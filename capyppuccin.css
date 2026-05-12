@@ -297,7 +297,7 @@
 
   /* Torrent-row badges (replace stock blues/purples with Capyppuccin palette) */
   --torrent-row-fg:                               var(--cp-text);
-  --torrent-row-visited-fg:                       var(--cp-mauve);
+  --torrent-row-visited-fg:                       var(--cp-rosewater);
   --torrent-row-sticky-bg:                        var(--cp-surface-1);
   --torrent-row-sticky-fg:                        var(--cp-base);
   --torrent-row-format-fg:                        var(--cp-subtext);
@@ -414,8 +414,11 @@ a {
 a:hover {
   color: var(--cp-cream);
 }
+/* Don't differentiate visited — keeps nav items consistently yellow.
+ * (Torrent rows still differentiate via --torrent-row-visited-fg, but with
+ * a subtle warm rosewater rather than mauve.) */
 a:visited {
-  color: var(--cp-mauve);
+  color: inherit;
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
