@@ -216,27 +216,31 @@
   /* === Block 7 — Extended component overrides === */
 
   /* Top-nav dropdowns (menu surfaces + items + icons) */
+  /* All TEXT in the nav uses --cp-text (#ebe2cf, warm off-white) so both
+     clickable (dropdowns, icon-bar links, ratio links) and non-clickable
+     (stats numbers, ratio bar inheritance) read as the same neutral tone.
+     Hover states use --cp-yellow as the brand accent so interactivity is
+     obvious. Icon-bar bg circles stay --cp-cream as a subtle yellow tint. */
   --top-nav-dropdown-fg:                          var(--cp-text);
-  --top-nav-dropdown-hover-fg:                    var(--cp-cream);  /* single nav-yellow tone */
+  --top-nav-dropdown-hover-fg:                    var(--cp-yellow);  /* hover = brand yellow */
   --top-nav-dropdown-hover-bg:                    var(--cp-surface-1);
   --top-nav-dropdown-menu-bg:                     var(--cp-surface-0);
   --top-nav-dropdown-menu-item-fg:                var(--cp-text);
   --top-nav-dropdown-menu-item-bg:                transparent;
-  --top-nav-dropdown-menu-item-hover-fg:          var(--cp-cream);  /* single nav-yellow tone */
+  --top-nav-dropdown-menu-item-hover-fg:          var(--cp-yellow);  /* hover = brand yellow */
   --top-nav-dropdown-menu-item-hover-bg:          var(--cp-surface-1);
   --top-nav-dropdown-menu-item-icon-fg:           var(--cp-base);
-  --top-nav-dropdown-menu-item-icon-bg:           var(--cp-cream);  /* unified lighter tone across the nav */
+  --top-nav-dropdown-menu-item-icon-bg:           var(--cp-cream);   /* decorative circle bg */
 
-  /* Top-nav misc (stats, toggle, icon bar, ratio).
-     All yellow-toned elements in the nav share --cp-cream for a single,
-     consistent lighter tone (no honey/gold mix here). */
-  --top-nav-stats-fg:                             var(--cp-cream);
-  --top-nav-toggle-fg:                            var(--cp-cream);
-  --top-nav-ratio-bar-fg:                         var(--cp-cream);
+  /* Stats / ratio / toggle text — all #ebe2cf so clickable & non-clickable
+     items in the ratio strip share one tone (no cream/yellow conflict). */
+  --top-nav-stats-fg:                             var(--cp-text);
+  --top-nav-toggle-fg:                            var(--cp-text);
+  --top-nav-ratio-bar-fg:                         var(--cp-text);
   --top-nav-icon-bar-icon-fg:                     var(--cp-text);
   --top-nav-icon-bar-icon-bg:                     var(--cp-surface-1);
   --top-nav-icon-bar-icon-hover-fg:               var(--cp-base);
-  --top-nav-icon-bar-icon-hover-bg:               var(--cp-cream);
+  --top-nav-icon-bar-icon-hover-bg:               var(--cp-cream);   /* decorative hover bg */
 
   /* Secondary-nav tabs */
   --secondary-nav-tab-fg:                         var(--cp-subtext);
@@ -436,6 +440,16 @@ a:link {
 a:hover,
 a:focus {
   color: var(--cp-cream);
+}
+
+/* Defensive catch — any <a> inside the nav that doesn't already have a
+ * UNIT3D-specific rule (e.g., .top-nav__dropdown > a, .top-nav__ratio-bar a)
+ * would otherwise fall through to the generic gold above. Force it to
+ * --cp-text (#ebe2cf) so the nav stays consistent. :where() keeps the
+ * specificity low (0,1,0,1) so UNIT3D's per-component rules still win,
+ * and :not([style]) preserves usergroup-colored usernames. */
+:where(.top-nav) a:not([style]) {
+  color: var(--cp-text);
 }
 
 /* Visited links: lighter --cp-yellow. Scoped to content containers only so
