@@ -437,6 +437,35 @@ a:visited:not([style]) {
   accent-color: var(--cp-yellow);
 }
 
+/* === Panel tabs ===
+ * Used for the in-panel tab strip (inbox: "Tudo / Marcar como lida /
+ * Caixa de entrada / Caixa de saída", and similar). Upstream hardcodes
+ * the active state to `color: #b0b0b0; border-bottom: 2px solid #888`
+ * which reads as dimmed/disabled against the warm charcoal — exactly
+ * the opposite of what an active tab should communicate. We also have
+ * to fix `.panel__tab` itself, which uses `--data-table-th-fg` for both
+ * its background and border-bottom (an upstream typo — should be -bg).
+ */
+.panel__tabs {
+  background-color: var(--cp-surface-1);
+  border-bottom: 1px solid var(--cp-surface-1);
+}
+.panel__tab {
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--cp-subtext);
+  transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+}
+.panel__tab:hover {
+  color: var(--cp-text);
+  background-color: var(--cp-surface-0);
+}
+.panel__tab--active {
+  color: var(--cp-yellow);
+  border-bottom: 2px solid var(--cp-yellow);
+  background-color: var(--cp-surface-0);
+}
+
 /* === Data-table polish ===
  * Rounds the table corners so the thead/tfoot hug the panel's radius
  * instead of sitting as a square bar inside the rounded panel, and
