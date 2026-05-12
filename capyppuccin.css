@@ -232,25 +232,29 @@
   --secondary-nav-tab-menu-bg:                    var(--cp-surface-0);
   --secondary-nav-tab-menu-fg:                    var(--cp-text);
 
-  /* Form active/hover states (replace blue #2195f3 focus rings) */
-  --input-text-border:                            1px solid var(--cp-surface-1);
+  /* Form active/hover states (replace blue #2195f3 focus rings).
+     Use --cp-overlay (warm grey) for resting borders so they're actually
+     visible against surface-0 backgrounds — surface-1 is too close to the
+     panel color and made inputs look borderless. */
+  --input-text-border:                            1px solid var(--cp-overlay);
   --input-text-border-active:                     2px solid var(--cp-yellow);
   --input-text-border-hover:                      2px solid var(--cp-peach);
-  --select-border:                                1px solid var(--cp-surface-1);
+  --select-border:                                1px solid var(--cp-overlay);
   --select-border-active:                         2px solid var(--cp-yellow);
   --select-border-hover:                          2px solid var(--cp-peach);
-  --textarea-border:                              1px solid var(--cp-surface-1);
+  --textarea-border:                              1px solid var(--cp-overlay);
   --textarea-border-active:                       2px solid var(--cp-yellow);
   --textarea-border-hover:                        2px solid var(--cp-peach);
   --label-fg-active:                              var(--cp-yellow);
   --label-fg-hover:                               var(--cp-peach);
 
-  /* Borders elsewhere */
+  /* Borders elsewhere — same reasoning: use overlay for clear definition. */
   --button-outlined-border:                       1px solid var(--cp-yellow);
-  --fieldset-border:                              1px solid var(--cp-surface-1);
-  --data-table-thead-border:                      1px solid var(--cp-surface-1);
+  --fieldset-border:                              1px solid var(--cp-overlay);
+  --data-table-thead-border:                      1px solid var(--cp-overlay);
   --data-table-tr-border:                         1px solid var(--cp-surface-1);
-  --data-table-tfoot-border:                      3px solid var(--cp-surface-1);
+  --data-table-tfoot-border:                      2px solid var(--cp-overlay);
+  --subforum-listing-border:                      1px solid var(--cp-surface-1);
 
   /* Quick search */
   --quick-search-bg:                              var(--cp-surface-0);
@@ -404,22 +408,19 @@ samp,
   outline: none;
 }
 
-/* Override hardcoded blue links from the main UNIT3D bundle (`a { color: #4991f6 }`).
- * We need element-level selectors (not just CSS vars) because the upstream rule
- * sets the color directly. `!important` would be heavy-handed — instead we rely
- * on the override sheet loading AFTER the main bundle, which is enough to win
- * on equal-specificity rules. */
-a {
-  color: var(--cp-yellow);
-}
-a:hover {
-  color: var(--cp-cream);
-}
-/* Don't differentiate visited — keeps nav items consistently yellow.
- * (Torrent rows still differentiate via --torrent-row-visited-fg, but with
- * a subtle warm rosewater rather than mauve.) */
+/* Override hardcoded blue links from the main UNIT3D bundle (`a { color: #4991f6 }`)
+ * and keep visited links from going browser-purple inside posts/messages where
+ * UNIT3D uses more specific selectors (`.post a:visited`, `.bbcode a:visited`...).
+ * `!important` on visited is intentional: we want a single source of truth for
+ * link color regardless of upstream specificity wars or browser defaults. */
+a,
+a:link,
 a:visited {
-  color: inherit;
+  color: var(--cp-yellow) !important;
+}
+a:hover,
+a:focus {
+  color: var(--cp-cream) !important;
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
