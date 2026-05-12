@@ -1,0 +1,13 @@
+# Brainstorming/spec artifacts (local-only)
+/docs/
+.superpowers/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Misc
+*.log
