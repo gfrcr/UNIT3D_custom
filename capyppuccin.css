@@ -52,6 +52,7 @@
 
   /* Surfaces (warm neutral charcoal — no purple undertone) */
   --cp-base: #161412;
+  --cp-mantle-light: #191918;
   --cp-mantle: #0e0d0c;
   --cp-surface-0: #221f1c;
   --cp-surface-1: #2f2b27;
@@ -98,7 +99,7 @@
   /* === Block 2 — Surfaces (warm charcoal ramp) === */
   --body-bg: var(--cp-base);
   --top-nav-bg: var(--cp-mantle);
-  --secondary-nav-bg: var(--cp-mantle);
+  --secondary-nav-bg: var(--cp-mantle-light);
   --footer-bg: var(--cp-mantle);
 
   --panel-bg: var(--cp-surface-0);
@@ -259,8 +260,8 @@
   /* Secondary-nav tabs */
   --secondary-nav-tab-fg: var(--cp-subtext);
   --secondary-nav-tab-hover-fg: var(--cp-text);
-  --secondary-nav-tab-active-text-decoration: underline var(--cp-yellow) 2px;
-  --secondary-nav-tab-hover-text-decoration: underline var(--cp-cream) 2px;
+  --secondary-nav-tab-active-text-decoration: underline var(--cp-gold) 2px;
+  --secondary-nav-tab-hover-text-decoration: underline var(--cp-yellow) 2px;
   --secondary-nav-tab-menu-bg: var(--cp-surface-0);
   --secondary-nav-tab-menu-fg: var(--cp-text);
 
@@ -549,6 +550,100 @@ button.form__button--filled.form__button--centered {
 }
 button.form__button--filled.form__button--centered:hover {
   background: var(--cp-honey);
+}
+
+/* === Forum index polish ===
+ * Default subforum listings render with everything in --panel-fg (cream),
+ * making section headings, subforum names, descriptions, stats numbers,
+ * and latest-topic info all read as the same monotone text. Give each
+ * role its own typographic treatment so the page has clear hierarchy. */
+
+/* Section panel head (e.g., "CAPYBARA BR", "CONCURSOS E BONIFICAÇÕES").
+ * Promote to small-caps yellow band so categories pop visually. */
+.page__forum--index .panel__heading,
+.page__forum--index .panel__header-link {
+  color: var(--cp-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Subforum row — subtle hover lift on the whole item */
+.subforum-listings__item {
+  transition: background-color 0.12s ease;
+}
+.subforum-listings__item:hover {
+  background-color: var(--cp-surface-1);
+}
+
+/* Subforum name link (e.g., "Avisos"). Brand yellow, hover cream. */
+.subforum-listing__link {
+  color: var(--cp-yellow);
+  font-size: 15px;
+}
+.subforum-listing__link:hover {
+  color: var(--cp-cream);
+}
+
+/* Description below the name (e.g., "Avisos Oficiais") — muted. */
+.subforum-listing__description {
+  color: var(--cp-subtext);
+  font-size: 12px;
+}
+
+/* Comments icon on the left — honey accent so it doesn't compete. */
+.subforum-listing__icon {
+  color: var(--cp-honey);
+}
+
+/* Topic/Post counts — bigger numbers in yellow, uppercase labels. */
+.subforum-listing__topic-stats dd,
+.subforum-listing__post-stats dd {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cp-yellow);
+}
+.subforum-listing__topic-stats dt,
+.subforum-listing__post-stats dt {
+  color: var(--cp-subtext);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* Latest-topic block: title is content, time/author is muted metadata. */
+.subforum-listing__latest-link {
+  color: var(--cp-text);
+  font-weight: 500;
+}
+.subforum-listing__latest-link:hover {
+  color: var(--cp-yellow);
+}
+.subforum-listing__latest-datetime,
+.subforum-listing__latest-post-link {
+  color: var(--cp-subtext);
+  font-size: 12px;
+}
+.subforum-listing__latest-post-link:hover {
+  color: var(--cp-yellow);
+}
+.subforum-listing__latest-author-link {
+  color: var(--cp-honey);
+  font-size: 12px;
+}
+.subforum-listing__latest-author-link:hover {
+  color: var(--cp-cream);
+}
+
+/* Sidebar stats list (.key-value rows: Fóruns / Tópicos / Posts).
+ * Numbers right-aligned in yellow, labels in subtext for hierarchy. */
+.page__forum--index .key-value dd {
+  color: var(--cp-yellow);
+  font-weight: 600;
+}
+.page__forum--index .key-value dt {
+  color: var(--cp-subtext);
 }
 
 /* === Search dropdown clipping fix ===
