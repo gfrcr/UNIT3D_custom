@@ -665,7 +665,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum--index,
     .page__forum-topic--index,
     .page__category-topic--index,
-    .page__topic--index
+    .page__topic--index,
+    .page__post--index
   )
   :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
@@ -681,7 +682,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum--index,
     .page__forum-topic--index,
     .page__category-topic--index,
-    .page__topic--index
+    .page__topic--index,
+    .page__post--index
   )
   .panelV2 {
   border-radius: var(--cp-radius-xl);
@@ -691,11 +693,24 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum--index,
     .page__forum-topic--index,
     .page__category-topic--index,
-    .page__topic--index
+    .page__topic--index,
+    .page__post--index
   )
   .panelV2
   .panel__heading {
   border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
+}
+
+/* Recent-posts listing (.page__post--index): each post is wrapped in an
+ * <li class="post-listings__item">. Add vertical breathing room and a
+ * rounded surface so posts read as discrete cards rather than a wall. */
+.post-listings__item {
+  margin-bottom: 12px;
+  border-radius: var(--cp-radius-lg);
+  overflow: hidden;
+}
+.post-listings__item:last-child {
+  margin-bottom: 0;
 }
 
 /* Subforum row — subtle hover lift on the whole item */
