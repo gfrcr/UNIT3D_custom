@@ -46,10 +46,15 @@
   --cp-radius-lg:  14px;
   --cp-radius-xl:  20px;
 
-  /* Shadow scale + focus glow (the only net-new UNIT3D var we add) */
+  /* Shadow scale */
   --cp-shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md:  0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg:  0 6px 24px rgba(0, 0, 0, 0.28);
+
+  /* ============================================
+   * Net-new additions to UNIT3D's variable namespace
+   * (not --cp-* tokens — these are consumed directly by global selectors)
+   * ============================================ */
   --shadow-glow:   0 0 0 3px rgba(249, 226, 175, 0.4);
 
   /* Block 1 — Brand & action colors        (Task 3) */
