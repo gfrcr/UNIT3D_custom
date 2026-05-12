@@ -423,28 +423,24 @@ samp,
 }
 
 /* Override hardcoded blue links from the main UNIT3D bundle (`a { color: #4991f6 }`).
- * Regular link colors have NO !important — inline `style="color:..."` (used by
- * UNIT3D for usergroup-colored usernames: admin red, mod green, etc.) must win. */
+ * Convention: unvisited = darker --cp-gold, visited = lighter --cp-yellow.
+ * Idea — links you've already clicked rise visually (the "already known"
+ * branches) while unvisited stay quieter / wait to be discovered.
+ *
+ * No !important on either — inline `style="color:..."` (UNIT3D usergroup
+ * colors: admin red, mod green, etc.) must win. */
 a,
 a:link {
-  color: var(--cp-yellow);
+  color: var(--cp-gold);
 }
 a:hover,
 a:focus {
   color: var(--cp-cream);
 }
 
-/* Visited links go --cp-gold (darker yellow) — but ONLY inside content
- * containers. We can't apply this globally because UNIT3D has links with
- * hardcoded brand colors (notably .top-nav__telegram-item > a { color: #2aabee })
- * that should win in the nav. Scoping to content areas keeps the "what have
- * I already clicked" signal where it matters (posts, comments, inbox, BBCode)
- * without touching nav/footer brand links.
- *
- *   - :not([style]) preserves usergroup-colored usernames (inline style).
- *   - The scope list covers UNIT3D's main content classes; if a visited
- *     link goes purple somewhere not in this list, append the class here.
- */
+/* Visited links: lighter --cp-yellow. Scoped to content containers only so
+ * nav links with hardcoded brand colors (Telegram cyan, etc.) keep theirs.
+ * :not([style]) preserves usergroup-colored usernames. */
 .bbcode-rendered a:visited:not([style]),
 .panel__body a:visited:not([style]),
 .post a:visited:not([style]),
@@ -452,7 +448,7 @@ a:focus {
 .notification a:visited:not([style]),
 .article-card a:visited:not([style]),
 .message a:visited:not([style]) {
-  color: var(--cp-gold);
+  color: var(--cp-yellow);
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
