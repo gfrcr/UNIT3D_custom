@@ -57,7 +57,14 @@
    * ============================================ */
   --shadow-glow:   0 0 0 3px rgba(249, 226, 175, 0.4);
 
-  /* Block 1 — Brand & action colors        (Task 3) */
+  /* === Block 1 — Brand & action colors (yellow-dominant) === */
+  --button-filled-bg:        var(--cp-yellow);
+  --button-filled-fg:        var(--cp-base);
+  --button-outlined-fg:      var(--cp-yellow);
+  --button-text-fg:          var(--cp-yellow);
+  --icon-button-filled-bg:   var(--cp-yellow);
+  --icon-button-filled-fg:   var(--cp-base);
+  --icon-button-fg:          var(--cp-text);
   /* Block 2 — Surfaces                     (Task 4) */
   /* Block 3 — Text                         (Task 5) */
   /* Block 4 — Semantic                     (Task 6) */
