@@ -108,6 +108,7 @@
   --body-fg:                    var(--cp-text);
   --panel-fg:                   var(--cp-text);
   --dialog-fg:                  var(--cp-text);
+  --dialog-head-fg:             var(--cp-text);
   --article-card-fg:            var(--cp-text);
   --article-card-head-fg:       var(--cp-text);
   --mediahub-card-fg:           var(--cp-text);
