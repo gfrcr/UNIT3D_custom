@@ -126,7 +126,12 @@
   --article-card-time-fg:       var(--cp-subtext);
   --meta-description-fg:        var(--cp-subtext);
   --footer-hr-fg:               var(--cp-overlay);
-  /* Block 4 — Semantic                     (Task 6) */
+  /* === Block 4 — Semantic colors === */
+  --torrent-row-seeders-fg:         var(--cp-green);
+  --torrent-row-leechers-fg:        var(--cp-red);
+  --bbcode-rendered-danger-fg:      var(--cp-red);
+  --bbcode-rendered-accent-fg:      var(--cp-mauve);
+  --bbcode-rendered-accent-emphasis: var(--cp-mauve);
   /* Block 5 — Border radii                 (Task 7) */
   /* Block 6 — Shadows                      (Task 8) */
 }
