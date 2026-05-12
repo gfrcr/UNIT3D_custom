@@ -170,7 +170,27 @@
   /* xl — circular/large */
   --top-nav-icon-bar-icon-border-radius:   var(--cp-radius-xl);
   --quick-search-result-image-border-radius: var(--cp-radius-xl);
-  /* Block 6 — Shadows                      (Task 8) */
+  /* === Block 6 — Shadows (soft, low-alpha) ===
+   *  sm  light elevation
+   *  md  standard cards, panels
+   *  lg  dropdowns, modals, hover-lifted cards
+   */
+  --top-nav-box-shadow:                 var(--cp-shadow-sm);
+  --secondary-nav-box-shadow:           var(--cp-shadow-sm);
+  --compact-search-box-shadow:          var(--cp-shadow-sm);
+  --quick-search-box-shadow:            var(--cp-shadow-sm);
+
+  --panel-box-shadow:                   var(--cp-shadow-md);
+  --article-box-shadow:                 var(--cp-shadow-md);
+  --mediahub-card-box-shadow:           var(--cp-shadow-md);
+  --playlist-card-box-shadow:           var(--cp-shadow-md);
+  --achievement-box-shadow:             var(--cp-shadow-md);
+  --prize-box-shadow:                   var(--cp-shadow-md);
+  --post-shadow:                        var(--cp-shadow-md);
+
+  --dialog-box-shadow:                  var(--cp-shadow-lg);
+  --top-nav-dropdown-menu-box-shadow:   var(--cp-shadow-lg);
+  --secondary-nav-tab-menu-box-shadow:  var(--cp-shadow-lg);
 }
 
 /* Block 7 — Global element overrides (typography + focus) — Task 9 */
