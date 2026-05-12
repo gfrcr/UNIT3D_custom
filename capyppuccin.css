@@ -659,18 +659,8 @@ button.form__button--filled.form__button--centered:hover {
 
 /* Section panel head (e.g., "CAPYBARA BR", "CONCURSOS E BONIFICAÇÕES",
  * "UNIT3D Forums", "Avisos Oficiais"). Promote to small-caps yellow band
- * across all three forum index pages — root (subforum listings), inside
- * a forum (topic listings), inside a category (cross-forum topic list). */
-:is(
-    .page__forum--index,
-    .page__forum-topic--index,
-    .page__category-topic--index,
-    .page__topic--index,
-    .page__post--index,
-    .page__subscription--index,
-    [class*="page__stats--"]
-  )
-  :is(.panel__heading, .panel__header-link) {
+ * across every UNIT3D page wrapper. */
+[class*="page__"] :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -678,38 +668,24 @@ button.form__button--filled.form__button--centered:hover {
   font-size: 14px;
 }
 
-/* Beefier rounded corners on forum panels — keeps the forum's "soft card"
+/* Beefier rounded corners on every page's panels — keeps the "soft card"
  * vibe more pronounced than the rest of the site (which stays at radius-lg). */
-:is(
-    .page__forum--index,
-    .page__forum-topic--index,
-    .page__category-topic--index,
-    .page__topic--index,
-    .page__post--index,
-    .page__subscription--index,
-    [class*="page__stats--"]
-  )
-  :is(.panel, .panelV2) {
+[class*="page__"] :is(.panel, .panelV2) {
   border-radius: var(--cp-radius-xl);
   overflow: hidden;
 }
 /* Round only the TOP of the heading band — flat bottom so it merges with
- * the panel body below. Most forum pages use bare .panel__heading as direct
- * child of the panel; only .page__post--index wraps it in .panel__header
- * (with sibling .panel__actions for the search bar). */
-:is(
-    .page__forum--index,
-    .page__forum-topic--index,
-    .page__category-topic--index,
-    .page__topic--index,
-    .page__subscription--index,
-    [class*="page__stats--"]
-  )
+ * the panel body below. Most pages use bare .panel__heading as direct child
+ * of the panel; only .page__post--index wraps it in .panel__header (with
+ * sibling .panel__actions for the search bar). */
+[class*="page__"]
   :is(.panel, .panelV2)
   .panel__heading {
   border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
 }
-.page__post--index :is(.panel, .panelV2) .panel__header {
+.page__post--index,
+.page__ticket--index,
+.page__user-conversation--index :is(.panel, .panelV2) .panel__header {
   border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
 }
 
