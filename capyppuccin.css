@@ -493,11 +493,11 @@ a.form__button--filled.form__button--centered:hover {
 }
 
 /* In-place <button> action buttons (Marcar lidas, Limpar caixa, etc.):
- * default sits 1 tone down at --cp-honey (richer/slightly muted) so the
- * panel reads with more depth. Hover rises to --cp-yellow (brand primary)
- * — same tone as anchor-button hover, creating a clear "lift" on interaction. */
+ * default sits 1 tone lighter at --cp-cream so the panel reads softer,
+ * then hover drops to --cp-yellow (brand primary) — clear darker shift
+ * = bigger visual "impact" on press. */
 button.form__button--filled.form__button--centered {
-  background: var(--cp-honey);
+  background: var(--cp-cream);
   color: var(--cp-base);
 }
 button.form__button--filled.form__button--centered:hover {
