@@ -65,7 +65,42 @@
   --icon-button-filled-bg:   var(--cp-yellow);
   --icon-button-filled-fg:   var(--cp-base);
   --icon-button-fg:          var(--cp-text);
-  /* Block 2 — Surfaces                     (Task 4) */
+  /* === Block 2 — Surfaces (warm charcoal ramp) === */
+  --body-bg:                    var(--cp-base);
+  --top-nav-bg:                 var(--cp-mantle);
+  --secondary-nav-bg:           var(--cp-mantle);
+  --footer-bg:                  var(--cp-mantle);
+
+  --panel-bg:                   var(--cp-surface-0);
+  --panel-head-bg:              var(--cp-surface-1);
+  --dialog-bg:                  var(--cp-surface-0);
+  --dialog-head-bg:             var(--cp-surface-1);
+  --article-card-bg:            var(--cp-surface-0);
+  --mediahub-card-bg:           var(--cp-surface-0);
+  --playlist-card-bg:           var(--cp-surface-0);
+  --message-bubble-bg:          var(--cp-surface-0);
+  --meta-popup-bg:              var(--cp-surface-0);
+  --meta-dropdown-bg:           var(--cp-surface-0);
+  --alert-bg:                   var(--cp-surface-0);
+  --fieldset-bg:                var(--cp-surface-0);
+  --legend-bg:                  var(--cp-surface-1);
+  --label-bg:                   var(--cp-surface-1);
+  --option-bg:                  var(--cp-surface-0);
+  --paginate-bg:                var(--cp-surface-0);
+  --compact-search-bg:          var(--cp-surface-0);
+  --chatbox-message-bg:         var(--cp-surface-0);
+  --chatbox-users-bg:           var(--cp-mantle);
+
+  --bbcode-input-bg:            var(--cp-surface-0);
+  --bbcode-input-body-bg:       var(--cp-base);
+  --bbcode-input-header-bg:     var(--cp-surface-1);
+
+  --key-value-odd-bg:           var(--cp-surface-0);
+  --key-value-even-bg:          var(--cp-surface-1);
+  --data-table-th-bg:           var(--cp-surface-1);
+  --data-table-tr-odd-bg:       var(--cp-surface-0);
+  --data-table-tr-even-bg:      var(--cp-base);
+  --data-table-tr-hover-bg:     var(--cp-surface-1);
   /* Block 3 — Text                         (Task 5) */
   /* Block 4 — Semantic                     (Task 6) */
   /* Block 5 — Border radii                 (Task 7) */
