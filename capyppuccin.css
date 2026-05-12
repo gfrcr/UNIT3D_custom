@@ -471,6 +471,23 @@ a:focus {
   accent-color: var(--cp-yellow);
 }
 
+/* === Action panel buttons (inverted) ===
+ * `.form__button--filled.form__button--centered` is the combo UNIT3D uses
+ * for sidebar action buttons (Nova Mensagem, Marca como lida, Excluir, etc.).
+ * Default filled style is yellow-bg + dark-text which feels heavy when
+ * stacked 3-4 in a narrow side panel. Invert to surface bg + yellow text +
+ * yellow border — reads as part of the panel, with the brand color carrying
+ * the meaning. Hover fills back to solid yellow for a clear "press me" cue. */
+.form__button--filled.form__button--centered {
+  background: var(--cp-surface-1);
+  color: var(--cp-yellow);
+  border: 1px solid var(--cp-yellow);
+}
+.form__button--filled.form__button--centered:hover {
+  background: var(--cp-yellow);
+  color: var(--cp-base);
+}
+
 /* === Panel tabs ===
  * Used for the in-panel tab strip (inbox: "Tudo / Marcar como lida /
  * Caixa de entrada / Caixa de saída", and similar). Upstream hardcodes
