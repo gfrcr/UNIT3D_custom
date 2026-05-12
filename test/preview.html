@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catppuccin Mocha Override — Visual Preview</title>
+<link rel="stylesheet" href="../material-design-v3-dark.css">
+<link rel="stylesheet" href="../catppuccin-mocha-overrides.css">
+<style>
+  body { margin: 0; background: var(--body-bg); color: var(--body-fg); min-height: 100vh; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .topnav { background: var(--top-nav-bg); padding: 14px 24px; box-shadow: var(--top-nav-box-shadow); display: flex; gap: 24px; align-items: center; }
+  .topnav .brand { color: var(--cp-yellow); font-weight: 700; font-size: 18px; }
+  .topnav a { color: var(--body-fg); text-decoration: none; font-weight: 500; }
+  .topnav a:hover { color: var(--cp-yellow); }
+  .panel { background: var(--panel-bg); color: var(--panel-fg); border-radius: var(--panel-border-radius); box-shadow: var(--panel-box-shadow); padding: 20px; margin: 20px 0; }
+  .panel-head { background: var(--panel-head-bg); border-radius: var(--panel-head-border-radius); padding: 12px 16px; margin: -20px -20px 16px; font-weight: 600; }
+  .torrent-row { background: var(--data-table-tr-odd-bg); padding: 12px 16px; border-radius: var(--cp-radius-md); display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+  .torrent-row:nth-child(even) { background: var(--data-table-tr-even-bg); }
+  .torrent-row:hover { background: var(--data-table-tr-hover-bg); }
+  .torrent-name { flex: 1; font-weight: 500; }
+  .torrent-size { color: var(--cp-subtext); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .badge { display: inline-block; padding: 3px 9px; border-radius: var(--cp-radius-sm); font-size: 10px; font-weight: 700; letter-spacing: 0.3px; color: var(--cp-base); }
+  .badge.fl { background: var(--cp-yellow); }
+  .badge.dub { background: var(--cp-peach); }
+  .badge.int { background: var(--cp-mauve); }
+  .badge.exc { background: var(--cp-pink); }
+  .badge.seed { background: var(--cp-green); }
+  .badge.remux { background: var(--cp-teal); }
+  .btn-filled { background: var(--button-filled-bg); color: var(--button-filled-fg); border: none; padding: 8px 16px; border-radius: var(--button-filled-border-radius); font-weight: 600; cursor: pointer; }
+  .btn-filled:hover { background: var(--cp-cream); }
+  .btn-outlined { background: transparent; color: var(--button-outlined-fg); border: 1.5px solid var(--button-outlined-fg); padding: 7px 15px; border-radius: var(--button-outlined-border-radius); font-weight: 600; cursor: pointer; }
+  .input { background: var(--cp-surface-0); color: var(--input-text-fg); border: 1px solid var(--cp-surface-1); padding: 8px 12px; border-radius: var(--input-text-border-radius); }
+  .seeders { color: var(--torrent-row-seeders-fg); font-weight: 600; }
+  .leechers { color: var(--torrent-row-leechers-fg); font-weight: 600; }
+  .dialog { background: var(--dialog-bg); border-radius: var(--dialog-border-radius); box-shadow: var(--dialog-box-shadow); padding: 24px; max-width: 480px; margin: 30px auto; }
+  .dialog-head { background: var(--dialog-head-bg); margin: -24px -24px 16px; padding: 14px 20px; border-radius: var(--cp-radius-lg) var(--cp-radius-lg) 0 0; font-weight: 600; }
+  h1, h2, h3 { color: var(--cp-text); }
+  h1 { font-weight: 700; }
+  .small { font-size: 12px; color: var(--cp-subtext); }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="brand">★ UNIT3D</span>
+  <a href="#">Browse</a>
+  <a href="#">Forums</a>
+  <a href="#">Stats</a>
+  <a href="#">Wiki</a>
+  <span style="margin-left:auto"><input class="input" placeholder="Search torrents..."></span>
+  <button class="btn-filled">Upload</button>
+</nav>
+
+<div class="container">
+
+  <h1>Browse Torrents</h1>
+  <p class="small">Showing 24 of 1,247 results &nbsp;·&nbsp; <span class="seeders">42 seeding</span> &nbsp;·&nbsp; <span class="leechers">3 leeching</span></p>
+
+  <div class="panel">
+    <div class="panel-head">Latest releases</div>
+
+    <div class="torrent-row">
+      <span class="badge fl">FREELEECH</span>
+      <span class="badge dub">2X UP</span>
+      <span class="torrent-name">Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX.HDR10+</span>
+      <span class="torrent-size">62.4 GiB</span>
+      <button class="btn-filled">↓ Download</button>
+    </div>
+
+    <div class="torrent-row">
+      <span class="badge seed">SEEDING</span>
+      <span class="badge remux">REMUX</span>
+      <span class="torrent-name">The.Bear.S03.1080p.BluRay.x265-HEVC</span>
+      <span class="torrent-size">8.2 GiB</span>
+      <button class="btn-outlined">Seeding</button>
+    </div>
+
+    <div class="torrent-row">
+      <span class="badge int">INTERNAL</span>
+      <span class="badge exc">EXCLUSIVE</span>
+      <span class="torrent-name">Oppenheimer.2023.IMAX.2160p.WEB-DL</span>
+      <span class="torrent-size">21.7 GiB</span>
+      <button class="btn-filled">↓ Download</button>
+    </div>
+  </div>
+
+  <div class="dialog">
+    <div class="dialog-head">Confirm download</div>
+    <p>Use 1 freeleech token for <strong>Dune.Part.Two.2024.2160p</strong>?</p>
+    <p class="small">You have 4 tokens remaining.</p>
+    <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+      <button class="btn-outlined">Cancel</button>
+      <button class="btn-filled">Confirm</button>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
