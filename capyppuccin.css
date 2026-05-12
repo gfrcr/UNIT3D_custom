@@ -434,18 +434,25 @@ a:focus {
   color: var(--cp-cream);
 }
 
-/* Visited links need special treatment: UNIT3D's main bundle has contextual
- * rules like `.message a:visited` (specificity 0,1,1,1) that pull visited
- * links to browser-default purple. We need higher specificity to beat them.
+/* Visited links go --cp-gold (darker yellow) — but ONLY inside content
+ * containers. We can't apply this globally because UNIT3D has links with
+ * hardcoded brand colors (notably .top-nav__telegram-item > a { color: #2aabee })
+ * that should win in the nav. Scoping to content areas keeps the "what have
+ * I already clicked" signal where it matters (posts, comments, inbox, BBCode)
+ * without touching nav/footer brand links.
  *
- *   - `:not([style])` raises specificity to 0,1,1,1 AND excludes any element
- *     with an inline `style=""` (preserving usergroup-colored usernames).
- *   - `!important` covers any contextual rule with even higher specificity.
- *
- * Color: --cp-gold (darker yellow) — gives a visible "already-clicked"
- * signal without going full browser-purple. */
-a:visited:not([style]) {
-  color: var(--cp-gold) !important;
+ *   - :not([style]) preserves usergroup-colored usernames (inline style).
+ *   - The scope list covers UNIT3D's main content classes; if a visited
+ *     link goes purple somewhere not in this list, append the class here.
+ */
+.bbcode-rendered a:visited:not([style]),
+.panel__body a:visited:not([style]),
+.post a:visited:not([style]),
+.comment__content a:visited:not([style]),
+.notification a:visited:not([style]),
+.article-card a:visited:not([style]),
+.message a:visited:not([style]) {
+  color: var(--cp-gold);
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
