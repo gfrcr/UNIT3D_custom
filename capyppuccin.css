@@ -408,20 +408,27 @@ samp,
   outline: none;
 }
 
-/* Override hardcoded blue links from the main UNIT3D bundle (`a { color: #4991f6 }`)
- * and override the browser-default purple on :visited.
- * NO `!important`: inline `style="color:..."` (used by UNIT3D for usergroup-colored
- * usernames like admin red / mod green) must win over our brand color. We still
- * beat the UA visited default (which has lower priority than any author rule) and
- * the main bundle's plain `a` selector, which is all we need in practice. */
+/* Override hardcoded blue links from the main UNIT3D bundle (`a { color: #4991f6 }`).
+ * Regular link colors have NO !important — inline `style="color:..."` (used by
+ * UNIT3D for usergroup-colored usernames: admin red, mod green, etc.) must win. */
 a,
-a:link,
-a:visited {
+a:link {
   color: var(--cp-yellow);
 }
 a:hover,
 a:focus {
   color: var(--cp-cream);
+}
+
+/* Visited links need special treatment: UNIT3D's main bundle has contextual
+ * rules like `.message a:visited` (specificity 0,1,1,1) that pull visited
+ * links to browser-default purple. We need higher specificity to beat them.
+ *
+ *   - `:not([style])` raises specificity to 0,1,1,1 AND excludes any element
+ *     with an inline `style=""` (preserving usergroup-colored usernames).
+ *   - `!important` covers any contextual rule with even higher specificity. */
+a:visited:not([style]) {
+  color: var(--cp-yellow) !important;
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
