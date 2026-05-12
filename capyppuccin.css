@@ -217,12 +217,12 @@
 
   /* Top-nav dropdowns (menu surfaces + items + icons) */
   --top-nav-dropdown-fg:                          var(--cp-text);
-  --top-nav-dropdown-hover-fg:                    var(--cp-yellow);
+  --top-nav-dropdown-hover-fg:                    var(--cp-cream);  /* single nav-yellow tone */
   --top-nav-dropdown-hover-bg:                    var(--cp-surface-1);
   --top-nav-dropdown-menu-bg:                     var(--cp-surface-0);
   --top-nav-dropdown-menu-item-fg:                var(--cp-text);
   --top-nav-dropdown-menu-item-bg:                transparent;
-  --top-nav-dropdown-menu-item-hover-fg:          var(--cp-yellow);
+  --top-nav-dropdown-menu-item-hover-fg:          var(--cp-cream);  /* single nav-yellow tone */
   --top-nav-dropdown-menu-item-hover-bg:          var(--cp-surface-1);
   --top-nav-dropdown-menu-item-icon-fg:           var(--cp-base);
   --top-nav-dropdown-menu-item-icon-bg:           var(--cp-cream);  /* unified lighter tone across the nav */
@@ -440,9 +440,12 @@ a:focus {
  *
  *   - `:not([style])` raises specificity to 0,1,1,1 AND excludes any element
  *     with an inline `style=""` (preserving usergroup-colored usernames).
- *   - `!important` covers any contextual rule with even higher specificity. */
+ *   - `!important` covers any contextual rule with even higher specificity.
+ *
+ * Color: --cp-gold (darker yellow) — gives a visible "already-clicked"
+ * signal without going full browser-purple. */
 a:visited:not([style]) {
-  color: var(--cp-yellow) !important;
+  color: var(--cp-gold) !important;
 }
 
 /* Native form controls (checkbox, radio, progress, range) — `accent-color`
