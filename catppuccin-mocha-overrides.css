@@ -101,7 +101,31 @@
   --data-table-tr-odd-bg:       var(--cp-surface-0);
   --data-table-tr-even-bg:      var(--cp-base);
   --data-table-tr-hover-bg:     var(--cp-surface-1);
-  /* Block 3 — Text                         (Task 5) */
+  /* === Block 3 — Text === */
+  --body-fg:                    var(--cp-text);
+  --panel-fg:                   var(--cp-text);
+  --dialog-fg:                  var(--cp-text);
+  --article-card-fg:            var(--cp-text);
+  --article-card-head-fg:       var(--cp-text);
+  --mediahub-card-fg:           var(--cp-text);
+  --playlist-card-fg:           var(--cp-text);
+  --message-bubble-fg:          var(--cp-text);
+  --alert-fg:                   var(--cp-text);
+  --label-fg:                   var(--cp-text);
+  --legend-fg:                  var(--cp-text);
+  --option-fg:                  var(--cp-text);
+  --paginate-fg:                var(--cp-text);
+  --key-value-fg:               var(--cp-text);
+  --data-table-fg:              var(--cp-text);
+  --input-text-fg:              var(--cp-text);
+  --breadcrumb-fg:              var(--cp-subtext);
+  --breadcrumb-active-fg:       var(--cp-yellow);
+  --breadcrumb-hover-fg:        var(--cp-cream);
+
+  /* Subtext / muted */
+  --article-card-time-fg:       var(--cp-subtext);
+  --meta-description-fg:        var(--cp-subtext);
+  --footer-hr-fg:               var(--cp-overlay);
   /* Block 4 — Semantic                     (Task 6) */
   /* Block 5 — Border radii                 (Task 7) */
   /* Block 6 — Shadows                      (Task 8) */
