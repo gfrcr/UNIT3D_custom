@@ -12,17 +12,38 @@
 
 ## Install
 
+In your UNIT3D fork's main layout template (typically `resources/views/layout.blade.php`, or wherever the theme `<link>` lives), add the override **immediately after** the base theme:
+
+### Option A — jsDelivr CDN (recommended)
+
+No file copy needed. jsDelivr mirrors this repo automatically:
+
+```html
+<link rel="stylesheet" href="/css/material-design-v3-dark.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gfrcr/UNIT3D_custom@main/capyppuccin.css">
+```
+
+To pin to a specific version (so future updates to `main` don't auto-apply), replace `@main` with a commit SHA or tag:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gfrcr/UNIT3D_custom@02de7b7/capyppuccin.css">
+```
+
+### Option B — Self-hosted
+
+If you prefer to ship the CSS yourself (no third-party CDN dependency):
+
 1. Copy `capyppuccin.css` into your UNIT3D fork's public CSS directory (typically `public/css/`).
-2. In the main layout template (typically `resources/views/layout.blade.php` or wherever the theme `<link>` lives), add the override **after** the base theme:
+2. Reference it locally:
 
    ```html
    <link rel="stylesheet" href="/css/material-design-v3-dark.css">
    <link rel="stylesheet" href="/css/capyppuccin.css">
    ```
 
-3. Hard-refresh. Verify via `test/verify.html` (should report all assertions passing).
+### Verify
 
-To roll back, remove the single `<link>` line.
+Hard-refresh the page. Open `test/verify.html` from a checkout of this repo to confirm the override resolves correctly (should report 34 assertions passing). To roll back the theme, remove the `<link>` line you added.
 
 ## Palette
 
