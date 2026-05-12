@@ -558,10 +558,16 @@ button.form__button--filled.form__button--centered:hover {
  * and latest-topic info all read as the same monotone text. Give each
  * role its own typographic treatment so the page has clear hierarchy. */
 
-/* Section panel head (e.g., "CAPYBARA BR", "CONCURSOS E BONIFICAÇÕES").
- * Promote to small-caps yellow band so categories pop visually. */
-.page__forum--index .panel__heading,
-.page__forum--index .panel__header-link {
+/* Section panel head (e.g., "CAPYBARA BR", "CONCURSOS E BONIFICAÇÕES",
+ * "UNIT3D Forums", "Avisos Oficiais"). Promote to small-caps yellow band
+ * across all three forum index pages — root (subforum listings), inside
+ * a forum (topic listings), inside a category (cross-forum topic list). */
+:is(
+    .page__forum--index,
+    .page__forum-topic--index,
+    .page__category-topic--index
+  )
+  :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -650,16 +656,6 @@ button.form__button--filled.form__button--centered:hover {
  * Same idea as forum index but for `.page__forum-topic--index` — the list
  * of topics inside a forum (e.g., /forums/5). Uses `.topic-listing__*`
  * classes instead of `.subforum-listing__*`. */
-
-/* Section heading ("Avisos Oficiais", etc.) — same yellow small-caps band. */
-.page__forum-topic--index .panel__heading,
-.page__forum-topic--index .panel__header-link {
-  color: var(--cp-yellow);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 700;
-  font-size: 14px;
-}
 
 /* Row hover + unread indicator (3px yellow stripe on the left of unread topics). */
 .topic-listings__item {
