@@ -467,6 +467,10 @@ a:hover,
 a:focus {
   color: var(--cp-cream);
 }
+.top-nav__dropdown:hover > a,
+.top-nav__dropdown:focus-within > a {
+  color: var(--cp-yellow);
+}
 
 /* Defensive catch — any <a> inside the nav that doesn't already have a
  * UNIT3D-specific rule (e.g., .top-nav__dropdown > a, .top-nav__ratio-bar a)
@@ -510,12 +514,13 @@ a:focus {
  * for a clear press cue. */
 a.form__button--filled.form__button--centered {
   background: var(--cp-surface-1);
-  color: var(--cp-base);
-  border: 1px solid var(--cp-base);
+  color: var(--cp-yellow-soft);
+  border: 1px solid var(--cp-yellow-soft);
 }
 a.form__button--filled.form__button--centered:hover {
-  background: var(--cp-yellow);
-  color: var(--cp-yellow);
+  background: var(--cp-honey);
+  color: var(--cp-base);
+  border: 1px solid var(--cp-honey);
 }
 
 /* In-place <button> action buttons (Marcar lidas, Limpar caixa, etc.):
@@ -523,11 +528,23 @@ a.form__button--filled.form__button--centered:hover {
  * then hover drops to --cp-yellow (brand primary) — clear darker shift
  * = bigger visual "impact" on press. */
 button.form__button--filled.form__button--centered {
-  background: var(--cp-cream);
+  background: var(--cp-yellow);
   color: var(--cp-base);
 }
 button.form__button--filled.form__button--centered:hover {
-  background: var(--cp-yellow);
+  background: var(--cp-honey);
+}
+
+/* === Top-nav alert badge ===
+ * `.top-nav__icon-bar > li > a > svg` is the small notification indicator
+ * that floats on the bell/envelope icons (animated, blinks when there's
+ * an unread item). UNIT3D doesn't expose a CSS variable for its color —
+ * tint it honey via the `color` property (consumed by `fill="currentColor"`
+ * SVGs) and an explicit `fill` fallback for SVGs that hardcode their fill. */
+.top-nav__icon-bar > li > a > svg,
+.top-nav__icon-bar > li > a > svg * {
+  color: var(--cp-honey);
+  fill: var(--cp-honey);
 }
 
 /* === Panel tabs ===
@@ -560,6 +577,9 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-yellow);
   border-bottom: 2px solid var(--cp-yellow);
   background-color: var(--cp-surface-0);
+}
+.panel__heading {
+  color: var(--cp-text);
 }
 
 /* === Data-table polish ===
