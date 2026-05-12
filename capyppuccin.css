@@ -5,10 +5,11 @@
  * Yellow-dominant pastel theme for UNIT3D's Material Design v3 Dark.
  * Palette inspired by Catppuccin Mocha (https://catppuccin.com).
  *
- * Load AFTER material-design-v3-dark.css. Easiest way is via jsDelivr CDN:
+ * Load AFTER material-design-v3-dark.css. Hosted via GitHub Pages
+ * (compatible with UNIT3D's default CSP):
  *   <link rel="stylesheet" href="/css/material-design-v3-dark.css">
  *   <link rel="stylesheet"
- *     href="https://cdn.jsdelivr.net/gh/gfrcr/UNIT3D_custom@main/capyppuccin.css">
+ *     href="https://gfrcr.github.io/UNIT3D_custom/capyppuccin.css">
  *
  * See README.md for the self-hosted alternative.
  */
