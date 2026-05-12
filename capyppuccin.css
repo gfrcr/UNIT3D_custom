@@ -225,16 +225,18 @@
   --top-nav-dropdown-menu-item-hover-fg:          var(--cp-yellow);
   --top-nav-dropdown-menu-item-hover-bg:          var(--cp-surface-1);
   --top-nav-dropdown-menu-item-icon-fg:           var(--cp-base);
-  --top-nav-dropdown-menu-item-icon-bg:           var(--cp-honey);  /* richer than primary yellow for depth */
+  --top-nav-dropdown-menu-item-icon-bg:           var(--cp-cream);  /* unified lighter tone across the nav */
 
-  /* Top-nav misc (stats, toggle, icon bar, ratio) */
-  --top-nav-stats-fg:                             var(--cp-text);
-  --top-nav-toggle-fg:                            var(--cp-text);
-  --top-nav-ratio-bar-fg:                         var(--cp-text);
+  /* Top-nav misc (stats, toggle, icon bar, ratio).
+     All yellow-toned elements in the nav share --cp-cream for a single,
+     consistent lighter tone (no honey/gold mix here). */
+  --top-nav-stats-fg:                             var(--cp-cream);
+  --top-nav-toggle-fg:                            var(--cp-cream);
+  --top-nav-ratio-bar-fg:                         var(--cp-cream);
   --top-nav-icon-bar-icon-fg:                     var(--cp-text);
   --top-nav-icon-bar-icon-bg:                     var(--cp-surface-1);
   --top-nav-icon-bar-icon-hover-fg:               var(--cp-base);
-  --top-nav-icon-bar-icon-hover-bg:               var(--cp-gold);  /* deepest yellow — clear hover */
+  --top-nav-icon-bar-icon-hover-bg:               var(--cp-cream);
 
   /* Secondary-nav tabs */
   --secondary-nav-tab-fg:                         var(--cp-subtext);
@@ -309,7 +311,7 @@
 
   /* Buttons extra */
   --button-outlined-fg:                           var(--cp-yellow);
-  --icon-button-filled-bg:                        var(--cp-honey);  /* depth — distinguishes from primary button */
+  --icon-button-filled-bg:                        var(--cp-cream);  /* unified with nav cream tone */
   --icon-button-filled-fg:                        var(--cp-base);
 
   /* Torrent-row badges (replace stock blues/purples with Capyppuccin palette) */
