@@ -667,7 +667,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum-topic--index,
     .page__category-topic--index,
     .page__topic--index,
-    .page__post--index
+    .page__post--index,
+    .page__subscription--index
   )
   :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
@@ -684,7 +685,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum-topic--index,
     .page__category-topic--index,
     .page__topic--index,
-    .page__post--index
+    .page__post--index,
+    .page__subscription--index
   )
   :is(.panel, .panelV2) {
   border-radius: var(--cp-radius-xl);
@@ -697,7 +699,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__forum-topic--index,
     .page__category-topic--index,
     .page__topic--index,
-    .page__post--index
+    .page__post--index,
+    .page__subscription--index
   )
   :is(.panel, .panelV2)
   .panel__header {
