@@ -14,7 +14,7 @@
      for non-file origins; on file://, they silently miss https:// resources.
      Production tracker loads this over HTTPS so its bare `*.github.io` policy
      works there — we add the scheme here only to mirror that behavior locally. -->
-<meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' https://gitcdn.xyz https://github.io https://*.github.io https://github.com; font-src 'self' data: https://gitcdn.xyz https://github.io https://*.github.io https://github.com; img-src 'self' data: blob: https://gitcdn.xyz https://github.io https://*.github.io https://github.com">
+<meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline' https://gitcdn.xyz https://github.io https://*.github.io https://github.com; font-src 'self'; img-src 'self' data: blob: https://gitcdn.xyz https://github.io https://*.github.io https://github.com">
 <script>
   // Register CSP listener BEFORE <link> tags load so we catch stylesheet
   // violations during initial parsing (which fire before any body script).

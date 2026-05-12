@@ -60,6 +60,55 @@ Hard-refresh the page. Open `test/verify.html` from a checkout of this repo to c
 | Accent (premium) | `#cba6f7` Mocha Mauve |
 | Accent (cool) | `#94e2d5` Mocha Teal |
 
+## Self-hosting fonts (optional)
+
+UNIT3D's default CSP allows `*.github.io` for stylesheets but only `'self'` for
+fonts. As a result, the override ships **without** web fonts — UI falls back
+to your platform's system font (San Francisco on macOS, Segoe UI on Windows,
+the system default on Linux) plus `ui-monospace` for code/hash text.
+
+If you want the original Outfit + JetBrains Mono typography:
+
+1. Grab the four woff2 files from this repo's `fonts/` directory:
+   - `outfit-latin.woff2`, `outfit-latin-ext.woff2`
+   - `jetbrainsmono-latin.woff2`, `jetbrainsmono-latin-ext.woff2`
+2. Copy them into your UNIT3D fork's `public/css/fonts/` (or wherever
+   makes sense in your static-asset layout). After deploy they're
+   reachable at `https://your-tracker/css/fonts/<filename>.woff2` —
+   same origin as the tracker, so `font-src 'self'` permits them.
+3. Add this block at the **very top** of `capyppuccin.css` (above `:root`),
+   replacing `/css/fonts/` with whatever path you used:
+
+   ```css
+   @font-face {
+     font-family: "Outfit"; font-style: normal; font-weight: 400 700;
+     font-display: swap;
+     src: url("/css/fonts/outfit-latin.woff2") format("woff2");
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+   }
+   @font-face {
+     font-family: "Outfit"; font-style: normal; font-weight: 400 700;
+     font-display: swap;
+     src: url("/css/fonts/outfit-latin-ext.woff2") format("woff2");
+     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+   }
+   @font-face {
+     font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 500;
+     font-display: swap;
+     src: url("/css/fonts/jetbrainsmono-latin.woff2") format("woff2");
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+   }
+   @font-face {
+     font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 500;
+     font-display: swap;
+     src: url("/css/fonts/jetbrainsmono-latin-ext.woff2") format("woff2");
+     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+   }
+   ```
+
+4. Hard-refresh. The font-family stacks already list Outfit/JetBrains Mono
+   first, so they activate automatically once the @font-face URLs resolve.
+
 ## Light-mode variant
 
 The override is built around a single `--cp-*` design-token layer, so a light-mode sister theme (Catppuccin Latte) can be produced by cloning this file and swapping just the token values — the per-component mappings carry over unchanged.
