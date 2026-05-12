@@ -552,6 +552,105 @@ button.form__button--filled.form__button--centered:hover {
   background: var(--cp-honey);
 }
 
+/* === Topic show — individual posts ===
+ * The view of a single topic (/forums/topics/N) renders each post as a
+ * `.post` grid (aside | header / content / footer). Default styling
+ * hardcodes `border-radius: 5px` on .post and toolbar — too tight for
+ * our scale. Bump to radius-lg + tighten the visual hierarchy of
+ * header / aside / toolbar so each post reads as a card. */
+.post {
+  border-radius: var(--cp-radius-lg);
+  box-shadow: var(--cp-shadow-md);
+  background-color: var(--cp-surface-0);
+  margin-bottom: 12px;
+}
+.post__header {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-text);
+  border-bottom: 1px solid var(--cp-surface-1);
+}
+.post__datetime,
+.post__topic {
+  color: var(--cp-subtext);
+  font-size: 12px;
+}
+.post__topic a {
+  color: var(--cp-yellow);
+}
+.post__topic a:hover {
+  color: var(--cp-cream);
+}
+.post__tip-stats {
+  color: var(--cp-subtext);
+}
+.post__toolbar {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-subtext);
+  border-bottom-left-radius: var(--cp-radius-md);
+}
+.post__tip-button {
+  color: var(--cp-subtext);
+}
+.post__tip-button:hover {
+  background-color: var(--cp-surface-0);
+  color: var(--cp-yellow);
+}
+.post__aside {
+  background-color: var(--cp-surface-0);
+  color: var(--cp-subtext);
+  border-right: 1px solid var(--cp-surface-1);
+}
+.post__avatar {
+  border-radius: var(--cp-radius-md);
+}
+.post__content,
+.post__body {
+  background-color: var(--cp-surface-0);
+  color: var(--cp-text);
+  padding: 14px 18px;
+}
+.post__footer {
+  background-color: var(--cp-surface-0);
+  border-top: 1px solid var(--cp-surface-1);
+  padding: 8px 14px;
+}
+.post__author {
+  color: var(--cp-yellow);
+  font-weight: 600;
+}
+.post__author:hover {
+  color: var(--cp-cream);
+}
+.post__group-name,
+.post__group-title {
+  color: var(--cp-subtext);
+  font-size: 11px;
+}
+.post__stats dd,
+.post__stats dt {
+  color: var(--cp-subtext);
+  font-size: 11px;
+}
+
+/* Like / dislike buttons inside posts — use semantic colors. */
+.post__like {
+  color: var(--cp-green);
+}
+.post__dislike {
+  color: var(--cp-red);
+}
+.post__like-count,
+.post__dislike-count {
+  color: var(--cp-subtext);
+}
+
+/* Hide post left-column rounded right-bottom corner since aside has
+ * its own border-right. */
+.post__aside {
+  border-bottom-left-radius: var(--cp-radius-lg);
+  border-top-left-radius: var(--cp-radius-lg);
+}
+
 /* === Forum index polish ===
  * Default subforum listings render with everything in --panel-fg (cream),
  * making section headings, subforum names, descriptions, stats numbers,
