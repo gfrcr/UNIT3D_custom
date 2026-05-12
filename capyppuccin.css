@@ -690,10 +690,8 @@ button.form__button--filled.form__button--centered:hover {
   border-radius: var(--cp-radius-xl);
   overflow: hidden;
 }
-/* Heading gets rounded TL, actions sibling gets rounded TR — together they
- * form a continuous rounded band when both are present (.page__post--index
- * search bar); when only heading exists, parent overflow:hidden still clips
- * the TR side cleanly. */
+/* Round the whole header strip — both heading + actions sit inside it,
+ * so this gives a clean continuous rounded band across the panel top. */
 :is(
     .page__forum--index,
     .page__forum-topic--index,
@@ -702,19 +700,8 @@ button.form__button--filled.form__button--centered:hover {
     .page__post--index
   )
   :is(.panel, .panelV2)
-  .panel__heading {
-  border-radius: var(--cp-radius-xl) 0 0 0;
-}
-:is(
-    .page__forum--index,
-    .page__forum-topic--index,
-    .page__category-topic--index,
-    .page__topic--index,
-    .page__post--index
-  )
-  :is(.panel, .panelV2)
-  .panel__actions {
-  border-radius: 0 var(--cp-radius-xl) 0 0;
+  .panel__header {
+  border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
 }
 
 /* Subforum row — subtle hover lift on the whole item */
