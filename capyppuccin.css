@@ -14,7 +14,42 @@
  * See README.md for the self-hosted alternative.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Self-hosted fonts (UNIT3D's default CSP blocks fonts.googleapis.com).
+ * Served from the same GitHub Pages origin as this stylesheet, so the
+ * tracker's `*.github.io` allowance covers them. Variable fonts: a single
+ * woff2 file supplies all weights via wght range. */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://gfrcr.github.io/UNIT3D_custom/fonts/outfit-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://gfrcr.github.io/UNIT3D_custom/fonts/outfit-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('https://gfrcr.github.io/UNIT3D_custom/fonts/jetbrainsmono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('https://gfrcr.github.io/UNIT3D_custom/fonts/jetbrainsmono-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
   /* ============================================
@@ -32,126 +67,126 @@
    *
    * Plus warm complements (peach, rosewater) for non-yellow accents.
    */
-  --cp-yellow-soft: #fff8c5;  /* very pale, decorative — glow rings, subtle bg */
-  --cp-cream:       #fce087;  /* saturated lemon — hover, lift, button accent */
-  --cp-yellow:      #f9e2af;  /* brand pastel peachy yellow */
-  --cp-honey:       #e8c573;
-  --cp-gold:        #caa55e;
-  --cp-peach:       #fab387;
-  --cp-rosewater:   #f5e0dc;
+  --cp-yellow-soft: #fff8c5; /* very pale, decorative — glow rings, subtle bg */
+  --cp-cream: #fce087; /* saturated lemon — hover, lift, button accent */
+  --cp-yellow: #f9e2af; /* brand pastel peachy yellow */
+  --cp-honey: #e8c573;
+  --cp-gold: #caa55e;
+  --cp-peach: #fab387;
+  --cp-rosewater: #f5e0dc;
 
   /* Surfaces (warm neutral charcoal — no purple undertone) */
-  --cp-base:       #161412;
-  --cp-mantle:     #0e0d0c;
-  --cp-surface-0:  #221f1c;
-  --cp-surface-1:  #2f2b27;
+  --cp-base: #161412;
+  --cp-mantle: #0e0d0c;
+  --cp-surface-0: #221f1c;
+  --cp-surface-1: #2f2b27;
 
   /* Text (warm off-white scale — replaces Mocha's lavender-tinted greys
      which read as blueish against the yellow brand) */
-  --cp-text:       #ebe2cf;
-  --cp-subtext:    #b8b1a0;
-  --cp-overlay:    #7d7869;
+  --cp-text: #ebe2cf;
+  --cp-subtext: #b8b1a0;
+  --cp-overlay: #7d7869;
 
   /* Semantic */
-  --cp-green:      #a6e3a1;
-  --cp-red:        #f38ba8;
-  --cp-blue:       #89b4fa;
-  --cp-mauve:      #cba6f7;
-  --cp-teal:       #94e2d5;
-  --cp-pink:       #f5c2e7;
+  --cp-green: #a6e3a1;
+  --cp-red: #f38ba8;
+  --cp-blue: #89b4fa;
+  --cp-mauve: #cba6f7;
+  --cp-teal: #94e2d5;
+  --cp-pink: #f5c2e7;
 
   /* Shape scale */
-  --cp-radius-sm:  6px;
-  --cp-radius-md:  10px;
-  --cp-radius-lg:  14px;
-  --cp-radius-xl:  20px;
+  --cp-radius-sm: 6px;
+  --cp-radius-md: 10px;
+  --cp-radius-lg: 14px;
+  --cp-radius-xl: 20px;
 
   /* Shadow scale */
-  --cp-shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.18);
-  --cp-shadow-md:  0 3px 10px rgba(0, 0, 0, 0.22);
-  --cp-shadow-lg:  0 6px 24px rgba(0, 0, 0, 0.28);
+  --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
+  --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
+  --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
 
   /* ============================================
    * Net-new additions to UNIT3D's variable namespace
    * (not --cp-* tokens — these are consumed directly by global selectors)
    * ============================================ */
-  --shadow-glow:   0 0 0 3px rgba(255, 248, 197, 0.5);  /* yellow-soft alpha — pale ring */
+  --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5); /* yellow-soft alpha — pale ring */
 
   /* === Block 1 — Brand & action colors (yellow-dominant) === */
-  --button-filled-bg:        var(--cp-yellow);
-  --button-filled-fg:        var(--cp-base);
-  --button-outlined-fg:      var(--cp-yellow);
-  --button-text-fg:          var(--cp-yellow);
-  --icon-button-filled-bg:   var(--cp-yellow);
-  --icon-button-filled-fg:   var(--cp-base);
-  --icon-button-fg:          var(--cp-text);
+  --button-filled-bg: var(--cp-yellow);
+  --button-filled-fg: var(--cp-base);
+  --button-outlined-fg: var(--cp-yellow);
+  --button-text-fg: var(--cp-yellow);
+  --icon-button-filled-bg: var(--cp-yellow);
+  --icon-button-filled-fg: var(--cp-base);
+  --icon-button-fg: var(--cp-text);
   /* === Block 2 — Surfaces (warm charcoal ramp) === */
-  --body-bg:                    var(--cp-base);
-  --top-nav-bg:                 var(--cp-mantle);
-  --secondary-nav-bg:           var(--cp-mantle);
-  --footer-bg:                  var(--cp-mantle);
+  --body-bg: var(--cp-base);
+  --top-nav-bg: var(--cp-mantle);
+  --secondary-nav-bg: var(--cp-mantle);
+  --footer-bg: var(--cp-mantle);
 
-  --panel-bg:                   var(--cp-surface-0);
-  --panel-head-bg:              var(--cp-surface-1);
-  --dialog-bg:                  var(--cp-surface-0);
-  --dialog-head-bg:             var(--cp-surface-1);
-  --article-card-bg:            var(--cp-surface-0);
-  --mediahub-card-bg:           var(--cp-surface-0);
-  --playlist-card-bg:           var(--cp-surface-0);
-  --message-bubble-bg:          var(--cp-surface-0);
-  --meta-popup-bg:              var(--cp-surface-0);
-  --meta-dropdown-bg:           var(--cp-surface-0);
-  --alert-bg:                   var(--cp-surface-0);
-  --fieldset-bg:                var(--cp-surface-0);
-  --legend-bg:                  var(--cp-surface-1);
-  --label-bg:                   var(--cp-surface-1);
-  --option-bg:                  var(--cp-surface-0);
-  --paginate-bg:                var(--cp-surface-0);
-  --compact-search-bg:          var(--cp-surface-0);
-  --chatbox-message-bg:         var(--cp-surface-0);
-  --chatbox-users-bg:           var(--cp-mantle);
+  --panel-bg: var(--cp-surface-0);
+  --panel-head-bg: var(--cp-surface-1);
+  --dialog-bg: var(--cp-surface-0);
+  --dialog-head-bg: var(--cp-surface-1);
+  --article-card-bg: var(--cp-surface-0);
+  --mediahub-card-bg: var(--cp-surface-0);
+  --playlist-card-bg: var(--cp-surface-0);
+  --message-bubble-bg: var(--cp-surface-0);
+  --meta-popup-bg: var(--cp-surface-0);
+  --meta-dropdown-bg: var(--cp-surface-0);
+  --alert-bg: var(--cp-surface-0);
+  --fieldset-bg: var(--cp-surface-0);
+  --legend-bg: var(--cp-surface-1);
+  --label-bg: var(--cp-surface-1);
+  --option-bg: var(--cp-surface-0);
+  --paginate-bg: var(--cp-surface-0);
+  --compact-search-bg: var(--cp-surface-0);
+  --chatbox-message-bg: var(--cp-surface-0);
+  --chatbox-users-bg: var(--cp-mantle);
 
-  --bbcode-input-bg:            var(--cp-surface-0);
-  --bbcode-input-body-bg:       var(--cp-base);
-  --bbcode-input-header-bg:     var(--cp-surface-1);
+  --bbcode-input-bg: var(--cp-surface-0);
+  --bbcode-input-body-bg: var(--cp-base);
+  --bbcode-input-header-bg: var(--cp-surface-1);
 
-  --key-value-odd-bg:           var(--cp-surface-0);
-  --key-value-even-bg:          var(--cp-surface-1);
-  --data-table-th-bg:           var(--cp-surface-1);
-  --data-table-tr-odd-bg:       var(--cp-surface-0);
-  --data-table-tr-even-bg:      var(--cp-base);
-  --data-table-tr-hover-bg:     var(--cp-surface-1);
+  --key-value-odd-bg: var(--cp-surface-0);
+  --key-value-even-bg: var(--cp-surface-1);
+  --data-table-th-bg: var(--cp-surface-1);
+  --data-table-tr-odd-bg: var(--cp-surface-0);
+  --data-table-tr-even-bg: var(--cp-base);
+  --data-table-tr-hover-bg: var(--cp-surface-1);
   /* === Block 3 — Text === */
-  --body-fg:                    var(--cp-text);
-  --panel-fg:                   var(--cp-text);
-  --dialog-fg:                  var(--cp-text);
-  --dialog-head-fg:             var(--cp-text);
-  --article-card-fg:            var(--cp-text);
-  --article-card-head-fg:       var(--cp-text);
-  --mediahub-card-fg:           var(--cp-text);
-  --playlist-card-fg:           var(--cp-text);
-  --message-bubble-fg:          var(--cp-text);
-  --alert-fg:                   var(--cp-text);
-  --label-fg:                   var(--cp-text);
-  --legend-fg:                  var(--cp-text);
-  --option-fg:                  var(--cp-text);
-  --paginate-fg:                var(--cp-text);
-  --key-value-fg:               var(--cp-text);
-  --data-table-fg:              var(--cp-text);
-  --input-text-fg:              var(--cp-text);
-  --breadcrumb-fg:              var(--cp-subtext);
-  --breadcrumb-active-fg:       var(--cp-yellow);
-  --breadcrumb-hover-fg:        var(--cp-cream);
+  --body-fg: var(--cp-text);
+  --panel-fg: var(--cp-text);
+  --dialog-fg: var(--cp-text);
+  --dialog-head-fg: var(--cp-text);
+  --article-card-fg: var(--cp-text);
+  --article-card-head-fg: var(--cp-text);
+  --mediahub-card-fg: var(--cp-text);
+  --playlist-card-fg: var(--cp-text);
+  --message-bubble-fg: var(--cp-text);
+  --alert-fg: var(--cp-text);
+  --label-fg: var(--cp-text);
+  --legend-fg: var(--cp-text);
+  --option-fg: var(--cp-text);
+  --paginate-fg: var(--cp-text);
+  --key-value-fg: var(--cp-text);
+  --data-table-fg: var(--cp-text);
+  --input-text-fg: var(--cp-text);
+  --breadcrumb-fg: var(--cp-subtext);
+  --breadcrumb-active-fg: var(--cp-yellow);
+  --breadcrumb-hover-fg: var(--cp-cream);
 
   /* Subtext / muted */
-  --article-card-time-fg:       var(--cp-subtext);
-  --meta-description-fg:        var(--cp-subtext);
-  --footer-hr-fg:               var(--cp-overlay);
+  --article-card-time-fg: var(--cp-subtext);
+  --meta-description-fg: var(--cp-subtext);
+  --footer-hr-fg: var(--cp-overlay);
   /* === Block 4 — Semantic colors === */
-  --torrent-row-seeders-fg:         var(--cp-green);
-  --torrent-row-leechers-fg:        var(--cp-red);
-  --bbcode-rendered-danger-fg:      var(--cp-red);
-  --bbcode-rendered-accent-fg:      var(--cp-mauve);
+  --torrent-row-seeders-fg: var(--cp-green);
+  --torrent-row-leechers-fg: var(--cp-red);
+  --bbcode-rendered-danger-fg: var(--cp-red);
+  --bbcode-rendered-accent-fg: var(--cp-mauve);
   --bbcode-rendered-accent-emphasis: var(--cp-mauve);
   /* === Block 5 — Border radii ===
    *  sm  6px  badges, small chips
@@ -161,57 +196,57 @@
    */
 
   /* md — buttons, inputs */
-  --button-filled-border-radius:        var(--cp-radius-md);
-  --button-outlined-border-radius:      var(--cp-radius-md);
-  --button-text-border-radius:          var(--cp-radius-md);
-  --icon-button-border-radius:          var(--cp-radius-md);
-  --input-text-border-radius:           var(--cp-radius-md);
-  --textarea-border-radius:             var(--cp-radius-md);
-  --select-border-radius:               var(--cp-radius-md);
-  --bbcode-input-border-radius:         var(--cp-radius-md);
-  --compact-search-border-radius:       var(--cp-radius-md);
-  --quick-search-border-radius:         var(--cp-radius-md);
-  --paginate-border-radius:             var(--cp-radius-md);
+  --button-filled-border-radius: var(--cp-radius-md);
+  --button-outlined-border-radius: var(--cp-radius-md);
+  --button-text-border-radius: var(--cp-radius-md);
+  --icon-button-border-radius: var(--cp-radius-md);
+  --input-text-border-radius: var(--cp-radius-md);
+  --textarea-border-radius: var(--cp-radius-md);
+  --select-border-radius: var(--cp-radius-md);
+  --bbcode-input-border-radius: var(--cp-radius-md);
+  --compact-search-border-radius: var(--cp-radius-md);
+  --quick-search-border-radius: var(--cp-radius-md);
+  --paginate-border-radius: var(--cp-radius-md);
 
   /* lg — cards, panels, dialogs */
-  --panel-border-radius:                var(--cp-radius-lg);
-  --panel-body-border-radius:           var(--cp-radius-lg);
-  --panel-head-border-radius:           var(--cp-radius-lg);
-  --dialog-border-radius:               var(--cp-radius-lg);
-  --mediahub-card-border-radius:        var(--cp-radius-lg);
-  --playlist-card-border-radius:        var(--cp-radius-lg);
-  --key-value-border-radius:            var(--cp-radius-lg);
-  --fieldset-border-radius:             var(--cp-radius-lg);
-  --legend-border-radius:               var(--cp-radius-lg);
-  --data-table-border-radius:           var(--cp-radius-lg);
-  --prize-border-radius:                var(--cp-radius-lg);
+  --panel-border-radius: var(--cp-radius-lg);
+  --panel-body-border-radius: var(--cp-radius-lg);
+  --panel-head-border-radius: var(--cp-radius-lg);
+  --dialog-border-radius: var(--cp-radius-lg);
+  --mediahub-card-border-radius: var(--cp-radius-lg);
+  --playlist-card-border-radius: var(--cp-radius-lg);
+  --key-value-border-radius: var(--cp-radius-lg);
+  --fieldset-border-radius: var(--cp-radius-lg);
+  --legend-border-radius: var(--cp-radius-lg);
+  --data-table-border-radius: var(--cp-radius-lg);
+  --prize-border-radius: var(--cp-radius-lg);
   --top-nav-dropdown-menu-border-radius: var(--cp-radius-lg);
   --secondary-nav-tab-menu-border-radius: var(--cp-radius-lg);
 
   /* xl — circular/large */
-  --top-nav-icon-bar-icon-border-radius:   var(--cp-radius-xl);
+  --top-nav-icon-bar-icon-border-radius: var(--cp-radius-xl);
   --quick-search-result-image-border-radius: var(--cp-radius-xl);
   /* === Block 6 — Shadows (soft, low-alpha) ===
    *  sm  light elevation
    *  md  standard cards, panels
    *  lg  dropdowns, modals, hover-lifted cards
    */
-  --top-nav-box-shadow:                 var(--cp-shadow-sm);
-  --secondary-nav-box-shadow:           var(--cp-shadow-sm);
-  --compact-search-box-shadow:          var(--cp-shadow-sm);
-  --quick-search-box-shadow:            var(--cp-shadow-sm);
+  --top-nav-box-shadow: var(--cp-shadow-sm);
+  --secondary-nav-box-shadow: var(--cp-shadow-sm);
+  --compact-search-box-shadow: var(--cp-shadow-sm);
+  --quick-search-box-shadow: var(--cp-shadow-sm);
 
-  --panel-box-shadow:                   var(--cp-shadow-md);
-  --article-box-shadow:                 var(--cp-shadow-md);
-  --mediahub-card-box-shadow:           var(--cp-shadow-md);
-  --playlist-card-box-shadow:           var(--cp-shadow-md);
-  --achievement-box-shadow:             var(--cp-shadow-md);
-  --prize-box-shadow:                   var(--cp-shadow-md);
-  --post-shadow:                        var(--cp-shadow-md);
+  --panel-box-shadow: var(--cp-shadow-md);
+  --article-box-shadow: var(--cp-shadow-md);
+  --mediahub-card-box-shadow: var(--cp-shadow-md);
+  --playlist-card-box-shadow: var(--cp-shadow-md);
+  --achievement-box-shadow: var(--cp-shadow-md);
+  --prize-box-shadow: var(--cp-shadow-md);
+  --post-shadow: var(--cp-shadow-md);
 
-  --dialog-box-shadow:                  var(--cp-shadow-lg);
-  --top-nav-dropdown-menu-box-shadow:   var(--cp-shadow-lg);
-  --secondary-nav-tab-menu-box-shadow:  var(--cp-shadow-lg);
+  --dialog-box-shadow: var(--cp-shadow-lg);
+  --top-nav-dropdown-menu-box-shadow: var(--cp-shadow-lg);
+  --secondary-nav-tab-menu-box-shadow: var(--cp-shadow-lg);
 
   /* === Block 7 — Extended component overrides === */
 
@@ -221,178 +256,186 @@
      (stats numbers, ratio bar inheritance) read as the same neutral tone.
      Hover states use --cp-yellow as the brand accent so interactivity is
      obvious. Icon-bar bg circles stay --cp-cream as a subtle yellow tint. */
-  --top-nav-dropdown-fg:                          var(--cp-text);
-  --top-nav-dropdown-hover-fg:                    var(--cp-yellow);  /* hover = brand yellow */
-  --top-nav-dropdown-hover-bg:                    var(--cp-surface-1);
-  --top-nav-dropdown-menu-bg:                     var(--cp-surface-0);
-  --top-nav-dropdown-menu-item-fg:                var(--cp-text);
-  --top-nav-dropdown-menu-item-bg:                transparent;
-  --top-nav-dropdown-menu-item-hover-fg:          var(--cp-yellow);  /* hover = brand yellow */
-  --top-nav-dropdown-menu-item-hover-bg:          var(--cp-surface-1);
-  --top-nav-dropdown-menu-item-icon-fg:           var(--cp-base);
-  --top-nav-dropdown-menu-item-icon-bg:           var(--cp-cream);   /* decorative circle bg */
+  --top-nav-dropdown-fg: var(--cp-text);
+  --top-nav-dropdown-hover-fg: var(--cp-yellow); /* hover = brand yellow */
+  --top-nav-dropdown-hover-bg: var(--cp-surface-1);
+  --top-nav-dropdown-menu-bg: var(--cp-surface-0);
+  --top-nav-dropdown-menu-item-fg: var(--cp-text);
+  --top-nav-dropdown-menu-item-bg: transparent;
+  --top-nav-dropdown-menu-item-hover-fg: var(
+    --cp-yellow
+  ); /* hover = brand yellow */
+  --top-nav-dropdown-menu-item-hover-bg: var(--cp-surface-1);
+  --top-nav-dropdown-menu-item-icon-fg: var(--cp-base);
+  --top-nav-dropdown-menu-item-icon-bg: var(
+    --cp-cream
+  ); /* decorative circle bg */
 
   /* Stats / ratio / toggle text — all #ebe2cf so clickable & non-clickable
      items in the ratio strip share one tone (no cream/yellow conflict). */
-  --top-nav-stats-fg:                             var(--cp-text);
-  --top-nav-toggle-fg:                            var(--cp-text);
-  --top-nav-ratio-bar-fg:                         var(--cp-text);
-  --top-nav-icon-bar-icon-fg:                     var(--cp-text);
-  --top-nav-icon-bar-icon-bg:                     var(--cp-surface-1);
-  --top-nav-icon-bar-icon-hover-fg:               var(--cp-base);
-  --top-nav-icon-bar-icon-hover-bg:               var(--cp-cream);   /* decorative hover bg */
+  --top-nav-stats-fg: var(--cp-text);
+  --top-nav-toggle-fg: var(--cp-text);
+  --top-nav-ratio-bar-fg: var(--cp-text);
+  --top-nav-icon-bar-icon-fg: var(--cp-text);
+  --top-nav-icon-bar-icon-bg: var(--cp-surface-1);
+  --top-nav-icon-bar-icon-hover-fg: var(--cp-base);
+  --top-nav-icon-bar-icon-hover-bg: var(--cp-cream); /* decorative hover bg */
 
   /* Secondary-nav tabs */
-  --secondary-nav-tab-fg:                         var(--cp-subtext);
-  --secondary-nav-tab-hover-fg:                   var(--cp-text);
-  --secondary-nav-tab-active-text-decoration:     underline var(--cp-yellow) 2px;
-  --secondary-nav-tab-hover-text-decoration:      underline var(--cp-cream) 2px;
-  --secondary-nav-tab-menu-bg:                    var(--cp-surface-0);
-  --secondary-nav-tab-menu-fg:                    var(--cp-text);
+  --secondary-nav-tab-fg: var(--cp-subtext);
+  --secondary-nav-tab-hover-fg: var(--cp-text);
+  --secondary-nav-tab-active-text-decoration: underline var(--cp-yellow) 2px;
+  --secondary-nav-tab-hover-text-decoration: underline var(--cp-cream) 2px;
+  --secondary-nav-tab-menu-bg: var(--cp-surface-0);
+  --secondary-nav-tab-menu-fg: var(--cp-text);
 
   /* Form active/hover states (replace blue #2195f3 focus rings).
      Use --cp-overlay (warm grey) for resting borders so they're actually
      visible against surface-0 backgrounds — surface-1 is too close to the
      panel color and made inputs look borderless. */
-  --input-text-border:                            1px solid var(--cp-overlay);
-  --input-text-border-active:                     2px solid var(--cp-yellow);
-  --input-text-border-hover:                      2px solid var(--cp-peach);
-  --select-border:                                1px solid var(--cp-overlay);
-  --select-border-active:                         2px solid var(--cp-yellow);
-  --select-border-hover:                          2px solid var(--cp-peach);
-  --textarea-border:                              1px solid var(--cp-overlay);
-  --textarea-border-active:                       2px solid var(--cp-yellow);
-  --textarea-border-hover:                        2px solid var(--cp-peach);
-  --label-fg-active:                              var(--cp-yellow);
-  --label-fg-hover:                               var(--cp-peach);
+  --input-text-border: 1px solid var(--cp-overlay);
+  --input-text-border-active: 2px solid var(--cp-yellow);
+  --input-text-border-hover: 2px solid var(--cp-peach);
+  --select-border: 1px solid var(--cp-overlay);
+  --select-border-active: 2px solid var(--cp-yellow);
+  --select-border-hover: 2px solid var(--cp-peach);
+  --textarea-border: 1px solid var(--cp-overlay);
+  --textarea-border-active: 2px solid var(--cp-yellow);
+  --textarea-border-hover: 2px solid var(--cp-peach);
+  --label-fg-active: var(--cp-yellow);
+  --label-fg-hover: var(--cp-peach);
 
   /* Borders elsewhere — same reasoning: use overlay for clear definition. */
-  --button-outlined-border:                       1px solid var(--cp-yellow);
-  --fieldset-border:                              1px solid var(--cp-overlay);
-  --data-table-thead-border:                      1px solid var(--cp-overlay);
-  --data-table-tr-border:                         1px solid var(--cp-surface-1);
-  --data-table-tfoot-border:                      2px solid var(--cp-overlay);
-  --subforum-listing-border:                      1px solid var(--cp-surface-1);
+  --button-outlined-border: 1px solid var(--cp-yellow);
+  --fieldset-border: 1px solid var(--cp-overlay);
+  --data-table-thead-border: 1px solid var(--cp-overlay);
+  --data-table-tr-border: 1px solid var(--cp-surface-1);
+  --data-table-tfoot-border: 2px solid var(--cp-overlay);
+  --subforum-listing-border: 1px solid var(--cp-surface-1);
 
   /* Quick search */
-  --quick-search-bg:                              var(--cp-surface-0);
-  --quick-search-fg:                              var(--cp-text);
-  --quick-search-selector-fg:                     var(--cp-subtext);
-  --quick-search-selector-hover-bg:               var(--cp-surface-1);
-  --quick-search-selector-hover-fg:               var(--cp-yellow);
-  --quick-search-selector-selected-bg:            var(--cp-honey);
-  --quick-search-selector-selected-fg:            var(--cp-base);
-  --quick-search-result-bg:                       var(--cp-surface-0);
-  --quick-search-result-fg:                       var(--cp-text);
-  --quick-search-result-hover-bg:                 var(--cp-surface-1);
-  --quick-search-result-hover-fg:                 var(--cp-yellow);
-  --quick-search-result-year-fg:                  var(--cp-subtext);
+  --quick-search-bg: var(--cp-surface-0);
+  --quick-search-fg: var(--cp-text);
+  --quick-search-selector-fg: var(--cp-subtext);
+  --quick-search-selector-hover-bg: var(--cp-surface-1);
+  --quick-search-selector-hover-fg: var(--cp-yellow);
+  --quick-search-selector-selected-bg: var(--cp-honey);
+  --quick-search-selector-selected-fg: var(--cp-base);
+  --quick-search-result-bg: var(--cp-surface-0);
+  --quick-search-result-fg: var(--cp-text);
+  --quick-search-result-hover-bg: var(--cp-surface-1);
+  --quick-search-result-hover-fg: var(--cp-yellow);
+  --quick-search-result-year-fg: var(--cp-subtext);
 
   /* Meta chips / dropdowns */
-  --meta-dropdown-bg:                             var(--cp-surface-0);
-  --meta-dropdown-fg:                             var(--cp-text);
-  --meta-dropdown-hover-bg:                       var(--cp-surface-1);
-  --meta-dropdown-hover-fg:                       var(--cp-yellow);
-  --meta-chips-heading-fg:                        var(--cp-subtext);
-  --meta-chip-icon-fg:                            var(--cp-base);
-  --meta-chip-icon-bg:                            var(--cp-honey);  /* depth on chip icon backgrounds */
-  --meta-chip-icon-hover-bg:                      var(--cp-cream);
-  --meta-chip-name-fg:                            var(--cp-text);
-  --meta-chip-value-fg:                           var(--cp-subtext);
-  --meta-chip-value-hover-fg:                     var(--cp-yellow);
-  --meta-chip-hover-bg:                           var(--cp-surface-1);
-  --meta-id-tag-fg:                               var(--cp-text);
-  --meta-id-tag-hover-fg:                         var(--cp-yellow);
-  --meta-id-tag-hover-bg:                         var(--cp-surface-1);
-  --meta-popup-bg:                                var(--cp-surface-0);
-  --meta-popup-fg:                                var(--cp-text);
+  --meta-dropdown-bg: var(--cp-surface-0);
+  --meta-dropdown-fg: var(--cp-text);
+  --meta-dropdown-hover-bg: var(--cp-surface-1);
+  --meta-dropdown-hover-fg: var(--cp-yellow);
+  --meta-chips-heading-fg: var(--cp-subtext);
+  --meta-chip-icon-fg: var(--cp-base);
+  --meta-chip-icon-bg: var(--cp-honey); /* depth on chip icon backgrounds */
+  --meta-chip-icon-hover-bg: var(--cp-cream);
+  --meta-chip-name-fg: var(--cp-text);
+  --meta-chip-value-fg: var(--cp-subtext);
+  --meta-chip-value-hover-fg: var(--cp-yellow);
+  --meta-chip-hover-bg: var(--cp-surface-1);
+  --meta-id-tag-fg: var(--cp-text);
+  --meta-id-tag-hover-fg: var(--cp-yellow);
+  --meta-id-tag-hover-bg: var(--cp-surface-1);
+  --meta-popup-bg: var(--cp-surface-0);
+  --meta-popup-fg: var(--cp-text);
 
   /* Paginate */
-  --paginate-bg-hover:                            var(--cp-surface-1);
-  --paginate-bg-current:                          var(--cp-yellow);
-  --paginate-fg-disabled:                         var(--cp-overlay);
-  --paginate-divider:                             var(--cp-overlay);
+  --paginate-bg-hover: var(--cp-surface-1);
+  --paginate-bg-current: var(--cp-yellow);
+  --paginate-fg-disabled: var(--cp-overlay);
+  --paginate-divider: var(--cp-overlay);
 
   /* Buttons extra */
-  --button-outlined-fg:                           var(--cp-yellow);
-  --icon-button-filled-bg:                        var(--cp-cream);  /* unified with nav cream tone */
-  --icon-button-filled-fg:                        var(--cp-base);
+  --button-outlined-fg: var(--cp-yellow);
+  --icon-button-filled-bg: var(--cp-cream); /* unified with nav cream tone */
+  --icon-button-filled-fg: var(--cp-base);
 
   /* Torrent-row badges (replace stock blues/purples with Capyppuccin palette) */
-  --torrent-row-fg:                               var(--cp-text);
-  --torrent-row-visited-fg:                       var(--cp-rosewater);
-  --torrent-row-sticky-bg:                        var(--cp-surface-1);
-  --torrent-row-sticky-fg:                        var(--cp-base);
-  --torrent-row-format-fg:                        var(--cp-subtext);
-  --torrent-row-buttons-fg:                       var(--cp-subtext);
-  --torrent-row-completed-fg:                     var(--cp-blue);
-  --torrent-row-comments-fg:                      var(--cp-green);
-  --torrent-row-internal-fg:                      var(--cp-rosewater);
-  --torrent-row-personal-fg:                      var(--cp-mauve);
-  --torrent-row-featured-fg:                      var(--cp-pink);
-  --torrent-row-freeleech-fg:                     var(--cp-yellow);
-  --torrent-row-double-upload-fg:                 var(--cp-peach);
-  --torrent-row-highspeed-fg:                     var(--cp-red);
-  --torrent-row-bumped-fg:                        var(--cp-honey);  /* richer than freeleech, less than upload */
+  --torrent-row-fg: var(--cp-text);
+  --torrent-row-visited-fg: var(--cp-rosewater);
+  --torrent-row-sticky-bg: var(--cp-surface-1);
+  --torrent-row-sticky-fg: var(--cp-base);
+  --torrent-row-format-fg: var(--cp-subtext);
+  --torrent-row-buttons-fg: var(--cp-subtext);
+  --torrent-row-completed-fg: var(--cp-blue);
+  --torrent-row-comments-fg: var(--cp-green);
+  --torrent-row-internal-fg: var(--cp-rosewater);
+  --torrent-row-personal-fg: var(--cp-mauve);
+  --torrent-row-featured-fg: var(--cp-pink);
+  --torrent-row-freeleech-fg: var(--cp-yellow);
+  --torrent-row-double-upload-fg: var(--cp-peach);
+  --torrent-row-highspeed-fg: var(--cp-red);
+  --torrent-row-bumped-fg: var(
+    --cp-honey
+  ); /* richer than freeleech, less than upload */
 
   /* Torrent / playlist / user cards */
-  --torrent-card-bg:                              var(--cp-surface-0);
-  --torrent-card-fg:                              var(--cp-text);
-  --torrent-card-head-bg:                         var(--cp-surface-1);
-  --torrent-card-head-fg:                         var(--cp-text);
-  --torrent-card-link-fg:                         var(--cp-yellow);
-  --torrent-card-genre-fg:                        var(--cp-subtext);
-  --torrent-group-bg:                             var(--cp-surface-0);
-  --torrent-group-header-bg:                      var(--cp-surface-1);
-  --torrent-group-text:                           var(--cp-text);
-  --torrent-group-text-muted:                     var(--cp-subtext);
-  --torrent-tag-fg:                               var(--cp-text);
-  --torrent-tag-hover-fg:                         var(--cp-yellow);
-  --user-stat-card-bg:                            var(--cp-surface-0);
-  --user-stat-card-fg:                            var(--cp-text);
+  --torrent-card-bg: var(--cp-surface-0);
+  --torrent-card-fg: var(--cp-text);
+  --torrent-card-head-bg: var(--cp-surface-1);
+  --torrent-card-head-fg: var(--cp-text);
+  --torrent-card-link-fg: var(--cp-yellow);
+  --torrent-card-genre-fg: var(--cp-subtext);
+  --torrent-group-bg: var(--cp-surface-0);
+  --torrent-group-header-bg: var(--cp-surface-1);
+  --torrent-group-text: var(--cp-text);
+  --torrent-group-text-muted: var(--cp-subtext);
+  --torrent-tag-fg: var(--cp-text);
+  --torrent-tag-hover-fg: var(--cp-yellow);
+  --user-stat-card-bg: var(--cp-surface-0);
+  --user-stat-card-fg: var(--cp-text);
 
   /* Chatbox / forum / posts */
-  --chatbox-button-fg:                            var(--cp-subtext);
-  --chatbox-button-hover-fg:                      var(--cp-yellow);
-  --chatbox-tab-delete-fg:                        var(--cp-red);
-  --chatbox-tab-delete-bg:                        var(--cp-surface-1);
-  --post-bg:                                      var(--cp-surface-0);
-  --post-fg:                                      var(--cp-text);
-  --post-toolbar-bg:                              var(--cp-surface-0);
-  --post-toolbar-fg:                              var(--cp-subtext);
-  --post-toolbar-hover-bg:                        var(--cp-surface-1);
-  --post-toolbar-hover-fg:                        var(--cp-yellow);
-  --post-like-fg:                                 var(--cp-green);
-  --post-dislike-fg:                              var(--cp-red);
-  --post-aside-bg:                                var(--cp-surface-0);
-  --post-aside-fg:                                var(--cp-subtext);
+  --chatbox-button-fg: var(--cp-subtext);
+  --chatbox-button-hover-fg: var(--cp-yellow);
+  --chatbox-tab-delete-fg: var(--cp-red);
+  --chatbox-tab-delete-bg: var(--cp-surface-1);
+  --post-bg: var(--cp-surface-0);
+  --post-fg: var(--cp-text);
+  --post-toolbar-bg: var(--cp-surface-0);
+  --post-toolbar-fg: var(--cp-subtext);
+  --post-toolbar-hover-bg: var(--cp-surface-1);
+  --post-toolbar-hover-fg: var(--cp-yellow);
+  --post-like-fg: var(--cp-green);
+  --post-dislike-fg: var(--cp-red);
+  --post-aside-bg: var(--cp-surface-0);
+  --post-aside-fg: var(--cp-subtext);
 
   /* BBCode rendered (forum-rendered HTML colors) */
-  --bbcode-rendered-fg-default:                   var(--cp-text);
-  --bbcode-rendered-fg-muted:                     var(--cp-subtext);
-  --bbcode-rendered-fg-subtle:                    var(--cp-overlay);
-  --bbcode-rendered-canvas-subtle:                var(--cp-surface-0);
-  --bbcode-rendered-border-default:               var(--cp-surface-1);
-  --bbcode-rendered-border-muted:                 var(--cp-surface-1);
-  --bbcode-rendered-attention-subtle:             var(--cp-mauve);
-  --bbcode-rendered-quote-border:                 var(--cp-yellow);
+  --bbcode-rendered-fg-default: var(--cp-text);
+  --bbcode-rendered-fg-muted: var(--cp-subtext);
+  --bbcode-rendered-fg-subtle: var(--cp-overlay);
+  --bbcode-rendered-canvas-subtle: var(--cp-surface-0);
+  --bbcode-rendered-border-default: var(--cp-surface-1);
+  --bbcode-rendered-border-muted: var(--cp-surface-1);
+  --bbcode-rendered-attention-subtle: var(--cp-mauve);
+  --bbcode-rendered-quote-border: var(--cp-yellow);
 
   /* Misc */
-  --meter-fg:                                     var(--cp-honey);  /* richer for progress bar fill visibility */
-  --meter-bg:                                     var(--cp-surface-1);
-  --notification-unread:                          var(--cp-cream);  /* paler — dot beside content, not competing */
-  --scrollbar-color:                              var(--cp-surface-1);
-  --comparison-divider-fg:                        var(--cp-yellow);
-  --comparison-button-fg:                         var(--cp-yellow);
-  --footer-hr-fg:                                 var(--cp-surface-1);
-  --breadcrumb-fg:                                var(--cp-subtext);
-  --breadcrumb-active-fg:                         var(--cp-yellow);
-  --breadcrumb-hover-fg:                          var(--cp-cream);
-  --article-card-time-fg:                         var(--cp-subtext);
-  --panel-action-fg:                              var(--cp-subtext);
-  --post-head-bg:                                 transparent;
-  --prize-fg:                                     var(--cp-text);
-  --prize-heading-fg:                             var(--cp-yellow);
+  --meter-fg: var(--cp-honey); /* richer for progress bar fill visibility */
+  --meter-bg: var(--cp-surface-1);
+  --notification-unread: var(
+    --cp-cream
+  ); /* paler — dot beside content, not competing */
+  --scrollbar-color: var(--cp-surface-1);
+  --comparison-divider-fg: var(--cp-yellow);
+  --comparison-button-fg: var(--cp-yellow);
+  --footer-hr-fg: var(--cp-surface-1);
+  --breadcrumb-fg: var(--cp-subtext);
+  --breadcrumb-active-fg: var(--cp-yellow);
+  --breadcrumb-hover-fg: var(--cp-cream);
+  --article-card-time-fg: var(--cp-subtext);
+  --panel-action-fg: var(--cp-subtext);
+  --post-head-bg: transparent;
+  --prize-fg: var(--cp-text);
+  --prize-heading-fg: var(--cp-yellow);
 }
 
 /* === Block 8 — Global element overrides ===
@@ -407,7 +450,14 @@ button,
 input,
 select,
 textarea {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family:
+    "Outfit",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 code,
@@ -418,7 +468,8 @@ samp,
 .size,
 .checksum,
 .font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 :focus-visible {
@@ -484,12 +535,12 @@ a:focus {
  * for a clear press cue. */
 a.form__button--filled.form__button--centered {
   background: var(--cp-surface-1);
-  color: var(--cp-yellow);
+  color: var(--cp-base);
   border: 1px solid var(--cp-yellow);
 }
 a.form__button--filled.form__button--centered:hover {
   background: var(--cp-yellow);
-  color: var(--cp-base);
+  color: var(--cp-yellow);
 }
 
 /* In-place <button> action buttons (Marcar lidas, Limpar caixa, etc.):
@@ -521,7 +572,10 @@ button.form__button--filled.form__button--centered:hover {
   background-color: transparent;
   border-bottom: 2px solid transparent;
   color: var(--cp-subtext);
-  transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+  transition:
+    color 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
 }
 .panel__tab:hover {
   color: var(--cp-text);
