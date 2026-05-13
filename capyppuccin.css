@@ -482,6 +482,12 @@ button.form__button--filled.form__button--centered:hover {
 .text-success {
   color: var(--cp-green);
 }
+/* Decorative icons in filter checkboxes (e.g. notifications filter) use
+ * .text-success as a generic accent — green there reads as status. Recolor
+ * to the theme yellow only inside checkbox-container fieldsets. */
+.form__fieldset-checkbox-container .text-success {
+  color: var(--cp-yellow);
+}
 .text-info {
   color: var(--cp-subtext);
 }
