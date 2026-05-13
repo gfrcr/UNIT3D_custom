@@ -1159,3 +1159,28 @@ html {
 .ratio-bar__warnings i {
   color: var(--cp-red);
 }
+
+/* === Torrent row icons / status badges ===
+ * The blade templates set inline `style="color: #..."` on the FREE / INTERNAL
+ * / FREELEECH icons and their adjacent label spans, which bypasses any var
+ * mapping. Force-override with !important so the pastel palette wins. */
+.torrent-icons__freeleech,
+.torrent-icons__freeleech + .fas {
+  color: var(--cp-green) !important;
+}
+.torrent-icons__internal,
+.torrent-icons__internal + .fas {
+  color: var(--cp-honey) !important;
+}
+.torrent-icons__personal-release {
+  color: var(--cp-mauve);
+}
+.torrent-icons__highspeed {
+  color: var(--cp-red);
+}
+.torrent-icons__sticky {
+  color: var(--cp-yellow);
+}
+.torrent-icons__comments {
+  color: var(--cp-blue);
+}
