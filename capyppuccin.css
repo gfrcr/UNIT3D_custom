@@ -440,23 +440,31 @@ a:focus {
   color: var(--cp-text);
 }
 
-/* Content areas: opt-in brand colors with visited differentiation. */
-.bbcode-rendered a:not([style]),
-.panel__body a:not([style]),
-.post a:not([style]),
-.comment__content a:not([style]),
-.notification a:not([style]),
-.article-card a:not([style]),
-.message a:not([style]) {
+/* Content areas: opt-in brand colors with visited differentiation. Wrap
+ * parents in :where() so specificity is just `a:not([style])` (0,0,1,1) —
+ * any per-component anchor rule (e.g. .form__button--filled) wins cleanly. */
+:where(
+    .bbcode-rendered,
+    .panel__body,
+    .post,
+    .comment__content,
+    .notification,
+    .article-card,
+    .message
+  )
+  a:not([style]) {
   color: var(--cp-yellow);
 }
-.bbcode-rendered a:visited:not([style]),
-.panel__body a:visited:not([style]),
-.post a:visited:not([style]),
-.comment__content a:visited:not([style]),
-.notification a:visited:not([style]),
-.article-card a:visited:not([style]),
-.message a:visited:not([style]) {
+:where(
+    .bbcode-rendered,
+    .panel__body,
+    .post,
+    .comment__content,
+    .notification,
+    .article-card,
+    .message
+  )
+  a:visited:not([style]) {
   color: var(--cp-yellow-soft);
 }
 
