@@ -23,14 +23,15 @@
    * Built blocks below remap UNIT3D variables to these.
    * ============================================ */
 
-  /* Brand yellow scale (soft → gold) + warm complements (peach, rosewater). */
+  /* Brand yellow scale (soft → honey) + warm complements (peach, rosewater).
+   * Order: lightest → deepest. cream = hover/lift, yellow = brand,
+   * honey = active borders + deeper accents. */
   --cp-yellow-soft: #fff8c5; /* very pale, decorative — glow rings, subtle bg */
   --cp-cream: #fce087; /* saturated lemon — hover, lift, button accent */
   --cp-yellow: #f9e2af; /* brand pastel peachy yellow */
   --cp-honey: #e8c573;
-  --cp-gold: #caa55e;
-  --cp-peach: #fab387;
-  --cp-rosewater: #f5e0dc;
+  --cp-peach: #fab387; /* extended palette: .text-orange + double-upload icon */
+  --cp-rosewater: #f5e0dc; /* extended palette: mocha tertiary */
 
   /* Surfaces (warm neutral charcoal — no purple undertone) */
   --cp-base: #161412;
@@ -52,7 +53,8 @@
   --cp-pink: #f5c2e7;
 
   /* Shape scale */
-  --cp-radius-sm: 6px;
+  --cp-radius-xs: 3px; /* checkbox */
+  --cp-radius-sm: 6px; /* scrollbar thumb */
   --cp-radius-md: 10px;
   --cp-radius-lg: 14px;
   --cp-radius-xl: 20px;
@@ -61,12 +63,15 @@
   --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
+  /* Soft yellow glow — diffuse, no spread (for trailer/button hover halos) */
+  --cp-glow-soft: 0 0 12px rgba(249, 226, 175, 0.4);
 
   /* ============================================
    * Net-new additions to UNIT3D's variable namespace
    * (not --cp-* tokens — these are consumed directly by global selectors)
    * ============================================ */
-  --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5); /* yellow-soft alpha — pale ring */
+  /* Pale ring used by :focus-visible accents (form__checkbox, etc) */
+  --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5);
 
   /* === Block 1 — Brand & action colors (yellow-dominant) === */
   --button-filled-bg: var(--cp-yellow);
@@ -373,9 +378,6 @@
   --comparison-divider-fg: var(--cp-yellow);
   --comparison-button-fg: var(--cp-yellow);
   --footer-hr-fg: var(--cp-surface-1);
-  --breadcrumb-fg: var(--cp-subtext);
-  --breadcrumb-active-fg: var(--cp-yellow);
-  --breadcrumb-hover-fg: var(--cp-cream);
   --article-card-time-fg: var(--cp-subtext);
   --panel-action-fg: var(--cp-subtext);
   --post-head-bg: transparent;
@@ -508,7 +510,7 @@ button.form__button--filled.form__button--centered:hover {
   width: 16px;
   height: 16px;
   border: 1.5px solid var(--cp-overlay);
-  border-radius: 3px;
+  border-radius: var(--cp-radius-xs);
   background-color: transparent;
   cursor: pointer;
   vertical-align: middle;
@@ -529,7 +531,7 @@ button.form__button--filled.form__button--centered:hover {
   background-position: center;
 }
 .form__checkbox:focus-visible {
-  box-shadow: 0 0 0 3px rgba(249, 226, 175, 0.3);
+  box-shadow: var(--shadow-glow);
   transform: none;
   filter: none;
 }
@@ -1118,7 +1120,7 @@ html {
   color: var(--cp-base);
 }
 .trailer-btn:hover {
-  box-shadow: 0 0 12px rgba(249, 226, 175, 0.4);
+  box-shadow: var(--cp-glow-soft);
   color: var(--cp-base);
 }
 .trailer-modal {

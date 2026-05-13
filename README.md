@@ -4,7 +4,7 @@ Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre
 
 ## O que muda
 
-- **Paleta amarelo-dominante** — botões/links/active states em yellow pastel (`#f9e2af`), com hierarquia de 5 tons (soft → cream → yellow → honey → gold).
+- **Paleta amarelo-dominante** — botões/links/active states em yellow pastel (`#f9e2af`), com hierarquia de 4 tons (soft → cream → yellow → honey).
 - **Superfícies warm charcoal** — `#161412 / #0e0d0c / #221f1c / #2f2b27` (sem o roxo do Mocha original).
 - **Texto warm off-white** — sem a tonalidade lavanda dos cinzas Material.
 - **Hover / focus consistentes** — peach/honey no hover, yellow no focus, em todos os inputs.
@@ -31,7 +31,7 @@ Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do cam
 
 | Papel | Hex |
 |------|-----|
-| Yellow scale | `#fff8c5` soft · `#fce087` cream · `#f9e2af` **yellow** · `#e8c573` honey · `#caa55e` gold |
+| Yellow scale | `#fff8c5` soft · `#fce087` cream · `#f9e2af` **yellow** · `#e8c573` honey |
 | Warm complement | `#fab387` peach · `#f5e0dc` rosewater |
 | Surfaces | `#161412` base · `#0e0d0c` mantle · `#221f1c` surface-0 · `#2f2b27` surface-1 |
 | Text | `#ebe2cf` text · `#b8b1a0` subtext · `#7d7869` overlay |
