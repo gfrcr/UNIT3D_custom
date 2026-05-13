@@ -3,29 +3,23 @@
  * https://github.com/gfrcr/UNIT3D_custom */
 
 :root {
-  /* ============================================
-   * Design tokens — single source of truth
-   * ============================================ */
-
-  --cp-yellow-soft: #fff8c5; /* very pale, decorative — glow rings, subtle bg */
-  --cp-cream: #fce087; /* saturated lemon — hover, lift, button accent */
-  --cp-yellow: #f9e2af; /* brand pastel peachy yellow */
+  /* Palette */
+  --cp-yellow-soft: #fff8c5;
+  --cp-cream: #fce087;
+  --cp-yellow: #f9e2af;
   --cp-honey: #e8c573;
-  --cp-peach: #fab387; /* extended palette: .text-orange + double-upload icon */
-  --cp-rosewater: #f5e0dc; /* extended palette: mocha tertiary */
+  --cp-peach: #fab387;
+  --cp-rosewater: #f5e0dc;
 
-  /* Surfaces (warm neutral charcoal — no purple undertone) */
   --cp-base: #161412;
   --cp-mantle: #0e0d0c;
   --cp-surface-0: #221f1c;
   --cp-surface-1: #2f2b27;
 
-  /* Text — warm off-white; replaces Mocha's lavender-tinted greys. */
   --cp-text: #ebe2cf;
   --cp-subtext: #b8b1a0;
   --cp-overlay: #7d7869;
 
-  /* Semantic */
   --cp-green: #a6e3a1;
   --cp-red: #f38ba8;
   --cp-blue: #89b4fa;
@@ -33,24 +27,20 @@
   --cp-teal: #94e2d5;
   --cp-pink: #f5c2e7;
 
-  /* Shape scale */
-  --cp-radius-xs: 3px; /* checkbox */
-  --cp-radius-sm: 6px; /* scrollbar thumb */
+  /* Shape + shadow scales */
+  --cp-radius-xs: 3px;
+  --cp-radius-sm: 6px;
   --cp-radius-md: 10px;
   --cp-radius-lg: 14px;
   --cp-radius-xl: 20px;
 
-  /* Shadow scale */
   --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
-  /* Soft yellow glow — diffuse, no spread (for trailer/button hover halos) */
   --cp-glow-soft: 0 0 12px rgba(249, 226, 175, 0.4);
-
-  /* Pale ring used by :focus-visible accents (form__checkbox, etc) */
   --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5);
 
-  /* === Block 1 — Brand & action colors (yellow-dominant) === */
+  /* Buttons */
   --button-filled-bg: var(--cp-yellow);
   --button-filled-fg: var(--cp-base);
   --button-outlined-fg: var(--cp-yellow);
@@ -58,7 +48,7 @@
   --icon-button-filled-fg: var(--cp-base);
   --icon-button-fg: var(--cp-text);
 
-  /* === Block 2 — Surfaces (warm charcoal ramp) === */
+  /* Surfaces */
   --body-bg: var(--cp-base);
   --top-nav-bg: var(--cp-mantle);
   --secondary-nav-bg: var(--cp-mantle);
@@ -94,7 +84,8 @@
   --data-table-tr-odd-bg: var(--cp-surface-0);
   --data-table-tr-even-bg: var(--cp-base);
   --data-table-tr-hover-bg: var(--cp-surface-1);
-  /* === Block 3 — Text === */
+
+  /* Text */
   --body-fg: var(--cp-text);
   --panel-fg: var(--cp-text);
   --dialog-fg: var(--cp-text);
@@ -118,20 +109,18 @@
   --breadcrumb-fg: var(--cp-subtext);
   --breadcrumb-active-fg: var(--cp-yellow);
   --breadcrumb-hover-fg: var(--cp-cream);
-
-  /* Subtext / muted */
   --article-card-time-fg: var(--cp-subtext);
   --meta-description-fg: var(--cp-subtext);
-  --footer-hr-fg: var(--cp-overlay);
-  /* === Block 4 — Semantic colors === */
+  --footer-hr-fg: var(--cp-surface-1);
+
+  /* Semantic */
   --torrent-row-seeders-fg: var(--cp-green);
   --torrent-row-leechers-fg: var(--cp-red);
   --bbcode-rendered-danger-fg: var(--cp-red);
   --bbcode-rendered-accent-fg: var(--cp-yellow);
   --bbcode-rendered-accent-emphasis: var(--cp-cream);
-  /* === Block 5 — Border radii (sm 6 / md 10 / lg 14 / xl 20) === */
 
-  /* md — buttons, inputs */
+  /* Border radii — md: inputs/buttons; lg: cards/panels; xl: circles */
   --button-filled-border-radius: var(--cp-radius-md);
   --button-outlined-border-radius: var(--cp-radius-md);
   --button-text-border-radius: var(--cp-radius-md);
@@ -143,8 +132,6 @@
   --compact-search-border-radius: var(--cp-radius-md);
   --quick-search-border-radius: var(--cp-radius-md);
   --paginate-border-radius: var(--cp-radius-md);
-
-  /* lg — cards, panels, dialogs */
   --panel-border-radius: var(--cp-radius-lg);
   --panel-body-border-radius: var(--cp-radius-lg);
   --panel-head-border-radius: var(--cp-radius-lg);
@@ -158,11 +145,10 @@
   --prize-border-radius: var(--cp-radius-lg);
   --top-nav-dropdown-menu-border-radius: var(--cp-radius-lg);
   --secondary-nav-tab-menu-border-radius: var(--cp-radius-lg);
-
-  /* xl — circular/large */
   --top-nav-icon-bar-icon-border-radius: var(--cp-radius-xl);
   --quick-search-result-image-border-radius: var(--cp-radius-xl);
-  /* === Block 6 — Shadows (sm elevation / md cards / lg modals & dropdowns) === */
+
+  /* Shadows — sm: nav/searches; md: cards; lg: modals/dropdowns */
   --top-nav-box-shadow: var(--cp-shadow-sm);
   --secondary-nav-box-shadow: var(--cp-shadow-sm);
   --compact-search-box-shadow: var(--cp-shadow-sm);
@@ -180,31 +166,25 @@
   --top-nav-dropdown-menu-box-shadow: var(--cp-shadow-lg);
   --secondary-nav-tab-menu-box-shadow: var(--cp-shadow-lg);
 
-  /* === Block 7 — Extended component overrides === */
-
+  /* Top nav */
   --top-nav-dropdown-fg: var(--cp-text);
-  --top-nav-dropdown-hover-fg: var(--cp-yellow); /* hover = brand yellow */
+  --top-nav-dropdown-hover-fg: var(--cp-yellow);
   --top-nav-dropdown-hover-bg: var(--cp-surface-1);
   --top-nav-dropdown-menu-bg: var(--cp-surface-0);
   --top-nav-dropdown-menu-item-fg: var(--cp-text);
   --top-nav-dropdown-menu-item-bg: transparent;
-  --top-nav-dropdown-menu-item-hover-fg: var(
-    --cp-yellow
-  ); /* hover = brand yellow */
+  --top-nav-dropdown-menu-item-hover-fg: var(--cp-yellow);
   --top-nav-dropdown-menu-item-hover-bg: var(--cp-surface-1);
   --top-nav-dropdown-menu-item-icon-fg: var(--cp-base);
-  --top-nav-dropdown-menu-item-icon-bg: var(
-    --cp-honey
-  ); /* decorative circle bg */
+  --top-nav-dropdown-menu-item-icon-bg: var(--cp-honey);
 
-  /* Stats / ratio / toggle text — unified neutral tone. */
   --top-nav-stats-fg: var(--cp-text);
   --top-nav-toggle-fg: var(--cp-text);
   --top-nav-ratio-bar-fg: var(--cp-text);
   --top-nav-icon-bar-icon-fg: var(--cp-text);
   --top-nav-icon-bar-icon-bg: var(--cp-surface-1);
   --top-nav-icon-bar-icon-hover-fg: var(--cp-base);
-  --top-nav-icon-bar-icon-hover-bg: var(--cp-cream); /* decorative hover bg */
+  --top-nav-icon-bar-icon-hover-bg: var(--cp-cream);
 
   /* Secondary-nav tabs */
   --secondary-nav-tab-fg: var(--cp-text);
@@ -216,8 +196,7 @@
   --secondary-nav-tab-menu-bg: var(--cp-surface-0);
   --secondary-nav-tab-menu-fg: var(--cp-text);
 
-  /* Form active/hover (replaces blue #2195f3 focus). Overlay for resting
-     borders — surface-1 was too close to panel bg and read as borderless. */
+  /* Form active/hover — surface-1 was too close to panel bg, use overlay. */
   --input-text-border: 1px solid var(--cp-overlay);
   --input-text-border-active: 2px solid var(--cp-yellow);
   --input-text-border-hover: 2px solid var(--cp-honey);
@@ -230,7 +209,6 @@
   --label-fg-active: var(--cp-yellow);
   --label-fg-hover: var(--cp-honey);
 
-  /* Borders elsewhere — same reasoning: use overlay for clear definition. */
   --button-outlined-border: 1px solid var(--cp-yellow);
   --fieldset-border: 1px solid var(--cp-overlay);
   --data-table-thead-border: 1px solid var(--cp-overlay);
@@ -253,14 +231,13 @@
   --quick-search-result-hover-fg: var(--cp-yellow);
   --quick-search-result-year-fg: var(--cp-subtext);
 
-  /* Meta chips / dropdowns */
-  --meta-dropdown-bg: var(--cp-surface-0);
+  /* Meta chips / dropdowns / popups */
   --meta-dropdown-fg: var(--cp-text);
   --meta-dropdown-hover-bg: var(--cp-surface-1);
   --meta-dropdown-hover-fg: var(--cp-yellow);
   --meta-chips-heading-fg: var(--cp-subtext);
   --meta-chip-icon-fg: var(--cp-base);
-  --meta-chip-icon-bg: var(--cp-honey); /* depth on chip icon backgrounds */
+  --meta-chip-icon-bg: var(--cp-honey);
   --meta-chip-icon-hover-bg: var(--cp-cream);
   --meta-chip-name-fg: var(--cp-text);
   --meta-chip-value-fg: var(--cp-subtext);
@@ -269,7 +246,6 @@
   --meta-id-tag-fg: var(--cp-text);
   --meta-id-tag-hover-fg: var(--cp-yellow);
   --meta-id-tag-hover-bg: var(--cp-surface-1);
-  --meta-popup-bg: var(--cp-surface-0);
   --meta-popup-fg: var(--cp-text);
 
   /* Paginate */
@@ -278,12 +254,9 @@
   --paginate-fg-disabled: var(--cp-overlay);
   --paginate-divider: var(--cp-overlay);
 
-  /* Buttons extra */
-  --button-outlined-fg: var(--cp-yellow);
-  --icon-button-filled-bg: var(--cp-cream); /* unified with nav cream tone */
-  --icon-button-filled-fg: var(--cp-base);
+  --icon-button-filled-bg: var(--cp-cream);
 
-  /* Torrent-row badges (replace stock blues/purples with Capyppuccin palette) */
+  /* Torrent-row badges */
   --torrent-row-fg: var(--cp-text);
   --torrent-row-visited-fg: var(--cp-rosewater);
   --torrent-row-sticky-bg: var(--cp-surface-1);
@@ -345,25 +318,21 @@
   --bbcode-rendered-quote-border: var(--cp-yellow);
 
   /* Misc */
-  --meter-fg: var(--cp-honey); /* richer for progress bar fill visibility */
+  --meter-fg: var(--cp-honey);
   --meter-bg: var(--cp-surface-1);
-  --notification-unread: var(
-    --cp-cream
-  ); /* paler — dot beside content, not competing */
+  --notification-unread: var(--cp-cream);
   --scrollbar-color: var(--cp-surface-1);
   --comparison-divider-fg: var(--cp-yellow);
   --comparison-button-fg: var(--cp-yellow);
-  --footer-hr-fg: var(--cp-surface-1);
-  --article-card-time-fg: var(--cp-subtext);
   --panel-action-fg: var(--cp-subtext);
   --post-head-bg: transparent;
   --prize-fg: var(--cp-text);
   --prize-heading-fg: var(--cp-yellow);
 }
 
-/* === Block 8 — Global element overrides ===
- * font-family is not tokenized; base hardcodes `a { color: #4991f6 }` and
- * uses UA accent-color — override via element selectors here. */
+/* === Globals ===
+ * font-family not tokenized; base hardcodes `a { color: #4991f6 }` and uses
+ * UA accent-color — override via element selectors. */
 html,
 body,
 button,
@@ -392,14 +361,17 @@ samp,
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* :focus-visible reset — base ships animated focus (translateY + brightness +
+ * gold glow) globally; we kill it. !important needed to beat the base rule. */
 :focus-visible {
-  box-shadow: var(--shadow-glow);
   outline: none;
+  transform: none !important;
+  filter: none !important;
+  box-shadow: none !important;
 }
 
-/* === Link colors — contextual ===
- * Default: inherit. Top-nav: force --cp-text on stray <a>. Content areas:
- * yellow unvisited / honey visited. Hover: cream everywhere.
+/* === Link colors ===
+ * Default inherit. Content areas: yellow unvisited / soft visited. Hover: cream.
  * :not([style]) preserves usergroup-colored usernames (inline style). */
 a,
 a:link,
@@ -449,10 +421,8 @@ a:focus {
   accent-color: var(--cp-yellow);
 }
 
-/* === Anchor-style action buttons (inverted) ===
- * Same .form__button--filled.form__button--centered class is used for both
- * <a> (navigate) and <button> (act). Differentiate by element: anchors get
- * inverted (surface + yellow text/border); <button> stays filled yellow. */
+/* Anchor-style action buttons — same class on both <a> and <button>.
+ * Anchors get inverted (surface + yellow border); buttons stay filled. */
 a.form__button--filled.form__button--centered,
 a.form__button--filled.form__button--centered:link,
 a.form__button--filled.form__button--centered:visited {
@@ -467,7 +437,6 @@ a.form__button--filled.form__button--centered:focus {
   border: 1px solid var(--cp-honey);
 }
 
-/* In-place <button> action buttons: yellow default, honey on hover. */
 button.form__button--filled.form__button--centered {
   background: var(--cp-yellow);
   color: var(--cp-base);
@@ -476,15 +445,11 @@ button.form__button--filled.form__button--centered:hover {
   background: var(--cp-honey);
 }
 
-/* === Utility color overrides ===
- * Base ships hard-saturated text-* utilities (user-torrents, ratio cells).
- * Remap to pastel Catppuccin tones. */
+/* === Text utility overrides — pastel pass on base's saturated text-* === */
 .text-success {
   color: var(--cp-green);
 }
-/* Decorative icons in filter checkboxes (e.g. notifications filter) use
- * .text-success as a generic accent — green there reads as status. Recolor
- * to the theme yellow only inside checkbox-container fieldsets. */
+/* Filter checkboxes use .text-success decoratively (not status) — yellow fits. */
 .form__fieldset-checkbox-container .text-success {
   color: var(--cp-yellow);
 }
@@ -495,8 +460,7 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-subtext);
 }
 
-/* Checkbox — unchecked = transparent with overlay border; checked = yellow
- * fill + base check via inline SVG. Base ships native UA rendering. */
+/* Checkbox — replace UA rendering with overlay border + yellow fill + inline check SVG. */
 .form__checkbox {
   appearance: none;
   -webkit-appearance: none;
@@ -522,11 +486,6 @@ button.form__button--filled.form__button--centered:hover {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23161412'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
   background-repeat: no-repeat;
   background-position: center;
-}
-.form__checkbox:focus-visible {
-  box-shadow: var(--shadow-glow);
-  transform: none;
-  filter: none;
 }
 .text-warning {
   color: var(--cp-honey);
@@ -566,12 +525,6 @@ button.form__button--filled.form__button--centered:hover {
   z-index: 1000;
 }
 
-:focus-visible {
-  transform: none !important;
-  filter: none !important;
-  box-shadow: none !important;
-}
-/* quick-search. */
 .quick-search:focus-within .quick-search__input,
 .quick-search:focus-within .quick-search__results {
   border-color: var(--cp-yellow);
@@ -584,9 +537,7 @@ button.form__button--filled.form__button--centered:hover {
   fill: var(--cp-honey);
 }
 
-/* === Top-nav dropdowns — mirror secondary-nav hover pattern ===
- * Base ships radius:5px + focus-within bg shift. Bump to radius-md + add
- * :hover (so mouse matches keyboard) with smoother fade. */
+/* === Top-nav dropdowns === */
 .top-nav__dropdown > a {
   border-radius: var(--cp-radius-md);
   transition:
@@ -597,10 +548,9 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-yellow);
   background-color: var(--cp-surface-1);
 }
-/* Active page indication via :has() — body knows which page__* wrapper is
- * mounted, propagate to the matching top-nav dropdown anchor. Active is
- * marked with bold + yellow underline (inset box-shadow) to keep the
- * background flat with the rest of the nav. */
+/* Active page via :has() — body knows the page__* wrapper; propagate to the
+ * matching dropdown trigger. Suporte/Outro have no href on trigger, so we
+ * disambiguate via a unique child link (/tickets vs /subtitles). */
 body:has(main[class*="page__torrent"])
   .top-nav__dropdown
   > a[href$="/torrents"],
@@ -658,9 +608,7 @@ body:has(main[class*="page__user"]) .top-nav__dropdown > a[href*="/users/"] {
   background-color: var(--cp-surface-1);
 }
 
-/* Envelope/sino: o círculo é o <i> (aspect-ratio:1/1 + border-radius +
- * background-color). Pra marcar ativo, espelhamos o estado :hover do
- * próprio <i>, não do <a> (pintar o <a> faria um retângulo solto). */
+/* Envelope/sino active — mirror :hover on the <i> (the circle), not the <a>. */
 body:has(main[class*="page__user-conversation"])
   .top-nav--right__icon-link[href*="/conversations"]
   > i,
@@ -706,9 +654,7 @@ body:has(main[class*="page__user-notification"])
   border-color: var(--cp-yellow);
   outline: none;
 }
-/* === Panel tabs ===
- * Upstream paints active tab #b0b0b0 + #888 underline (reads as disabled).
- * Also fixes .panel__tab using --data-table-th-fg for bg (upstream typo, should be -bg). */
+/* === Panel tabs — base paints active #b0b0b0 (reads disabled); brand it. === */
 .panel__tabs {
   background-color: var(--cp-surface-1);
   border-bottom: 1px solid var(--cp-surface-1);
@@ -733,13 +679,12 @@ body:has(main[class*="page__user-notification"])
   border-bottom: 2px solid transparent;
   font-weight: 600;
 }
-/* Chat tab ping icon — base uses .text-danger for idle (reads as alert);
- * inherit tab color instead so idle isn't visually loud. */
+/* Chat tab ping icon — base uses .text-danger for idle (false alert). */
 .chatbox__tab .fa-comment.text-danger {
   color: inherit;
 }
-/* Chat tab × icon — base ships always-red; inherit tab color, red only on
- * hover. <button> needs explicit color:inherit (UA default is `buttontext`). */
+/* Chat tab × icon — base ships always-red; red only on hover. <button>
+ * needs explicit color:inherit (UA default `buttontext`). */
 .chatbox__tab-delete-button,
 .chatbox__tab-delete-icon {
   color: inherit;
@@ -748,8 +693,7 @@ body:has(main[class*="page__user-notification"])
   color: var(--cp-red);
 }
 
-/* === BBCode input (forum/PM/comment editor) ===
- * Base hardcodes #555/#888 tab labels — invisible on dark. Remap to yellow-active. */
+/* === BBCode input — base hardcodes #555/#888 (invisible on dark) === */
 .bbcode-input__tab-label {
   color: var(--cp-subtext);
   cursor: pointer;
@@ -767,7 +711,7 @@ body:has(main[class*="page__user-notification"])
   border-bottom: 2px solid transparent;
   font-weight: 600;
 }
-/* Toolbar separator — base leaves UA inset/groove; thin vertical line instead. */
+/* Toolbar separator — drop UA inset/groove. */
 .bbcode-input__icon-separator {
   border: none;
   border-left: 1px solid var(--cp-surface-1);
@@ -777,9 +721,7 @@ body:has(main[class*="page__user-notification"])
   color: var(--cp-text);
 }
 
-/* === Data-table polish ===
- * Round corners + small-caps thead. border-collapse: separate required for
- * per-cell radius; manually re-add row separators via border-top. */
+/* === Data-table polish — separate borders (for radii) + small-caps thead === */
 .data-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -859,9 +801,7 @@ html {
   background: var(--cp-yellow);
 }
 
-/* === Topic show — individual posts ===
- * Base hardcodes border-radius: 5px on .post/toolbar — too tight. Bump to
- * radius-lg and tighten header/aside/toolbar so each post reads as a card. */
+/* === Forum posts — bump radius (base 5px) so each post reads as a card === */
 .post {
   border-radius: var(--cp-radius-lg);
   overflow: hidden;
@@ -904,6 +844,8 @@ html {
   background-color: var(--cp-surface-0);
   color: var(--cp-subtext);
   border-right: 1px solid var(--cp-surface-1);
+  border-top-left-radius: var(--cp-radius-lg);
+  border-bottom-left-radius: var(--cp-radius-lg);
 }
 .post__avatar {
   border-radius: var(--cp-radius-md);
@@ -949,17 +891,9 @@ html {
   color: var(--cp-subtext);
 }
 
-/* Round aside corners; it has its own border-right. */
-.post__aside {
-  border-bottom-left-radius: var(--cp-radius-lg);
-  border-top-left-radius: var(--cp-radius-lg);
-}
+/* === Forum index — base renders subforum rows monotone; add hierarchy === */
 
-/* === Forum index polish ===
- * Base renders subforum listings as monotone --panel-fg; give each role
- * its own treatment for hierarchy. */
-
-/* Section panel head — small-caps yellow band, every page wrapper. */
+/* Panel head — small-caps yellow band on every page wrapper. */
 [class*="page__"] :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
   text-transform: uppercase;
@@ -973,17 +907,11 @@ html {
   border-radius: var(--cp-radius-xl);
   overflow: hidden;
 }
-/* Round only the TOP of the heading band; .page__post--index uses
- * .panel__header (wraps .panel__heading + .panel__actions), others use
- * bare .panel__heading. */
-[class*="page__"] :is(.panel, .panelV2) .panel__heading {
-  border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
-}
-[class*="page__"] :is(.panel, .panelV2) .panel__header {
+/* Heading band — .page__post--index uses .panel__header, others .panel__heading. */
+[class*="page__"] :is(.panel, .panelV2) :is(.panel__heading, .panel__header) {
   border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
 }
 
-/* Subforum row — subtle hover lift on the whole item */
 .subforum-listings__item {
   transition: background-color 0.12s ease;
 }
@@ -991,7 +919,7 @@ html {
   background-color: var(--cp-surface-1);
 }
 
-/* Subforum name link (e.g., "Avisos"). Brand yellow, hover cream. */
+
 .subforum-listing__link {
   color: var(--cp-yellow);
   font-size: 15px;
@@ -999,19 +927,13 @@ html {
 .subforum-listing__link:hover {
   color: var(--cp-cream);
 }
-
-/* Description below the name (e.g., "Avisos Oficiais") — muted. */
 .subforum-listing__description {
   color: var(--cp-subtext);
   font-size: 12px;
 }
-
-/* Comments icon on the left — honey accent so it doesn't compete. */
 .subforum-listing__icon {
   color: var(--cp-honey);
 }
-
-/* Topic/Post counts — bigger numbers in yellow, uppercase labels. */
 .subforum-listing__topic-stats dd,
 .subforum-listing__post-stats dd {
   font-size: 16px;
@@ -1025,8 +947,6 @@ html {
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
-
-/* Latest-topic block: title is content, time/author is muted metadata. */
 .subforum-listing__latest-link {
   color: var(--cp-text);
   font-weight: 500;
@@ -1077,7 +997,6 @@ html {
   border-left: 3px solid transparent;
 }
 
-/* Topic title link — yellow brand, hover cream. Read topics get muted. */
 .topic-listing__link {
   color: var(--cp-yellow);
 }
@@ -1091,7 +1010,6 @@ html {
   color: var(--cp-yellow);
 }
 
-/* Meta on creation (author + datetime). */
 .topic-listing__created-author,
 .topic-listing__created-datetime,
 .topic-listing__created-link {
@@ -1101,16 +1019,13 @@ html {
   color: var(--cp-yellow);
 }
 
-/* Pin / lock icon column. */
 .topic-listing__icon {
   color: var(--cp-honey);
 }
 .topic-listing__forum {
   color: var(--cp-subtext);
 }
-
-/* Reply / view counts — "Visualizações" label overflows with uppercase +
- * letter-spacing in 72px column. Drop uppercase, shrink label. */
+/* "Visualizações" label overflows uppercase+letter-spacing in 72px col. */
 .topic-listing__post-stats dd,
 .topic-listing__view-stats dd {
   font-size: 16px;
@@ -1124,7 +1039,6 @@ html {
   font-weight: 500;
 }
 
-/* Latest post column. */
 .topic-listing__latest-author-link {
   color: var(--cp-honey);
   font-size: 12px;
@@ -1160,8 +1074,7 @@ html {
   --forum-tag-denied-fg: var(--cp-red);
 }
 
-/* === Torrent meta page (.page__torrent-similar--index and torrent show) ===
- * Base sets .meta__title to #bbb (grey) — promote to brand yellow. */
+/* === Torrent meta — base sets .meta__title to #bbb grey === */
 .meta__title {
   color: var(--cp-yellow);
   font-weight: 700;
@@ -1182,7 +1095,6 @@ html {
 .meta__poster {
   border-radius: var(--cp-radius-lg);
 }
-/* Work tags (media-type / language / runtime / rating row) */
 .work__tags {
   color: var(--cp-subtext);
 }
@@ -1199,7 +1111,6 @@ html {
   font-weight: 600;
 }
 
-/* Trailer button — base uses hard orange gradient; soften to honey→yellow. */
 .trailer-btn {
   background: linear-gradient(135deg, var(--cp-honey), var(--cp-yellow));
   color: var(--cp-base);
@@ -1226,7 +1137,6 @@ html {
   color: var(--cp-yellow);
 }
 
-/* Trending poster — base badge had hard blue bg + olive border. */
 .trending-poster__download-count {
   background: var(--cp-surface-0);
   border-color: var(--cp-yellow);
@@ -1245,7 +1155,6 @@ html {
   color: var(--cp-subtext);
 }
 
-/* Similar torrents grouped table — type label (Full Disc / Remux / Encode) */
 .similar-torrents__type {
   color: var(--cp-honey);
   font-weight: 600;
@@ -1257,7 +1166,7 @@ html {
   color: var(--cp-cream);
 }
 
-/* Ratio-bar icons — sidebar widget (sm subset) + top-nav full bar */
+/* Ratio-bar icons (sidebar + top-nav share the palette) */
 .ratio-bar__seeding i,
 .top-nav__ratio-bar .ratio-bar__uploaded i,
 .top-nav__ratio-bar .ratio-bar__seeding i {
@@ -1286,9 +1195,7 @@ html {
   color: var(--cp-yellow);
 }
 
-/* === Torrent row icons / status badges ===
- * Blade sets inline style="color: #..." on FREE/INTERNAL/FREELEECH icons —
- * bypasses var mapping. !important required to win specificity. */
+/* === Torrent row icons — Blade inlines style="color:#..." on FREE/INTERNAL === */
 .torrent-icons__freeleech,
 .torrent-icons__freeleech + .fas {
   color: var(--cp-green) !important;
@@ -1310,19 +1217,15 @@ html {
   color: var(--cp-blue);
 }
 
-/* === User group colors (.user-tag__link) ===
- * Each user group has a unique hex in the DB (Blade injects inline color).
- * Instead of remapping every hex to palette (would force duplicates with
- * 26 groups vs 12 tones), dessaturate + lighten via filter so each group
- * keeps its visual identity but lands in the pastel range. Pure black
- * (Owner #000) needs special handling since filter can't lift it. */
+/* === User group colors — DB injects 26 unique hexes inline; pastel via
+ * filter() instead of remap (would force palette duplicates). === */
 .user-tag__link,
 .top-nav__username .text-bold,
 .top-nav__username--highresolution .text-bold,
 td > span[style*="color: #"] {
   filter: saturate(0.5) brightness(1.25);
 }
-/* Owner (#000) — black stays invisible after filter; explicit text override. */
+/* Owner #000 — filter can't lift pure black, override explicitly. */
 .user-tag__link[style*="#000000"],
 .user-tag__link[style*="#000"],
 .top-nav__username .text-bold[style*="#000"],
@@ -1333,9 +1236,7 @@ td > span[style*="color: #000"] {
   filter: none;
 }
 
-/* === Chatbox ===
- * Bell/keyboard toggle states use inline rgb(0,102,0)/rgb(204,0,0) — force
- * pastel via attribute selectors + !important. */
+/* === Chatbox — bell/keyboard toggles inline rgb(0,102,0)/rgb(204,0,0) === */
 [style*="rgb(0,102,0)"],
 [style*="rgb(0, 102, 0)"] {
   color: var(--cp-green) !important;
@@ -1344,12 +1245,11 @@ td > span[style*="color: #000"] {
 [style*="rgb(204, 0, 0)"] {
   color: var(--cp-red) !important;
 }
-/* Hover targets in base use hardcoded #ff7b00 (orange). Soften to peach. */
+/* Base hover hardcodes #ff7b00 — soften. */
 .chatbox-message:hover .chatbox-message__delete-button:hover,
 .chatbox-message:hover .chatbox-message__action-button:hover {
   color: var(--cp-peach);
 }
-/* Message bubble polish */
 .chatbox-message {
   box-shadow: var(--cp-shadow-sm);
 }
@@ -1362,14 +1262,12 @@ td > span[style*="color: #000"] {
 .chatbox-message__content {
   color: var(--cp-text);
 }
-/* Bot message — italic from inline, just tint slightly muted */
 .bot-message,
 .chatbox-message__content.bot-message {
   color: var(--cp-subtext);
 }
 
-/* Chat avatar status border — Blade inlines border:2px solid <hex> from
- * user.chat_status.color (DB-stored saturated hexes); remap via [style*=] + !important. */
+/* Chat avatar status border — Blade inlines DB-stored saturated hexes. */
 .chatbox-message__avatar[style*="#2ECC40"],
 .chatbox-message__avatar[style*="#2ecc40"] {
   border-color: var(--cp-green) !important;
@@ -1387,13 +1285,12 @@ td > span[style*="color: #000"] {
 .chatbox-message__avatar[style*="#ccc"] {
   border-color: var(--cp-overlay) !important;
 }
-/* Whispers/typing indicator — muted */
 .chatroom__whispers {
   color: var(--cp-overlay);
   font-style: italic;
 }
 
-/* Comments — mirror .post card treatment (radius + shadow + clipped corners). */
+/* === Comments — mirror .post card treatment === */
 .comment {
   border-radius: var(--cp-radius-lg);
   overflow: hidden;
@@ -1433,7 +1330,7 @@ td > span[style*="color: #000"] {
   color: var(--cp-subtext);
   font-size: 11px;
 }
-/* Override base's #444 divider + border-radius:0 forced on 2nd+ comments. */
+/* Base forces #444 divider + radius:0 on 2nd+ comments — restore card look. */
 .comment__list-item + .comment__list-item > .comment {
   border-top: none;
   padding-top: 0;
