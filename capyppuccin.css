@@ -499,6 +499,40 @@ button.form__button--filled.form__button--centered:hover {
 .text-muted {
   color: var(--cp-subtext);
 }
+
+/* Checkbox — unchecked = transparent with overlay border; checked = yellow
+ * fill + base check via inline SVG. Base ships native UA rendering. */
+.form__checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cp-overlay);
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-right: 6px;
+  transition:
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+  flex-shrink: 0;
+}
+.form__checkbox:hover {
+  border-color: var(--cp-honey);
+}
+.form__checkbox:checked {
+  background-color: var(--cp-yellow);
+  border-color: var(--cp-yellow);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23161412'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.form__checkbox:focus-visible {
+  box-shadow: 0 0 0 3px rgba(249, 226, 175, 0.3);
+  transform: none;
+  filter: none;
+}
 .text-warning {
   color: var(--cp-honey);
 }
