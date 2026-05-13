@@ -14,17 +14,8 @@
  * See README.md for the self-hosted alternative.
  */
 
-/* No web fonts. UNIT3D's font-src CSP is `'self'` only — neither
- * fonts.googleapis.com nor *.github.io (where this stylesheet lives) is
- * allowed for font loading. The font-family stacks in Block 8 keep
- * 'Outfit' / 'JetBrains Mono' as the first family so that if a tracker
- * admin self-hosts the woff2 files at the tracker's own origin, adding
- * @font-face declarations here with `src: url('/css/fonts/...woff2')`
- * makes them pick up automatically. Until then, the second family in
- * each stack (system-ui / ui-monospace) is what renders.
- *
- * See README.md → "Self-hosting fonts (optional)" for the setup.
- */
+/* No web fonts: CSP font-src is 'self' only. Stacks in Block 8 fall back
+ * to system-ui/ui-monospace until admin self-hosts woff2. See README. */
 
 :root {
   /* ============================================
@@ -32,16 +23,7 @@
    * Built blocks below remap UNIT3D variables to these.
    * ============================================ */
 
-  /* Brand — yellow scale (light → deep) for visual hierarchy.
-   * Use the scale to differentiate component roles:
-   *   soft   subtlest highlights, glow fills
-   *   cream  hover state, lift, unread indicator
-   *   yellow MAIN brand — buttons, links, active tabs
-   *   honey  rich accent — meter fills, stat icons, depth
-   *   gold   deepest — hover backgrounds, structural accents
-   *
-   * Plus warm complements (peach, rosewater) for non-yellow accents.
-   */
+  /* Brand yellow scale (soft → gold) + warm complements (peach, rosewater). */
   --cp-yellow-soft: #fff8c5; /* very pale, decorative — glow rings, subtle bg */
   --cp-cream: #fce087; /* saturated lemon — hover, lift, button accent */
   --cp-yellow: #f9e2af; /* brand pastel peachy yellow */
@@ -56,8 +38,7 @@
   --cp-surface-0: #221f1c;
   --cp-surface-1: #2f2b27;
 
-  /* Text (warm off-white scale — replaces Mocha's lavender-tinted greys
-     which read as blueish against the yellow brand) */
+  /* Text — warm off-white; replaces Mocha's lavender-tinted greys. */
   --cp-text: #ebe2cf;
   --cp-subtext: #b8b1a0;
   --cp-overlay: #7d7869;
@@ -164,12 +145,7 @@
   --bbcode-rendered-danger-fg: var(--cp-red);
   --bbcode-rendered-accent-fg: var(--cp-mauve);
   --bbcode-rendered-accent-emphasis: var(--cp-mauve);
-  /* === Block 5 — Border radii ===
-   *  sm  6px  badges, small chips
-   *  md  10px buttons, inputs, dropdowns
-   *  lg  14px cards, panels, dialogs
-   *  xl  20px avatars, hero, big modals
-   */
+  /* === Block 5 — Border radii (sm 6 / md 10 / lg 14 / xl 20) === */
 
   /* md — buttons, inputs */
   --button-filled-border-radius: var(--cp-radius-md);
@@ -202,11 +178,7 @@
   /* xl — circular/large */
   --top-nav-icon-bar-icon-border-radius: var(--cp-radius-xl);
   --quick-search-result-image-border-radius: var(--cp-radius-xl);
-  /* === Block 6 — Shadows (soft, low-alpha) ===
-   *  sm  light elevation
-   *  md  standard cards, panels
-   *  lg  dropdowns, modals, hover-lifted cards
-   */
+  /* === Block 6 — Shadows (sm elevation / md cards / lg modals & dropdowns) === */
   --top-nav-box-shadow: var(--cp-shadow-sm);
   --secondary-nav-box-shadow: var(--cp-shadow-sm);
   --compact-search-box-shadow: var(--cp-shadow-sm);
@@ -226,12 +198,8 @@
 
   /* === Block 7 — Extended component overrides === */
 
-  /* Top-nav dropdowns (menu surfaces + items + icons) */
-  /* All TEXT in the nav uses --cp-text (#ebe2cf, warm off-white) so both
-     clickable (dropdowns, icon-bar links, ratio links) and non-clickable
-     (stats numbers, ratio bar inheritance) read as the same neutral tone.
-     Hover states use --cp-yellow as the brand accent so interactivity is
-     obvious. Icon-bar bg circles stay --cp-cream as a subtle yellow tint. */
+  /* Top-nav: all text in --cp-text (clickable + non-clickable share one tone);
+     hover = yellow brand accent; icon-bar bg circles stay cream. */
   --top-nav-dropdown-fg: var(--cp-text);
   --top-nav-dropdown-hover-fg: var(--cp-yellow); /* hover = brand yellow */
   --top-nav-dropdown-hover-bg: var(--cp-surface-1);
@@ -247,8 +215,7 @@
     --cp-honey
   ); /* decorative circle bg */
 
-  /* Stats / ratio / toggle text — all #ebe2cf so clickable & non-clickable
-     items in the ratio strip share one tone (no cream/yellow conflict). */
+  /* Stats / ratio / toggle text — unified neutral tone. */
   --top-nav-stats-fg: var(--cp-text);
   --top-nav-toggle-fg: var(--cp-text);
   --top-nav-ratio-bar-fg: var(--cp-text);
@@ -267,10 +234,8 @@
   --secondary-nav-tab-menu-bg: var(--cp-surface-0);
   --secondary-nav-tab-menu-fg: var(--cp-text);
 
-  /* Form active/hover states (replace blue #2195f3 focus rings).
-     Use --cp-overlay (warm grey) for resting borders so they're actually
-     visible against surface-0 backgrounds — surface-1 is too close to the
-     panel color and made inputs look borderless. */
+  /* Form active/hover (replaces blue #2195f3 focus). Overlay for resting
+     borders — surface-1 was too close to panel bg and read as borderless. */
   --input-text-border: 1px solid var(--cp-overlay);
   --input-text-border-active: 2px solid var(--cp-yellow);
   --input-text-border-hover: 2px solid var(--cp-honey);
@@ -418,11 +383,8 @@
 }
 
 /* === Block 8 — Global element overrides ===
- *  font-family is NOT tokenized by UNIT3D's base theme,
- *  and the main bundle hardcodes `a { color: #4991f6 }` plus
- *  uses browser-default accent-color on form controls — both
- *  must be overridden via element selectors here.
- */
+ * font-family is not tokenized; base hardcodes `a { color: #4991f6 }` and
+ * uses UA accent-color — override via element selectors here. */
 html,
 body,
 button,
@@ -457,28 +419,9 @@ samp,
 }
 
 /* === Link colors — contextual ===
- *
- * Three layers so each context renders links the way it should:
- *
- * 1. DEFAULT (everywhere not listed below): `a` inherits its parent's
- *    color. Footer "links at the end of the page", sidebar widgets,
- *    random body links: read as plain text until hover. No
- *    visited/unvisited differentiation.
- *
- * 2. TOP-NAV: UNIT3D's main bundle paints menu items via --top-nav-*
- *    variables (handled in Block 2/3 above). The catch-all here forces
- *    stray <a> elements (logo link, etc.) to --cp-text so the gold/yellow
- *    from content rules below doesn't leak into the nav.
- *
- * 3. CONTENT AREAS (posts, comments, BBCode, inbox, notifications,
- *    article cards, panel bodies): unvisited = --cp-yellow brand,
- *    visited = --cp-honey (slightly muted) so you can see what's
- *    already been opened. Add more selectors to the list if a context
- *    needs the brand link treatment.
- *
- * Hover is universal: --cp-cream so interactivity is signaled in any
- * context, including footer & sidebar. :not([style]) preserves
- * usergroup-colored usernames (UNIT3D applies them via inline style). */
+ * Default: inherit. Top-nav: force --cp-text on stray <a>. Content areas:
+ * yellow unvisited / honey visited. Hover: cream everywhere.
+ * :not([style]) preserves usergroup-colored usernames (inline style). */
 a,
 a:link,
 a:visited {
@@ -514,23 +457,15 @@ a:focus {
   color: var(--cp-honey);
 }
 
-/* Native form controls (checkbox, radio, progress, range) — `accent-color`
- * has no UNIT3D variable, so apply it broadly. */
+/* Native form controls — no UNIT3D var for accent-color, apply broadly. */
 :root {
   accent-color: var(--cp-yellow);
 }
 
 /* === Anchor-style action buttons (inverted) ===
- * UNIT3D uses the same `.form__button--filled.form__button--centered` combo
- * for both navigation-style action buttons (`<a href>` like "Nova Mensagem",
- * which take you somewhere) and in-place action buttons (`<button>` like
- * "Marcar como lida", which perform an action right there).
- *
- * Differentiate by element type: anchor variants get the inverted style
- * (surface bg + yellow text + yellow border, reads as "go somewhere")
- * while the `<button>` form keeps the default filled yellow (reads as
- * "click to act"). Hover on the anchor variant fills back to solid yellow
- * for a clear press cue. */
+ * Same .form__button--filled.form__button--centered class is used for both
+ * <a> (navigate) and <button> (act). Differentiate by element: anchors get
+ * inverted (surface + yellow text/border); <button> stays filled yellow. */
 a.form__button--filled.form__button--centered {
   background: var(--cp-surface-1);
   color: var(--cp-yellow-soft);
@@ -542,10 +477,7 @@ a.form__button--filled.form__button--centered:hover {
   border: 1px solid var(--cp-honey);
 }
 
-/* In-place <button> action buttons (Marcar lidas, Limpar caixa, etc.):
- * default sits 1 tone lighter at --cp-cream so the panel reads softer,
- * then hover drops to --cp-yellow (brand primary) — clear darker shift
- * = bigger visual "impact" on press. */
+/* In-place <button> action buttons: yellow default, honey on hover. */
 button.form__button--filled.form__button--centered {
   background: var(--cp-yellow);
   color: var(--cp-base);
@@ -555,11 +487,8 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Topic show — individual posts ===
- * The view of a single topic (/forums/topics/N) renders each post as a
- * `.post` grid (aside | header / content / footer). Default styling
- * hardcodes `border-radius: 5px` on .post and toolbar — too tight for
- * our scale. Bump to radius-lg + tighten the visual hierarchy of
- * header / aside / toolbar so each post reads as a card. */
+ * Base hardcodes border-radius: 5px on .post/toolbar — too tight. Bump to
+ * radius-lg and tighten header/aside/toolbar so each post reads as a card. */
 .post {
   border-radius: var(--cp-radius-lg);
   overflow: hidden;
@@ -647,22 +576,17 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-subtext);
 }
 
-/* Hide post left-column rounded right-bottom corner since aside has
- * its own border-right. */
+/* Round aside corners; it has its own border-right. */
 .post__aside {
   border-bottom-left-radius: var(--cp-radius-lg);
   border-top-left-radius: var(--cp-radius-lg);
 }
 
 /* === Forum index polish ===
- * Default subforum listings render with everything in --panel-fg (cream),
- * making section headings, subforum names, descriptions, stats numbers,
- * and latest-topic info all read as the same monotone text. Give each
- * role its own typographic treatment so the page has clear hierarchy. */
+ * Base renders subforum listings as monotone --panel-fg; give each role
+ * its own treatment for hierarchy. */
 
-/* Section panel head (e.g., "CAPYBARA BR", "CONCURSOS E BONIFICAÇÕES",
- * "UNIT3D Forums", "Avisos Oficiais"). Promote to small-caps yellow band
- * across every UNIT3D page wrapper. */
+/* Section panel head — small-caps yellow band, every page wrapper. */
 [class*="page__"] :is(.panel__heading, .panel__header-link) {
   color: var(--cp-yellow);
   text-transform: uppercase;
@@ -671,16 +595,14 @@ button.form__button--filled.form__button--centered:hover {
   font-size: 14px;
 }
 
-/* Beefier rounded corners on every page's panels — keeps the "soft card"
- * vibe more pronounced than the rest of the site (which stays at radius-lg). */
+/* Beefier corners on page panels — softer-card feel vs site-wide radius-lg. */
 [class*="page__"] :is(.panel, .panelV2) {
   border-radius: var(--cp-radius-xl);
   overflow: hidden;
 }
-/* Round only the TOP of the heading band — flat bottom so it merges with
- * the panel body below. Most pages use bare .panel__heading as direct child
- * of the panel; only .page__post--index wraps it in .panel__header (with
- * sibling .panel__actions for the search bar). */
+/* Round only the TOP of the heading band; .page__post--index uses
+ * .panel__header (wraps .panel__heading + .panel__actions), others use
+ * bare .panel__heading. */
 [class*="page__"] :is(.panel, .panelV2) .panel__heading {
   border-radius: var(--cp-radius-xl) var(--cp-radius-xl) 0 0;
 }
@@ -766,9 +688,7 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Forum topic listing polish ===
- * Same idea as forum index but for `.page__forum-topic--index` — the list
- * of topics inside a forum (e.g., /forums/5). Uses `.topic-listing__*`
- * classes instead of `.subforum-listing__*`. */
+ * Same idea as forum index but for .page__forum-topic--index (.topic-listing__*). */
 
 /* Row hover + unread indicator (3px yellow stripe on the left of unread topics). */
 .topic-listings__item {
@@ -816,10 +736,8 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-subtext);
 }
 
-/* Reply / view counts — same pattern as forum index stats, but the
- * "Visualizações" label is too long for a 72px column with uppercase +
- * letter-spacing (it overflowed onto its neighbor in the rendered view).
- * Drop uppercase here and shrink the label slightly so both fit cleanly. */
+/* Reply / view counts — "Visualizações" label overflows with uppercase +
+ * letter-spacing in 72px column. Drop uppercase, shrink label. */
 .topic-listing__post-stats dd,
 .topic-listing__view-stats dd {
   font-size: 16px;
@@ -850,10 +768,8 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-yellow);
 }
 
-/* Topic tags — main bundle hardcodes some less-than-ideal palettes (mustard
- * fg on yellow bg for "invalid", magenta for "suggestion"). Lighten the
- * vars to fit the brand. We don't repaint every tag (the per-status colors
- * still carry semantic meaning); we just bring the worst clashes in line. */
+/* Topic tags — base ships clashy palettes (mustard-on-yellow for "invalid",
+ * etc.). Lighten worst offenders; keep per-status semantic colors. */
 .topic-tag {
   --forum-tag-implemented-bg: rgba(232, 197, 115, 0.18); /* honey wash */
   --forum-tag-implemented-fg: var(--cp-honey);
@@ -872,14 +788,9 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Search dropdown clipping fix ===
- * Both `.compact-search` (UNIT3D's wrapper around the search input) and
- * the legacy `.compact-search` style use `overflow: hidden` to clip the
- * input's rounded corners. That also clips any absolutely-positioned
- * dropdown (search results) from escaping below the navbar. Switch to
- * `overflow: visible` and let the input element itself carry the
- * border-radius — its own `border-radius` is enough to shape the input
- * without needing the container to clip. Bump z-index on the results
- * so they layer above subsequent page content. */
+ * Base uses overflow:hidden to clip rounded corners — also clips the abs-positioned
+ * results dropdown below the navbar. Switch to overflow:visible; input's own
+ * border-radius shapes it. Bump z-index so results layer above page content. */
 .compact-search,
 .quick-search {
   overflow: visible;
@@ -889,11 +800,8 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Top-nav alert badge ===
- * `.top-nav__icon-bar > li > a > svg` is the small notification indicator
- * that floats on the bell/envelope icons (animated, blinks when there's
- * an unread item). UNIT3D doesn't expose a CSS variable for its color —
- * tint it honey via the `color` property (consumed by `fill="currentColor"`
- * SVGs) and an explicit `fill` fallback for SVGs that hardcode their fill. */
+ * Bell/envelope blink indicator; no UNIT3D var for color. Tint via `color`
+ * (for fill="currentColor" SVGs) plus explicit `fill` for hardcoded SVGs. */
 .top-nav__icon-bar > li > a > svg,
 .top-nav__icon-bar > li > a > svg * {
   color: var(--cp-honey);
@@ -901,14 +809,8 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Panel tabs ===
- * Used for the in-panel tab strip (inbox: "Tudo / Marcar como lida /
- * Caixa de entrada / Caixa de saída", and similar). Upstream hardcodes
- * the active state to `color: #b0b0b0; border-bottom: 2px solid #888`
- * which reads as dimmed/disabled against the warm charcoal — exactly
- * the opposite of what an active tab should communicate. We also have
- * to fix `.panel__tab` itself, which uses `--data-table-th-fg` for both
- * its background and border-bottom (an upstream typo — should be -bg).
- */
+ * Upstream paints active tab #b0b0b0 + #888 underline (reads as disabled).
+ * Also fixes .panel__tab using --data-table-th-fg for bg (upstream typo, should be -bg). */
 .panel__tabs {
   background-color: var(--cp-surface-1);
   border-bottom: 1px solid var(--cp-surface-1);
@@ -933,17 +835,13 @@ button.form__button--filled.form__button--centered:hover {
   border-bottom: 2px solid transparent;
   font-weight: 600;
 }
-/* Chat tab ping icon — base uses .text-danger for "no new pings" idle state,
- * but red reads as alert against the warm palette. Scoped override: when the
- * icon is inside a chatbox tab and NOT pinged, just inherit the tab's color
- * (subtext / cream / yellow depending on tab state). */
+/* Chat tab ping icon — base uses .text-danger for idle (reads as alert);
+ * inherit tab color instead so idle isn't visually loud. */
 .chatbox__tab .fa-comment.text-danger {
   color: inherit;
 }
-/* Chat tab close (×) icon — base ships always-red. Soften to inherit (tracks
- * the tab's text color) and only flip to red on hover so it doesn't compete
- * for attention when idle. Note: <button> needs explicit color:inherit
- * because UA default is `buttontext` (system color, not inherited). */
+/* Chat tab × icon — base ships always-red; inherit tab color, red only on
+ * hover. <button> needs explicit color:inherit (UA default is `buttontext`). */
 .chatbox__tab-delete-button,
 .chatbox__tab-delete-icon {
   color: inherit;
@@ -953,9 +851,7 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === BBCode input (forum/PM/comment editor) ===
- * Write/Visualizar tabs at top + toolbar + textarea. Base hardcodes #555
- * for tab labels and #888/grey for the active tab — invisible on our dark
- * surface. Remap to the same yellow-active pattern used elsewhere. */
+ * Base hardcodes #555/#888 tab labels — invisible on dark. Remap to yellow-active. */
 .bbcode-input__tab-label {
   color: var(--cp-subtext);
   cursor: pointer;
@@ -972,8 +868,7 @@ button.form__button--filled.form__button--centered:hover {
   border-bottom: 2px solid var(--cp-yellow);
   font-weight: 600;
 }
-/* Toolbar separator — base only sets margin; default <hr> renders inset/groove
- * which looks broken on dark bg. Use a thin vertical surface-1 line. */
+/* Toolbar separator — base leaves UA inset/groove; thin vertical line instead. */
 .bbcode-input__icon-separator {
   border: none;
   border-left: 1px solid var(--cp-surface-1);
@@ -984,15 +879,8 @@ button.form__button--filled.form__button--centered:hover {
 }
 
 /* === Data-table polish ===
- * Rounds the table corners so the thead/tfoot hug the panel's radius
- * instead of sitting as a square bar inside the rounded panel, and
- * bumps thead text to small-caps for clearer column hierarchy.
- *
- * Switching to border-collapse: separate is required to make per-cell
- * border-radius render. We add a one-pixel border between tbody rows
- * to replace the line collapse used to draw, keeping the row separators
- * we want without double-border artifacts.
- */
+ * Round corners + small-caps thead. border-collapse: separate required for
+ * per-cell radius; manually re-add row separators via border-top. */
 .data-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -1025,9 +913,7 @@ button.form__button--filled.form__button--centered:hover {
 .data-table tbody tr {
   transition: background-color 0.12s ease;
 }
-/* When a .data-table sits inside a panel (right below the heading band),
- * drop its own top-corner rounding so the table butts flush against the
- * heading instead of leaving a small internal radius gap. */
+/* .data-table inside a panel — drop top-corner radius to butt flush with heading. */
 :is(.panel, .panelV2) .data-table thead tr th:first-of-type,
 :is(.panel, .panelV2) .data-table thead tr th:last-of-type {
   border-top-left-radius: 0;
@@ -1068,9 +954,8 @@ html {
 }
 
 /* === Utility color overrides ===
- * UNIT3D's main bundle ships hard-saturated text-* utility classes used
- * throughout user-torrents / ratio cells / activity indicators. Remap to
- * pastel/Catppuccin tones so they harmonize with the rest of the theme. */
+ * Base ships hard-saturated text-* utilities (user-torrents, ratio cells).
+ * Remap to pastel Catppuccin tones. */
 .text-success {
   color: var(--cp-green);
 }
@@ -1098,8 +983,7 @@ html {
 }
 
 /* === Torrent meta page (.page__torrent-similar--index and torrent show) ===
- * The meta block at the top renders the TMDB title, description, cast/crew
- * chips. Base sets .meta__title to #bbb (greyish) — promote to brand yellow. */
+ * Base sets .meta__title to #bbb (grey) — promote to brand yellow. */
 .meta__title {
   color: var(--cp-yellow);
   font-weight: 700;
@@ -1137,8 +1021,7 @@ html {
   font-weight: 600;
 }
 
-/* Trailer button — base uses a hard orange gradient. Soften to pastel
- * honey→yellow with a yellow glow on hover. */
+/* Trailer button — base uses hard orange gradient; soften to honey→yellow. */
 .trailer-btn {
   background: linear-gradient(135deg, var(--cp-honey), var(--cp-yellow));
   color: var(--cp-base);
@@ -1165,8 +1048,7 @@ html {
   color: var(--cp-yellow);
 }
 
-/* Trending poster card — small download-count badge had hard blue bg + olive
- * border. Switch to surface-0 + yellow accent. */
+/* Trending poster — base badge had hard blue bg + olive border. */
 .trending-poster__download-count {
   background: var(--cp-surface-0);
   border-color: var(--cp-yellow);
@@ -1213,9 +1095,8 @@ html {
 }
 
 /* === Torrent row icons / status badges ===
- * The blade templates set inline `style="color: #..."` on the FREE / INTERNAL
- * / FREELEECH icons and their adjacent label spans, which bypasses any var
- * mapping. Force-override with !important so the pastel palette wins. */
+ * Blade sets inline style="color: #..." on FREE/INTERNAL/FREELEECH icons —
+ * bypasses var mapping. !important required to win specificity. */
 .torrent-icons__freeleech,
 .torrent-icons__freeleech + .fas {
   color: var(--cp-green) !important;
@@ -1238,10 +1119,8 @@ html {
 }
 
 /* === Chatbox ===
- * Inline `style="color: rgb(0,102,0)"` (green = ON) and `rgb(204,0,0)` (red
- * = OFF) marks the bell/keyboard toggle states. Force pastel via attribute
- * selectors + !important. Also tame hardcoded #ff7b00 hover on message
- * delete/action buttons. */
+ * Bell/keyboard toggle states use inline rgb(0,102,0)/rgb(204,0,0) — force
+ * pastel via attribute selectors + !important. */
 [style*="rgb(0,102,0)"],
 [style*="rgb(0, 102, 0)"] {
   color: var(--cp-green) !important;
@@ -1274,10 +1153,8 @@ html {
   color: var(--cp-subtext);
 }
 
-/* Chat avatar status border — Blade injects inline `border: 2px solid <hex>`
- * based on user.chat_status.color (defaults: Online #2ECC40 / Ausente #FFDC00
- * / Ocupado #FF4136 / Offline #AAAAAA). Force-remap to pastel via attribute
- * selectors + !important so saturated DB hexes don't leak through. */
+/* Chat avatar status border — Blade inlines border:2px solid <hex> from
+ * user.chat_status.color (DB-stored saturated hexes); remap via [style*=] + !important. */
 .chatbox-message__avatar[style*="#2ECC40"],
 .chatbox-message__avatar[style*="#2ecc40"] {
   border-color: var(--cp-green) !important;
@@ -1301,9 +1178,7 @@ html {
   font-style: italic;
 }
 
-/* Comments — mirror the .post card treatment so they read as discrete
- * units (radius + shadow + clipped corners). Drops the base divider line
- * approach in favor of separated cards. */
+/* Comments — mirror .post card treatment (radius + shadow + clipped corners). */
 .comment {
   border-radius: var(--cp-radius-lg);
   overflow: hidden;
@@ -1343,8 +1218,7 @@ html {
   color: var(--cp-subtext);
   font-size: 11px;
 }
-/* Override base's flush #444 line + the border-radius:0 it forces on
- * comments from the 2nd item onward — we want every comment rounded. */
+/* Override base's #444 divider + border-radius:0 forced on 2nd+ comments. */
 .comment__list-item + .comment__list-item > .comment {
   border-top: none;
   padding-top: 0;
@@ -1352,10 +1226,8 @@ html {
 }
 
 /* === Secondary nav tabs ===
- * Match the top-nav dropdown pattern: text resting, yellow hover with a
- * subtle surface-1 background lift (rounded), active tab persistently yellow
- * with a yellow underline. Drop base's brightness(120%) hover filter since
- * the bg lift + color shift already provides feedback. */
+ * Match top-nav dropdown pattern; drop base's brightness(120%) hover filter
+ * since bg lift + color shift already signals feedback. */
 .nav-tab--active__link,
 .nav-tab__link {
   border-radius: var(--cp-radius-md);
@@ -1372,9 +1244,7 @@ html {
   font-weight: 600;
 }
 
-/* Quick-search header input — match form__text hover/focus pattern:
- * peach border on hover, yellow border on focus. Base ships no hover/focus
- * vars for this input, so wire them up explicitly. */
+/* Quick-search input — base ships no hover/focus vars; wire them explicitly. */
 .quick-search__input {
   border: 1px solid var(--cp-overlay);
   color: var(--cp-text);
