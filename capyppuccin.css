@@ -1259,11 +1259,12 @@ html {
   color: var(--cp-subtext);
   font-size: 11px;
 }
-/* Override base's flush #444 line — no longer needed since cards are visually
- * separated by shadow + margin. */
+/* Override base's flush #444 line + the border-radius:0 it forces on
+ * comments from the 2nd item onward — we want every comment rounded. */
 .comment__list-item + .comment__list-item > .comment {
   border-top: none;
   padding-top: 0;
+  border-radius: var(--cp-radius-lg);
 }
 
 /* === Secondary nav tabs ===
