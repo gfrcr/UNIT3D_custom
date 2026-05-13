@@ -643,6 +643,15 @@ body:has(main[class*="page__user-notification"]) .top-nav--right__icon-link[href
   background-color: var(--cp-surface-0);
   font-weight: 600;
 }
+/* FA icons render as SVG; .top-nav__icon-bar svg has color/fill set
+ * explicitly, overriding the parent <a>. Recolor the svg directly. */
+body:has(main[class*="page__user-conversation"]) .top-nav--right__icon-link[href*="/conversations"] svg,
+body:has(main[class*="page__user-conversation"]) .top-nav--right__icon-link[href*="/conversations"] svg *,
+body:has(main[class*="page__user-notification"]) .top-nav--right__icon-link[href*="/notifications"] svg,
+body:has(main[class*="page__user-notification"]) .top-nav--right__icon-link[href*="/notifications"] svg * {
+  color: var(--cp-yellow);
+  fill: var(--cp-yellow);
+}
 
 /* === Secondary nav tabs === */
 .nav-tab--active__link,
