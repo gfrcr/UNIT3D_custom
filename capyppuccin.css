@@ -124,6 +124,7 @@
   --alert-fg: var(--cp-text);
   --label-fg: var(--cp-text);
   --legend-fg: var(--cp-text);
+  --fieldset-fg: var(--cp-text);
   --option-fg: var(--cp-text);
   --paginate-fg: var(--cp-text);
   --key-value-fg: var(--cp-text);
@@ -493,7 +494,7 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-green);
 }
 .text-info {
-  color: var(--cp-blue);
+  color: var(--cp-subtext);
 }
 .text-warning {
   color: var(--cp-honey);
