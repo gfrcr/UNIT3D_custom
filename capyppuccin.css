@@ -973,6 +973,14 @@ button.form__button--filled.form__button--centered:hover {
 .data-table tbody tr {
   transition: background-color 0.12s ease;
 }
+/* When a .data-table sits inside a panel (right below the heading band),
+ * drop its own top-corner rounding so the table butts flush against the
+ * heading instead of leaving a small internal radius gap. */
+:is(.panel, .panelV2) .data-table thead tr th:first-of-type,
+:is(.panel, .panelV2) .data-table thead tr th:last-of-type {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 
 /* Same treatment for key-value tables (settings forms, user stats) */
 .key-value {
