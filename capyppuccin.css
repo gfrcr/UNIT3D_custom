@@ -530,11 +530,23 @@ button.form__button--filled.form__button--centered:hover {
 .quick-search__results {
   z-index: 1000;
 }
-/* Base only styled :focus, leaving mouse hover unfeedbacked. Mirror the
- * focus state on :hover so pointer and keyboard share the same affordance. */
-.quick-search__result-link:hover {
+/* Result items — base styled :focus on .__result-link only; add :hover for
+ * mouse and cover the --default and --empty states (which have no <a>, so
+ * we target the article itself for those). */
+.quick-search__result-link:hover,
+.quick-search__result-link:focus {
   background-color: var(--cp-surface-1);
   color: var(--cp-yellow);
+}
+.quick-search__result--default:hover,
+.quick-search__result--empty:hover {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-yellow);
+}
+.quick-search__result {
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
 }
 
 /* === Top-nav alert badge ===
