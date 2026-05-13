@@ -1187,6 +1187,34 @@ html {
   color: var(--cp-blue);
 }
 
+/* === Chatbox ===
+ * Inline `style="color: rgb(0,102,0)"` (green = ON) and `rgb(204,0,0)` (red
+ * = OFF) marks the bell/keyboard toggle states. Force pastel via attribute
+ * selectors + !important. Also tame hardcoded #ff7b00 hover on message
+ * delete/action buttons. */
+[style*="rgb(0,102,0)"],
+[style*="rgb(0, 102, 0)"] {
+  color: var(--cp-green) !important;
+}
+[style*="rgb(204,0,0)"],
+[style*="rgb(204, 0, 0)"] {
+  color: var(--cp-red) !important;
+}
+/* Hover targets in base use hardcoded #ff7b00 (orange). Soften to peach. */
+.chatbox-message:hover .chatbox-message__delete-button:hover,
+.chatbox-message:hover .chatbox-message__action-button:hover {
+  color: var(--cp-peach);
+}
+/* Avatar border — base sets border-style but no color, defaults to currentColor */
+.chatbox-message__avatar {
+  border-color: var(--cp-surface-1);
+}
+/* Whispers/typing indicator — muted */
+.chatroom__whispers {
+  color: var(--cp-overlay);
+  font-style: italic;
+}
+
 /* === Secondary nav tabs ===
  * Match the top-nav dropdown pattern: text resting, yellow hover with a
  * subtle surface-1 background lift (rounded), active tab persistently yellow
