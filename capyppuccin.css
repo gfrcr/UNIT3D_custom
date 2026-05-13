@@ -530,6 +530,12 @@ button.form__button--filled.form__button--centered:hover {
 .quick-search__results {
   z-index: 1000;
 }
+/* Base only styled :focus, leaving mouse hover unfeedbacked. Mirror the
+ * focus state on :hover so pointer and keyboard share the same affordance. */
+.quick-search__result-link:hover {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-yellow);
+}
 
 /* === Top-nav alert badge ===
  * Bell/envelope blink indicator; no UNIT3D var for color. Tint via `color`
@@ -721,6 +727,9 @@ html {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--cp-yellow);
+}
+::-webkit-scrollbar-button {
+  display: none;
 }
 
 /* === Topic show — individual posts ===
