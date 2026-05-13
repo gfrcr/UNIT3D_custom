@@ -751,6 +751,13 @@ button.form__button--filled.form__button--centered:hover {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+/* When a data-table sits right below .panel__tabs, paint its thead in
+ * surface-0 (same as the active tab bg) so the active tab visually connects
+ * to its content area instead of floating as an isolated pill. */
+.panel__tabs + .data-table-wrapper .data-table thead tr th,
+.panel__tabs + .data-table thead tr th {
+  background-color: var(--cp-surface-0);
+}
 
 /* Same treatment for key-value tables (settings forms, user stats) */
 .key-value {
