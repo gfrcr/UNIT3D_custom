@@ -271,15 +271,15 @@
      panel color and made inputs look borderless. */
   --input-text-border: 1px solid var(--cp-overlay);
   --input-text-border-active: 2px solid var(--cp-yellow);
-  --input-text-border-hover: 2px solid var(--cp-peach);
+  --input-text-border-hover: 2px solid var(--cp-honey);
   --select-border: 1px solid var(--cp-overlay);
   --select-border-active: 2px solid var(--cp-yellow);
-  --select-border-hover: 2px solid var(--cp-peach);
+  --select-border-hover: 2px solid var(--cp-honey);
   --textarea-border: 1px solid var(--cp-overlay);
   --textarea-border-active: 2px solid var(--cp-yellow);
-  --textarea-border-hover: 2px solid var(--cp-peach);
+  --textarea-border-hover: 2px solid var(--cp-honey);
   --label-fg-active: var(--cp-yellow);
-  --label-fg-hover: var(--cp-peach);
+  --label-fg-hover: var(--cp-honey);
 
   /* Borders elsewhere — same reasoning: use overlay for clear definition. */
   --button-outlined-border: 1px solid var(--cp-yellow);
@@ -1222,7 +1222,7 @@ html {
   color: var(--cp-subtext);
 }
 .quick-search__input:hover {
-  border-color: var(--cp-peach);
+  border-color: var(--cp-honey);
 }
 .quick-search__input:focus {
   border-color: var(--cp-yellow);
