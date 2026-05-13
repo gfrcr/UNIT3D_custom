@@ -940,6 +940,34 @@ button.form__button--filled.form__button--centered:hover {
 .chatbox__tab .fa-comment.text-danger {
   color: inherit;
 }
+
+/* === BBCode input (forum/PM/comment editor) ===
+ * Write/Visualizar tabs at top + toolbar + textarea. Base hardcodes #555
+ * for tab labels and #888/grey for the active tab — invisible on our dark
+ * surface. Remap to the same yellow-active pattern used elsewhere. */
+.bbcode-input__tab-label {
+  color: var(--cp-subtext);
+  cursor: pointer;
+  transition:
+    color 0.12s ease,
+    background-color 0.12s ease;
+}
+.bbcode-input__tab-label:hover {
+  color: var(--cp-text);
+  background-color: var(--cp-surface-1);
+}
+.bbcode-input__tab-input:checked + .bbcode-input__tab-label {
+  color: var(--cp-yellow);
+  border-bottom: 2px solid var(--cp-yellow);
+  font-weight: 600;
+}
+/* Toolbar separator — base only sets margin; default <hr> renders inset/groove
+ * which looks broken on dark bg. Use a thin vertical surface-1 line. */
+.bbcode-input__icon-separator {
+  border: none;
+  border-left: 1px solid var(--cp-surface-1);
+  width: 0;
+}
 .panel__heading {
   color: var(--cp-text);
 }
