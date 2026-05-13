@@ -1045,6 +1045,104 @@ html {
   color: var(--cp-mauve);
 }
 
+/* === Torrent meta page (.page__torrent-similar--index and torrent show) ===
+ * The meta block at the top renders the TMDB title, description, cast/crew
+ * chips. Base sets .meta__title to #bbb (greyish) — promote to brand yellow. */
+.meta__title {
+  color: var(--cp-yellow);
+  font-weight: 700;
+}
+.meta__title-link:hover .meta__title {
+  color: var(--cp-cream);
+}
+.meta__heading {
+  color: var(--cp-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.meta__description {
+  color: var(--cp-text);
+}
+.meta__poster {
+  border-radius: var(--cp-radius-lg);
+}
+/* Work tags (media-type / language / runtime / rating row) */
+.work__tags {
+  color: var(--cp-subtext);
+}
+.work__media-type-link,
+.work__language-link {
+  color: var(--cp-honey);
+}
+.work__media-type-link:hover,
+.work__language-link:hover {
+  color: var(--cp-yellow);
+}
+.work__rating-text {
+  color: var(--cp-yellow);
+  font-weight: 600;
+}
+
+/* Trailer button — base uses a hard orange gradient. Soften to pastel
+ * honey→yellow with a yellow glow on hover. */
+.trailer-btn {
+  background: linear-gradient(135deg, var(--cp-honey), var(--cp-yellow));
+  color: var(--cp-base);
+}
+.trailer-btn:hover {
+  box-shadow: 0 0 12px rgba(249, 226, 175, 0.4);
+  color: var(--cp-base);
+}
+.trailer-modal {
+  background: var(--cp-surface-0);
+  border-color: var(--cp-yellow);
+  border-radius: var(--cp-radius-lg);
+}
+.trailer-modal__close {
+  color: var(--cp-subtext);
+}
+.trailer-modal__close:hover {
+  color: var(--cp-yellow);
+}
+.trailer-modal__title {
+  color: var(--cp-text);
+}
+.trailer-modal__yt-link {
+  color: var(--cp-yellow);
+}
+
+/* Trending poster card — small download-count badge had hard blue bg + olive
+ * border. Switch to surface-0 + yellow accent. */
+.trending-poster__download-count {
+  background: var(--cp-surface-0);
+  border-color: var(--cp-yellow);
+  color: var(--cp-text);
+}
+.torrent-search--poster__title {
+  color: var(--cp-text);
+}
+.torrent-search--poster__poster:hover ~ .torrent-search--poster__caption .torrent-search--poster__title,
+.torrent-search--poster__result a:hover .torrent-search--poster__title {
+  color: var(--cp-yellow);
+}
+.torrent-search--poster__release-date {
+  color: var(--cp-subtext);
+}
+
+/* Similar torrents grouped table — type label (Full Disc / Remux / Encode) */
+.similar-torrents__type {
+  color: var(--cp-honey);
+  font-weight: 600;
+}
+.torrent-search--grouped__name a {
+  color: var(--cp-yellow);
+}
+.torrent-search--grouped__name a:hover {
+  color: var(--cp-cream);
+}
+
 /* Ratio-bar icons (sidebar buffer/tokens widget) */
 .ratio-bar__seeding i {
   color: var(--cp-green);
