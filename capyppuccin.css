@@ -565,6 +565,15 @@ button.form__button--filled.form__button--centered:hover {
 .text-purple {
   color: var(--cp-mauve);
 }
+.text-gold {
+  color: var(--cp-yellow);
+}
+.text-bright {
+  color: var(--cp-text);
+}
+.text-pink {
+  color: var(--cp-pink);
+}
 
 /* === Search dropdown clipping fix ===
  * Base uses overflow:hidden to clip rounded corners — also clips the abs-positioned
@@ -1251,16 +1260,20 @@ html {
  * (Owner #000) needs special handling since filter can't lift it. */
 .user-tag__link,
 .top-nav__username .text-bold,
-.top-nav__username--highresolution .text-bold {
+.top-nav__username--highresolution .text-bold,
+td > span[style*="color: #"] {
   filter: saturate(0.5) brightness(1.25);
 }
+/* Owner (#000) — black stays invisible after filter; explicit text override. */
 .user-tag__link[style*="#000000"],
 .user-tag__link[style*="#000"],
 .top-nav__username .text-bold[style*="#000"],
-.top-nav__username--highresolution .text-bold[style*="#000"] {
+.top-nav__username--highresolution .text-bold[style*="#000"],
+td > span[style*="color: #000000"],
+td > span[style*="color: #000"] {
   color: var(--cp-text) !important;
   filter: none;
-} /* Owner — black is invisible on dark bg */
+}
 
 /* === Chatbox ===
  * Bell/keyboard toggle states use inline rgb(0,102,0)/rgb(204,0,0) — force
