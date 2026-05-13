@@ -928,8 +928,9 @@ button.form__button--filled.form__button--centered:hover {
 }
 .panel__tab--active {
   color: var(--cp-yellow);
-  border-bottom: 2px solid var(--cp-yellow);
   background-color: var(--cp-surface-0);
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
 }
 .panel__heading {
   color: var(--cp-text);
@@ -1224,6 +1225,28 @@ html {
 .bot-message,
 .chatbox-message__content.bot-message {
   color: var(--cp-subtext);
+}
+
+/* Chat avatar status border — Blade injects inline `border: 2px solid <hex>`
+ * based on user.chat_status.color (defaults: Online #2ECC40 / Ausente #FFDC00
+ * / Ocupado #FF4136 / Offline #AAAAAA). Force-remap to pastel via attribute
+ * selectors + !important so saturated DB hexes don't leak through. */
+.chatbox-message__avatar[style*="#2ECC40"],
+.chatbox-message__avatar[style*="#2ecc40"] {
+  border-color: var(--cp-green) !important;
+}
+.chatbox-message__avatar[style*="#FFDC00"],
+.chatbox-message__avatar[style*="#ffdc00"] {
+  border-color: var(--cp-honey) !important;
+}
+.chatbox-message__avatar[style*="#FF4136"],
+.chatbox-message__avatar[style*="#ff4136"] {
+  border-color: var(--cp-red) !important;
+}
+.chatbox-message__avatar[style*="#AAAAAA"],
+.chatbox-message__avatar[style*="#aaaaaa"],
+.chatbox-message__avatar[style*="#ccc"] {
+  border-color: var(--cp-overlay) !important;
 }
 /* Whispers/typing indicator — muted */
 .chatroom__whispers {
