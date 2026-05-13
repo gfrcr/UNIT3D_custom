@@ -40,12 +40,3 @@ Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do cam
 | Links / Info | `#89b4fa` blue |
 | Premium accent | `#cba6f7` mauve |
 
-## Desenvolvimento
-
-- `capyppuccin.css` — fonte formatada (editar aqui).
-- `capyppuccin.min.css` — output minificado (gerado por GitHub Action em todo push).
-- `capyppuccin-bg.css` / `.min.css` — wrapper que importa o tema + adiciona o bg.
-- `bg.svg` — pattern da capivara servido pelo Pages.
-- `.github/workflows/minify.yml` — Action que roda `csso` e commita o `.min.css`.
-
-Editar → `git push` → Action minifica em ~30s → Pages serve em ~1min.
