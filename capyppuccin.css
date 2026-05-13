@@ -496,6 +496,9 @@ button.form__button--filled.form__button--centered:hover {
 .text-info {
   color: var(--cp-subtext);
 }
+.text-muted {
+  color: var(--cp-subtext);
+}
 .text-warning {
   color: var(--cp-honey);
 }
