@@ -1217,17 +1217,53 @@ html {
   font-style: italic;
 }
 
-/* Comment list — base draws a barely-visible #444 line only BETWEEN
- * consecutive items, leaving single comments flush against the comment form
- * above. Apply a stronger top divider to every .comment so the first one
- * also reads as separated. */
-.comment-list .comment {
-  border-top: 1px solid var(--cp-overlay);
-  padding-top: 24px;
-  margin-top: 16px;
+/* Comments — mirror the .post card treatment so they read as discrete
+ * units (radius + shadow + clipped corners). Drops the base divider line
+ * approach in favor of separated cards. */
+.comment {
+  border-radius: var(--cp-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--cp-shadow-md);
+  background-color: var(--cp-surface-0);
+  margin-bottom: 12px;
 }
-.comment-list > .comment__list-item:first-child > .comment {
-  margin-top: 24px;
+.comment__header {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-text);
+}
+.comment__datetime {
+  color: var(--cp-subtext);
+  font-size: 12px;
+}
+.comment__toolbar {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-subtext);
+}
+.comment__aside {
+  background-color: var(--cp-surface-0);
+  color: var(--cp-subtext);
+  border-right: 1px solid var(--cp-surface-1);
+}
+.comment__avatar {
+  border-radius: var(--cp-radius-md);
+}
+.comment__content {
+  background-color: var(--cp-surface-0);
+  color: var(--cp-text);
+}
+.comment__author {
+  color: var(--cp-yellow);
+  font-weight: 600;
+}
+.comment__author-title {
+  color: var(--cp-subtext);
+  font-size: 11px;
+}
+/* Override base's flush #444 line — no longer needed since cards are visually
+ * separated by shadow + margin. */
+.comment__list-item + .comment__list-item > .comment {
+  border-top: none;
+  padding-top: 0;
 }
 
 /* === Secondary nav tabs ===
