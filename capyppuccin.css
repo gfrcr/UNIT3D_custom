@@ -457,7 +457,7 @@ a:focus {
 .notification a:visited:not([style]),
 .article-card a:visited:not([style]),
 .message a:visited:not([style]) {
-  color: var(--cp-honey);
+  color: var(--cp-yellow-soft);
 }
 
 /* Native form controls — no UNIT3D var for accent-color, apply broadly. */
@@ -469,12 +469,15 @@ a:focus {
  * Same .form__button--filled.form__button--centered class is used for both
  * <a> (navigate) and <button> (act). Differentiate by element: anchors get
  * inverted (surface + yellow text/border); <button> stays filled yellow. */
-a.form__button--filled.form__button--centered {
+a.form__button--filled.form__button--centered,
+a.form__button--filled.form__button--centered:link,
+a.form__button--filled.form__button--centered:visited {
   background: var(--cp-surface-1);
   color: var(--cp-yellow-soft);
   border: 1px solid var(--cp-yellow-soft);
 }
-a.form__button--filled.form__button--centered:hover {
+a.form__button--filled.form__button--centered:hover,
+a.form__button--filled.form__button--centered:focus {
   background: var(--cp-honey);
   color: var(--cp-base);
   border: 1px solid var(--cp-honey);
@@ -1150,7 +1153,9 @@ html {
 .torrent-search--poster__title {
   color: var(--cp-text);
 }
-.torrent-search--poster__poster:hover ~ .torrent-search--poster__caption .torrent-search--poster__title,
+.torrent-search--poster__poster:hover
+  ~ .torrent-search--poster__caption
+  .torrent-search--poster__title,
 .torrent-search--poster__result a:hover .torrent-search--poster__title {
   color: var(--cp-yellow);
 }
@@ -1348,4 +1353,3 @@ html {
   padding-top: 0;
   border-radius: var(--cp-radius-lg);
 }
-
