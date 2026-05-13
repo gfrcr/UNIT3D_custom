@@ -486,6 +486,238 @@ button.form__button--filled.form__button--centered:hover {
   background: var(--cp-honey);
 }
 
+/* === Utility color overrides ===
+ * Base ships hard-saturated text-* utilities (user-torrents, ratio cells).
+ * Remap to pastel Catppuccin tones. */
+.text-success {
+  color: var(--cp-green);
+}
+.text-info {
+  color: var(--cp-blue);
+}
+.text-warning {
+  color: var(--cp-honey);
+}
+.text-danger,
+.text-red {
+  color: var(--cp-red);
+}
+.text-green {
+  color: var(--cp-green);
+}
+.text-orange {
+  color: var(--cp-peach);
+}
+.text-blue {
+  color: var(--cp-blue);
+}
+.text-purple {
+  color: var(--cp-mauve);
+}
+
+/* === Search dropdown clipping fix ===
+ * Base uses overflow:hidden to clip rounded corners — also clips the abs-positioned
+ * results dropdown below the navbar. Switch to overflow:visible; input's own
+ * border-radius shapes it. Bump z-index so results layer above page content. */
+.compact-search,
+.quick-search {
+  overflow: visible;
+}
+.quick-search__results {
+  z-index: 1000;
+}
+
+/* === Top-nav alert badge ===
+ * Bell/envelope blink indicator; no UNIT3D var for color. Tint via `color`
+ * (for fill="currentColor" SVGs) plus explicit `fill` for hardcoded SVGs. */
+.top-nav__icon-bar > li > a > svg,
+.top-nav__icon-bar > li > a > svg * {
+  color: var(--cp-honey);
+  fill: var(--cp-honey);
+}
+
+/* === Secondary nav tabs ===
+ * Match top-nav dropdown pattern; drop base's brightness(120%) hover filter
+ * since bg lift + color shift already signals feedback. */
+.nav-tab--active__link,
+.nav-tab__link {
+  border-radius: var(--cp-radius-md);
+  transition:
+    color 0.12s ease,
+    background-color 0.12s ease;
+}
+.nav-tab--active__link:hover,
+.nav-tab__link:hover {
+  filter: none;
+}
+.nav-tab--active > .nav-tab--active__link {
+  color: var(--cp-yellow);
+  font-weight: 600;
+}
+
+/* Quick-search input — base ships no hover/focus vars; wire them explicitly. */
+.quick-search__input {
+  border: 1px solid var(--cp-overlay);
+  color: var(--cp-text);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.quick-search__input::placeholder {
+  color: var(--cp-subtext);
+}
+.quick-search__input:hover {
+  border-color: var(--cp-honey);
+}
+.quick-search__input:focus {
+  border-color: var(--cp-yellow);
+  outline: none;
+}
+/* === Panel tabs ===
+ * Upstream paints active tab #b0b0b0 + #888 underline (reads as disabled).
+ * Also fixes .panel__tab using --data-table-th-fg for bg (upstream typo, should be -bg). */
+.panel__tabs {
+  background-color: var(--cp-surface-1);
+  border-bottom: 1px solid var(--cp-surface-1);
+}
+.panel__tab {
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--cp-subtext);
+  border-radius: var(--cp-radius-md) var(--cp-radius-md) 0 0;
+  transition:
+    color 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+.panel__tab:hover {
+  color: var(--cp-text);
+  background-color: var(--cp-surface-0);
+}
+.panel__tab--active {
+  color: var(--cp-yellow);
+  background-color: var(--cp-surface-0);
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+}
+/* Chat tab ping icon — base uses .text-danger for idle (reads as alert);
+ * inherit tab color instead so idle isn't visually loud. */
+.chatbox__tab .fa-comment.text-danger {
+  color: inherit;
+}
+/* Chat tab × icon — base ships always-red; inherit tab color, red only on
+ * hover. <button> needs explicit color:inherit (UA default is `buttontext`). */
+.chatbox__tab-delete-button,
+.chatbox__tab-delete-icon {
+  color: inherit;
+}
+.chatbox__tab-delete-button:hover .chatbox__tab-delete-icon {
+  color: var(--cp-red);
+}
+
+/* === BBCode input (forum/PM/comment editor) ===
+ * Base hardcodes #555/#888 tab labels — invisible on dark. Remap to yellow-active. */
+.bbcode-input__tab-label {
+  color: var(--cp-subtext);
+  cursor: pointer;
+  transition:
+    color 0.12s ease,
+    background-color 0.12s ease;
+}
+.bbcode-input__tab-label:hover {
+  color: var(--cp-text);
+  background-color: var(--cp-surface-1);
+}
+.bbcode-input__tab-input:checked + .bbcode-input__tab-label {
+  color: var(--cp-yellow);
+  border-bottom: 2px solid var(--cp-yellow);
+  font-weight: 600;
+}
+/* Toolbar separator — base leaves UA inset/groove; thin vertical line instead. */
+.bbcode-input__icon-separator {
+  border: none;
+  border-left: 1px solid var(--cp-surface-1);
+  width: 0;
+}
+.panel__heading {
+  color: var(--cp-text);
+}
+
+/* === Data-table polish ===
+ * Round corners + small-caps thead. border-collapse: separate required for
+ * per-cell radius; manually re-add row separators via border-top. */
+.data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.data-table thead tr th {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--cp-subtext);
+}
+.data-table thead tr th:first-of-type {
+  border-top-left-radius: var(--cp-radius-md);
+}
+.data-table thead tr th:last-of-type {
+  border-top-right-radius: var(--cp-radius-md);
+}
+.data-table tbody tr td {
+  border-top: 1px solid var(--cp-surface-1);
+}
+.data-table tbody tr:first-of-type td {
+  border-top: none;
+}
+.data-table tbody tr:last-of-type td:first-of-type {
+  border-bottom-left-radius: var(--cp-radius-md);
+}
+.data-table tbody tr:last-of-type td:last-of-type {
+  border-bottom-right-radius: var(--cp-radius-md);
+}
+.data-table tbody tr {
+  transition: background-color 0.12s ease;
+}
+/* .data-table inside a panel — drop top-corner radius to butt flush with heading. */
+:is(.panel, .panelV2) .data-table thead tr th:first-of-type,
+:is(.panel, .panelV2) .data-table thead tr th:last-of-type {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Same treatment for key-value tables (settings forms, user stats) */
+.key-value {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--cp-radius-md);
+  overflow: hidden;
+}
+
+/* Selection highlight (default is system blue) */
+::selection {
+  background: var(--cp-yellow);
+  color: var(--cp-base);
+}
+
+/* Custom scrollbars (Firefox + WebKit) */
+html {
+  scrollbar-color: var(--cp-surface-1) var(--cp-base);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cp-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cp-surface-1);
+  border-radius: var(--cp-radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cp-yellow);
+}
+
 /* === Topic show — individual posts ===
  * Base hardcodes border-radius: 5px on .post/toolbar — too tight. Bump to
  * radius-lg and tighten header/aside/toolbar so each post reads as a card. */
@@ -787,201 +1019,6 @@ button.form__button--filled.form__button--centered:hover {
   --forum-tag-denied-fg: var(--cp-red);
 }
 
-/* === Search dropdown clipping fix ===
- * Base uses overflow:hidden to clip rounded corners — also clips the abs-positioned
- * results dropdown below the navbar. Switch to overflow:visible; input's own
- * border-radius shapes it. Bump z-index so results layer above page content. */
-.compact-search,
-.quick-search {
-  overflow: visible;
-}
-.quick-search__results {
-  z-index: 1000;
-}
-
-/* === Top-nav alert badge ===
- * Bell/envelope blink indicator; no UNIT3D var for color. Tint via `color`
- * (for fill="currentColor" SVGs) plus explicit `fill` for hardcoded SVGs. */
-.top-nav__icon-bar > li > a > svg,
-.top-nav__icon-bar > li > a > svg * {
-  color: var(--cp-honey);
-  fill: var(--cp-honey);
-}
-
-/* === Panel tabs ===
- * Upstream paints active tab #b0b0b0 + #888 underline (reads as disabled).
- * Also fixes .panel__tab using --data-table-th-fg for bg (upstream typo, should be -bg). */
-.panel__tabs {
-  background-color: var(--cp-surface-1);
-  border-bottom: 1px solid var(--cp-surface-1);
-}
-.panel__tab {
-  background-color: transparent;
-  border-bottom: 2px solid transparent;
-  color: var(--cp-subtext);
-  border-radius: var(--cp-radius-md) var(--cp-radius-md) 0 0;
-  transition:
-    color 0.12s ease,
-    border-color 0.12s ease,
-    background-color 0.12s ease;
-}
-.panel__tab:hover {
-  color: var(--cp-text);
-  background-color: var(--cp-surface-0);
-}
-.panel__tab--active {
-  color: var(--cp-yellow);
-  background-color: var(--cp-surface-0);
-  border-bottom: 2px solid transparent;
-  font-weight: 600;
-}
-/* Chat tab ping icon — base uses .text-danger for idle (reads as alert);
- * inherit tab color instead so idle isn't visually loud. */
-.chatbox__tab .fa-comment.text-danger {
-  color: inherit;
-}
-/* Chat tab × icon — base ships always-red; inherit tab color, red only on
- * hover. <button> needs explicit color:inherit (UA default is `buttontext`). */
-.chatbox__tab-delete-button,
-.chatbox__tab-delete-icon {
-  color: inherit;
-}
-.chatbox__tab-delete-button:hover .chatbox__tab-delete-icon {
-  color: var(--cp-red);
-}
-
-/* === BBCode input (forum/PM/comment editor) ===
- * Base hardcodes #555/#888 tab labels — invisible on dark. Remap to yellow-active. */
-.bbcode-input__tab-label {
-  color: var(--cp-subtext);
-  cursor: pointer;
-  transition:
-    color 0.12s ease,
-    background-color 0.12s ease;
-}
-.bbcode-input__tab-label:hover {
-  color: var(--cp-text);
-  background-color: var(--cp-surface-1);
-}
-.bbcode-input__tab-input:checked + .bbcode-input__tab-label {
-  color: var(--cp-yellow);
-  border-bottom: 2px solid var(--cp-yellow);
-  font-weight: 600;
-}
-/* Toolbar separator — base leaves UA inset/groove; thin vertical line instead. */
-.bbcode-input__icon-separator {
-  border: none;
-  border-left: 1px solid var(--cp-surface-1);
-  width: 0;
-}
-.panel__heading {
-  color: var(--cp-text);
-}
-
-/* === Data-table polish ===
- * Round corners + small-caps thead. border-collapse: separate required for
- * per-cell radius; manually re-add row separators via border-top. */
-.data-table {
-  border-collapse: separate;
-  border-spacing: 0;
-}
-.data-table thead tr th {
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--cp-subtext);
-}
-.data-table thead tr th:first-of-type {
-  border-top-left-radius: var(--cp-radius-md);
-}
-.data-table thead tr th:last-of-type {
-  border-top-right-radius: var(--cp-radius-md);
-}
-.data-table tbody tr td {
-  border-top: 1px solid var(--cp-surface-1);
-}
-.data-table tbody tr:first-of-type td {
-  border-top: none;
-}
-.data-table tbody tr:last-of-type td:first-of-type {
-  border-bottom-left-radius: var(--cp-radius-md);
-}
-.data-table tbody tr:last-of-type td:last-of-type {
-  border-bottom-right-radius: var(--cp-radius-md);
-}
-.data-table tbody tr {
-  transition: background-color 0.12s ease;
-}
-/* .data-table inside a panel — drop top-corner radius to butt flush with heading. */
-:is(.panel, .panelV2) .data-table thead tr th:first-of-type,
-:is(.panel, .panelV2) .data-table thead tr th:last-of-type {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-/* Same treatment for key-value tables (settings forms, user stats) */
-.key-value {
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: var(--cp-radius-md);
-  overflow: hidden;
-}
-
-/* Selection highlight (default is system blue) */
-::selection {
-  background: var(--cp-yellow);
-  color: var(--cp-base);
-}
-
-/* Custom scrollbars (Firefox + WebKit) */
-html {
-  scrollbar-color: var(--cp-surface-1) var(--cp-base);
-}
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--cp-base);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--cp-surface-1);
-  border-radius: var(--cp-radius-sm);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--cp-yellow);
-}
-
-/* === Utility color overrides ===
- * Base ships hard-saturated text-* utilities (user-torrents, ratio cells).
- * Remap to pastel Catppuccin tones. */
-.text-success {
-  color: var(--cp-green);
-}
-.text-info {
-  color: var(--cp-blue);
-}
-.text-warning {
-  color: var(--cp-honey);
-}
-.text-danger,
-.text-red {
-  color: var(--cp-red);
-}
-.text-green {
-  color: var(--cp-green);
-}
-.text-orange {
-  color: var(--cp-peach);
-}
-.text-blue {
-  color: var(--cp-blue);
-}
-.text-purple {
-  color: var(--cp-mauve);
-}
-
 /* === Torrent meta page (.page__torrent-similar--index and torrent show) ===
  * Base sets .meta__title to #bbb (grey) — promote to brand yellow. */
 .meta__title {
@@ -1225,40 +1262,3 @@ html {
   border-radius: var(--cp-radius-lg);
 }
 
-/* === Secondary nav tabs ===
- * Match top-nav dropdown pattern; drop base's brightness(120%) hover filter
- * since bg lift + color shift already signals feedback. */
-.nav-tab--active__link,
-.nav-tab__link {
-  border-radius: var(--cp-radius-md);
-  transition:
-    color 0.12s ease,
-    background-color 0.12s ease;
-}
-.nav-tab--active__link:hover,
-.nav-tab__link:hover {
-  filter: none;
-}
-.nav-tab--active > .nav-tab--active__link {
-  color: var(--cp-yellow);
-  font-weight: 600;
-}
-
-/* Quick-search input — base ships no hover/focus vars; wire them explicitly. */
-.quick-search__input {
-  border: 1px solid var(--cp-overlay);
-  color: var(--cp-text);
-  transition:
-    border-color 0.12s ease,
-    box-shadow 0.12s ease;
-}
-.quick-search__input::placeholder {
-  color: var(--cp-subtext);
-}
-.quick-search__input:hover {
-  border-color: var(--cp-honey);
-}
-.quick-search__input:focus {
-  border-color: var(--cp-yellow);
-  outline: none;
-}
