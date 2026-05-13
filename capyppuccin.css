@@ -775,6 +775,16 @@ button.form__button--filled.form__button--centered:hover {
   border-radius: var(--cp-radius-md);
   overflow: hidden;
 }
+/* Base stripes only .key-value__group--nested (nested rows). Plain
+ * .key-value__group at the end of a panel breaks the pattern visually.
+ * Extend striping to all .key-value__group so the alternating bg
+ * continues uniformly through summary/totals rows at the bottom. */
+.key-value__group:nth-child(odd) {
+  background-color: var(--key-value-odd-bg);
+}
+.key-value__group:nth-child(2n) {
+  background-color: var(--key-value-even-bg);
+}
 
 /* Selection highlight (default is system blue) */
 ::selection {
