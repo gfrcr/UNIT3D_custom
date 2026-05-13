@@ -940,6 +940,15 @@ button.form__button--filled.form__button--centered:hover {
 .chatbox__tab .fa-comment.text-danger {
   color: inherit;
 }
+/* Chat tab close (×) icon — base ships always-red. Soften to inherit (tracks
+ * the tab's text color) and only flip to red on hover so it doesn't compete
+ * for attention when idle. */
+.chatbox__tab-delete-icon {
+  color: inherit;
+}
+.chatbox__tab-delete-button:hover .chatbox__tab-delete-icon {
+  color: var(--cp-red);
+}
 
 /* === BBCode input (forum/PM/comment editor) ===
  * Write/Visualizar tabs at top + toolbar + textarea. Base hardcodes #555
