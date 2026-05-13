@@ -634,7 +634,8 @@ button.form__button--filled.form__button--centered:hover {
 }
 .bbcode-input__tab-input:checked + .bbcode-input__tab-label {
   color: var(--cp-yellow);
-  border-bottom: 2px solid var(--cp-yellow);
+  background-color: var(--cp-surface-0);
+  border-bottom: 2px solid transparent;
   font-weight: 600;
 }
 /* Toolbar separator — base leaves UA inset/groove; thin vertical line instead. */
