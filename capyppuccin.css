@@ -942,7 +942,9 @@ button.form__button--filled.form__button--centered:hover {
 }
 /* Chat tab close (×) icon — base ships always-red. Soften to inherit (tracks
  * the tab's text color) and only flip to red on hover so it doesn't compete
- * for attention when idle. */
+ * for attention when idle. Note: <button> needs explicit color:inherit
+ * because UA default is `buttontext` (system color, not inherited). */
+.chatbox__tab-delete-button,
 .chatbox__tab-delete-icon {
   color: inherit;
 }
