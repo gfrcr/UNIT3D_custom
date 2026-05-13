@@ -564,13 +564,6 @@ button.form__button--filled.form__button--centered:hover {
 .quick-search__results {
   z-index: 1000;
 }
-/* Continuous outline: when focus is anywhere inside .quick-search, paint
- * both the input border AND the dropdown border yellow so they read as a
- * single connected element instead of two stacked cards. */
-.quick-search:focus-within .quick-search__input,
-.quick-search:focus-within .quick-search__results {
-  border-color: var(--cp-yellow);
-}
 
 /* === Top-nav alert badge ===
  * Bell/envelope blink indicator; no UNIT3D var for color. Tint via `color`
