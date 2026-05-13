@@ -1217,12 +1217,17 @@ html {
   font-style: italic;
 }
 
-/* Comment list — base uses #444 between items which is barely visible on
- * our warm-charcoal surface. Beef up the divider and add breathing room. */
-.comment__list-item + .comment__list-item > .comment {
-  border-top: 1px solid var(--cp-surface-1);
-  padding-top: 28px;
+/* Comment list — base draws a barely-visible #444 line only BETWEEN
+ * consecutive items, leaving single comments flush against the comment form
+ * above. Apply a stronger top divider to every .comment so the first one
+ * also reads as separated. */
+.comment-list .comment {
+  border-top: 1px solid var(--cp-overlay);
+  padding-top: 24px;
   margin-top: 16px;
+}
+.comment-list > .comment__list-item:first-child > .comment {
+  margin-top: 24px;
 }
 
 /* === Secondary nav tabs ===
