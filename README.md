@@ -1,17 +1,23 @@
 # Capyppuccin
 
-Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Paleta amarelo-pastel inspirada em [Catppuccin Mocha](https://catppuccin.com) sobre superfícies charcoal quentes, com cantos arredondados e shadows mais suaves.
+Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Duas paletas pastel inspiradas em [Catppuccin Mocha](https://catppuccin.com), sobre superfícies charcoal, com cantos arredondados e shadows suaves.
+
+## Variantes
+
+- **Amarelo (padrão)** — escala `soft → cream → yellow → honey` em torno de `#f9e2af`, sobre superfícies *warm* (`#161412 / #0e0d0c / #221f1c / #2f2b27`).
+- **Teal** — mesma estrutura com escala em torno de `#2dd4bf`, sobre superfícies *cool* deep (`#0e1110 / #07090a / #161a19 / #1f2422`).
+
+Verde/vermelho/azul/mauve dos seeders, leechers, links e accents são comuns às duas.
 
 ## O que muda
 
-- **Paleta amarelo-dominante** — botões/links/active states em yellow pastel (`#f9e2af`), com hierarquia de 4 tons (soft → cream → yellow → honey).
-- **Superfícies warm charcoal** — `#161412 / #0e0d0c / #221f1c / #2f2b27` (sem o roxo do Mocha original).
-- **Texto warm off-white** — sem a tonalidade lavanda dos cinzas Material.
-- **Hover / focus consistentes** — peach/honey no hover, yellow no focus, em todos os inputs.
+- **Hierarquia de accent em 4 tons** — botões, links e active states no accent forte; hover sobe pro cream; honey nos contadores e dropdowns; soft só em estados muito leves.
+- **Superfícies charcoal** — sem o roxo do Mocha original; warm na variante amarela, cool na variante teal.
+- **Hover / focus consistentes** — honey no hover, accent no focus, em todos os inputs.
 - **Cards mais pronunciados** — `border-radius` 10/14/20px e shadows suaves; posts do fórum, comentários e mensagens de chat ficam como cards distintos.
-- **Hierarquia tipográfica nos fóruns** — section heads em small-caps yellow, títulos de tópicos destacados, contadores honey.
+- **Hierarquia tipográfica nos fóruns** — section heads em small-caps, títulos de tópicos destacados, contadores honey.
 - **Ícones de torrent pastel** — FREE / INTERNAL / sticky / hr / freeleech remapeados para tons da paleta (override de inline styles via `!important`).
-- **Padrão único de tabs** — secondary nav, panel tabs, chat tabs e bbcode editor compartilham o mesmo hover (surface-1 lift) e active (yellow + bold).
+- **Padrão único de tabs** — secondary nav, panel tabs, chat tabs e bbcode editor compartilham o mesmo hover (surface-1 lift) e active (accent + bold).
 
 ## Instalação
 
