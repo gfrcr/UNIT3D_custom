@@ -40,7 +40,7 @@ jobs:
           set -euo pipefail
           for palette in src/_palette-*.css; do
             variant=$(basename "$palette" .css | sed 's/^_palette-//')
-            if [ "$variant" = "yellow" ]; then
+            if [ "$variant" = "capyppuccin" ]; then
               out="capyppuccin.min.css"
             else
               out="capyppuccin-${variant}.min.css"

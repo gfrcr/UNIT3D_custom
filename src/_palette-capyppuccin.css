@@ -1,7 +1,7 @@
 /*!
- * Capyppuccin (yellow) — palette tokens
+ * Capyppuccin — palette tokens (canonical yellow-dominant scale)
  * Pairs with src/_core.css; combined into capyppuccin.min.css by the workflow.
- * Adding a variant = copy this file, swap hexes + palette-derived assets. */
+ * Adding a variant = copy this file to _palette-<name>.css, swap hexes. */
 
 :root {
   /* Palette */
