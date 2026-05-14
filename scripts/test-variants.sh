@@ -17,6 +17,12 @@ CANONICAL="src/_palette-capyppuccin.css"
 PALETTES=(src/_palette-*.css)
 FAIL=0
 
+# Minimum number of var values that must differ between any two palettes.
+# Discourages near-duplicate variants (e.g., changing only 2 hexes).
+# Calibrated to capyppuccin vs teal distance (the canonical "this is a
+# meaningfully different variant" baseline).
+MIN_DISTINCT_VARS=16
+
 err() { printf '  \033[31mFAIL\033[0m %s\n' "$1" >&2; FAIL=1; }
 ok() { printf '  \033[32mOK\033[0m   %s\n' "$1"; }
 section() { printf '\n\033[1m%s\033[0m\n' "$1"; }
@@ -113,6 +119,31 @@ for p in "${PALETTES[@]}"; do
     ok "$variant builds: $count selectors"
   fi
 done
+
+section "7. variants must differ meaningfully from each other"
+extract_kv() {
+  grep -oE '^\s*--[a-z0-9-]+\s*:\s*[^;]+' "$1" \
+    | sed 's/^\s*\(--[a-z0-9-]\+\)\s*:\s*\(.*\)$/\1=\2/' \
+    | sort
+}
+if [ "${#PALETTES[@]}" -lt 2 ]; then
+  ok "only one palette, distance check skipped"
+else
+  for ((i = 0; i < ${#PALETTES[@]}; i++)); do
+    for ((j = i + 1; j < ${#PALETTES[@]}; j++)); do
+      p1="${PALETTES[$i]}"
+      p2="${PALETTES[$j]}"
+      diff_count=$(diff <(extract_kv "$p1") <(extract_kv "$p2") | grep -c '^>' || true)
+      name1=$(basename "$p1" .css | sed 's/^_palette-//')
+      name2=$(basename "$p2" .css | sed 's/^_palette-//')
+      if [ "$diff_count" -lt "$MIN_DISTINCT_VARS" ]; then
+        err "$name1 vs $name2: only $diff_count vars differ (min $MIN_DISTINCT_VARS) — near-duplicate variant"
+      else
+        ok "$name1 vs $name2: $diff_count vars differ"
+      fi
+    done
+  done
+fi
 
 echo
 if [ $FAIL -eq 0 ]; then
