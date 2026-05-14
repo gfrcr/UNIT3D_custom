@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/capyppuccin.css"
+      - "src/_core.css"
+      - "src/_palette-*.css"
       - "src/capyppuccin-bg.css"
       - ".github/workflows/minify.yml"
   workflow_dispatch:
@@ -32,19 +33,31 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Minify
+      - name: Build variants
+        # Each capyppuccin-<variant>.min.css = _palette-<variant>.css + _core.css, minified.
+        # Adding a variant = drop a new _palette-<name>.css; the loop picks it up.
         run: |
-          npx --yes csso-cli@4.0.1 src/capyppuccin.css -o capyppuccin.min.css
+          set -euo pipefail
+          for palette in src/_palette-*.css; do
+            variant=$(basename "$palette" .css | sed 's/^_palette-//')
+            if [ "$variant" = "yellow" ]; then
+              out="capyppuccin.min.css"
+            else
+              out="capyppuccin-${variant}.min.css"
+            fi
+            cat "$palette" src/_core.css | npx --yes csso-cli@4.0.1 -o "$out"
+            echo "built $out from $palette + src/_core.css"
+          done
           npx --yes csso-cli@4.0.1 src/capyppuccin-bg.css -o capyppuccin-bg.min.css
 
       - name: Commit minified output
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet capyppuccin.min.css capyppuccin-bg.min.css; then
+          git add capyppuccin*.min.css
+          if git diff --cached --quiet; then
             echo "No changes in minified output, skipping commit."
             exit 0
           fi
-          git add capyppuccin.min.css capyppuccin-bg.min.css
           git commit -m "build: regen minified css [skip-minify]"
           git push
