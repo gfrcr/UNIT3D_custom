@@ -489,7 +489,7 @@ html {
   background-color: var(--cp-accent-light);
   color: var(--cp-base);
 }
-.scroll-to-top-btn:focus-visible {
+.scroll-to-top-btn:focus {
   background-color: var(--cp-peach);
   color: var(--cp-base);
   outline: 2px solid var(--cp-peach);
