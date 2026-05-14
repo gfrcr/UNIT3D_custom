@@ -1,51 +1,75 @@
 /*!
- * Capyppuccin — palette tokens (canonical yellow-dominant scale)
- * Pairs with src/_core.css; combined into capyppuccin.min.css by the workflow.
- * Adding a variant = copy this file to _palette-<name>.css, swap hexes. */
+ * Capyppuccin — canonical palette (yellow-dominant)
+ * Pairs with src/_core.css; combined into capyppuccin.min.css.
+ * Variant authoring guide: see comments inline + ../README.md. */
 
 :root {
-  /* Palette */
-  --cp-yellow-soft: #fff8c5;
-  --cp-cream: #fce087;
-  --cp-yellow: #f9e2af;
-  --cp-honey: #e8c573;
+  /* ============================================================
+   *  ACCENT RAMP — the brand color in 4 tones (soft → strong).
+   *  Drives every "primary" element: buttons, links, active states,
+   *  focused inputs, dropdown hovers, panel headings.
+   *  Pick a hue, then ladder 4 hex values from pale to saturated.
+   * ============================================================ */
+  --cp-accent-soft: #fff8c5;   /* pale: visited links, glow rings */
+  --cp-accent-light: #fce087;  /* hover lifts, decorative icon bg */
+  --cp-accent: #f9e2af;        /* main brand: buttons, links, focus */
+  --cp-accent-strong: #e8c573; /* counters, dropdown icon circle, button hover */
+
+  /* Warm complements — orange/rose used by stock UNIT3D for specific
+   * states (.text-orange, double-upload icon, visited torrent rows).
+   * Keep warm even in a cool variant or those badges read off. */
   --cp-peach: #fab387;
   --cp-rosewater: #f5e0dc;
 
+  /* SURFACES — 4-tone background ramp, darkest (mantle) to lightest (surface-1).
+   * Body bg = base; nav/footer = mantle; cards/panels = surface-0; thead/headers = surface-1.
+   * Keep enough contrast between adjacent tones (~8% lightness) for cards to read as cards. */
   --cp-base: #161412;
   --cp-mantle: #0e0d0c;
   --cp-surface-0: #221f1c;
   --cp-surface-1: #2f2b27;
 
+  /* TEXT — 3 tones for hierarchy. text on cards; subtext for metadata; overlay for borders/disabled. */
   --cp-text: #ebe2cf;
   --cp-subtext: #b8b1a0;
   --cp-overlay: #7d7869;
 
-  --cp-green: #a6e3a1;
-  --cp-red: #f38ba8;
-  --cp-blue: #89b4fa;
-  --cp-mauve: #cba6f7;
-  --cp-teal: #94e2d5;
-  --cp-pink: #f5c2e7;
+  /* SEMANTIC — fixed meaning regardless of palette. Don't swap to your accent;
+   * green stays green (seeders), red stays red (leechers/danger), etc. */
+  --cp-green: #a6e3a1;   /* seeders, success */
+  --cp-red: #f38ba8;     /* leechers, danger */
+  --cp-blue: #89b4fa;    /* info, completed badge */
+  --cp-mauve: #cba6f7;   /* premium, personal release */
+  --cp-teal: #94e2d5;    /* ratio buffer */
+  --cp-pink: #f5c2e7;    /* featured */
 
-  /* Shape + shadow scales */
+  /* Shape (radii) — usually keep these across variants; they define the
+   * "feel" of the theme more than the palette does. */
   --cp-radius-xs: 3px;
   --cp-radius-sm: 6px;
   --cp-radius-md: 10px;
   --cp-radius-lg: 14px;
   --cp-radius-xl: 20px;
 
+  /* Shadows — black drops scale by elevation; glow uses accent hue.
+   * Variants: update the glow rgba to match the new accent. */
   --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
   --cp-glow-soft: 0 0 12px rgba(249, 226, 175, 0.4);
   --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5);
 
+  /* ============================================================
+   *  COMPONENT MAPPINGS — UNIT3D's own vars wired to our palette.
+   *  Generally edit ABOVE this line for a new variant; below should
+   *  stay as `var(--cp-*)` references that resolve automatically.
+   * ============================================================ */
+
   /* Buttons */
-  --button-filled-bg: var(--cp-yellow);
+  --button-filled-bg: var(--cp-accent);
   --button-filled-fg: var(--cp-base);
-  --button-outlined-fg: var(--cp-yellow);
-  --button-text-fg: var(--cp-yellow);
+  --button-outlined-fg: var(--cp-accent);
+  --button-text-fg: var(--cp-accent);
   --icon-button-filled-fg: var(--cp-base);
   --icon-button-fg: var(--cp-text);
 
@@ -108,8 +132,8 @@
   --textarea-fg: var(--cp-text);
   --select-fg: var(--cp-text);
   --breadcrumb-fg: var(--cp-subtext);
-  --breadcrumb-active-fg: var(--cp-yellow);
-  --breadcrumb-hover-fg: var(--cp-cream);
+  --breadcrumb-active-fg: var(--cp-accent);
+  --breadcrumb-hover-fg: var(--cp-accent-light);
   --article-card-time-fg: var(--cp-subtext);
   --meta-description-fg: var(--cp-subtext);
   --footer-hr-fg: var(--cp-surface-1);
@@ -118,8 +142,8 @@
   --torrent-row-seeders-fg: var(--cp-green);
   --torrent-row-leechers-fg: var(--cp-red);
   --bbcode-rendered-danger-fg: var(--cp-red);
-  --bbcode-rendered-accent-fg: var(--cp-yellow);
-  --bbcode-rendered-accent-emphasis: var(--cp-cream);
+  --bbcode-rendered-accent-fg: var(--cp-accent);
+  --bbcode-rendered-accent-emphasis: var(--cp-accent-light);
 
   /* Border radii — md: inputs/buttons; lg: cards/panels; xl: circles */
   --button-filled-border-radius: var(--cp-radius-md);
@@ -169,15 +193,15 @@
 
   /* Top nav */
   --top-nav-dropdown-fg: var(--cp-text);
-  --top-nav-dropdown-hover-fg: var(--cp-yellow);
+  --top-nav-dropdown-hover-fg: var(--cp-accent);
   --top-nav-dropdown-hover-bg: var(--cp-surface-1);
   --top-nav-dropdown-menu-bg: var(--cp-surface-0);
   --top-nav-dropdown-menu-item-fg: var(--cp-text);
   --top-nav-dropdown-menu-item-bg: transparent;
-  --top-nav-dropdown-menu-item-hover-fg: var(--cp-yellow);
+  --top-nav-dropdown-menu-item-hover-fg: var(--cp-accent);
   --top-nav-dropdown-menu-item-hover-bg: var(--cp-surface-1);
   --top-nav-dropdown-menu-item-icon-fg: var(--cp-base);
-  --top-nav-dropdown-menu-item-icon-bg: var(--cp-honey);
+  --top-nav-dropdown-menu-item-icon-bg: var(--cp-accent-strong);
 
   --top-nav-stats-fg: var(--cp-text);
   --top-nav-toggle-fg: var(--cp-text);
@@ -185,12 +209,12 @@
   --top-nav-icon-bar-icon-fg: var(--cp-text);
   --top-nav-icon-bar-icon-bg: var(--cp-surface-1);
   --top-nav-icon-bar-icon-hover-fg: var(--cp-base);
-  --top-nav-icon-bar-icon-hover-bg: var(--cp-cream);
+  --top-nav-icon-bar-icon-hover-bg: var(--cp-accent-light);
 
   /* Secondary-nav tabs */
   --secondary-nav-tab-fg: var(--cp-text);
   --secondary-nav-tab-bg: transparent;
-  --secondary-nav-tab-hover-fg: var(--cp-yellow);
+  --secondary-nav-tab-hover-fg: var(--cp-accent);
   --secondary-nav-tab-hover-bg: var(--cp-surface-1);
   --secondary-nav-tab-active-text-decoration: none;
   --secondary-nav-tab-hover-text-decoration: none;
@@ -199,18 +223,18 @@
 
   /* Form active/hover — surface-1 was too close to panel bg, use overlay. */
   --input-text-border: 1px solid var(--cp-overlay);
-  --input-text-border-active: 2px solid var(--cp-yellow);
-  --input-text-border-hover: 2px solid var(--cp-honey);
+  --input-text-border-active: 2px solid var(--cp-accent);
+  --input-text-border-hover: 2px solid var(--cp-accent-strong);
   --select-border: 1px solid var(--cp-overlay);
-  --select-border-active: 2px solid var(--cp-yellow);
-  --select-border-hover: 2px solid var(--cp-honey);
+  --select-border-active: 2px solid var(--cp-accent);
+  --select-border-hover: 2px solid var(--cp-accent-strong);
   --textarea-border: 1px solid var(--cp-overlay);
-  --textarea-border-active: 2px solid var(--cp-yellow);
-  --textarea-border-hover: 2px solid var(--cp-honey);
-  --label-fg-active: var(--cp-yellow);
-  --label-fg-hover: var(--cp-honey);
+  --textarea-border-active: 2px solid var(--cp-accent);
+  --textarea-border-hover: 2px solid var(--cp-accent-strong);
+  --label-fg-active: var(--cp-accent);
+  --label-fg-hover: var(--cp-accent-strong);
 
-  --button-outlined-border: 1px solid var(--cp-yellow);
+  --button-outlined-border: 1px solid var(--cp-accent);
   --fieldset-border: 1px solid var(--cp-overlay);
   --data-table-thead-border: 1px solid var(--cp-overlay);
   --data-table-tr-border: 1px solid var(--cp-surface-1);
@@ -223,39 +247,39 @@
   --quick-search-fg: var(--cp-text);
   --quick-search-selector-fg: var(--cp-subtext);
   --quick-search-selector-hover-bg: var(--cp-surface-1);
-  --quick-search-selector-hover-fg: var(--cp-yellow);
-  --quick-search-selector-selected-bg: var(--cp-honey);
+  --quick-search-selector-hover-fg: var(--cp-accent);
+  --quick-search-selector-selected-bg: var(--cp-accent-strong);
   --quick-search-selector-selected-fg: var(--cp-base);
   --quick-search-result-bg: var(--cp-surface-0);
   --quick-search-result-fg: var(--cp-text);
   --quick-search-result-hover-bg: var(--cp-surface-1);
-  --quick-search-result-hover-fg: var(--cp-yellow);
+  --quick-search-result-hover-fg: var(--cp-accent);
   --quick-search-result-year-fg: var(--cp-subtext);
 
   /* Meta chips / dropdowns / popups */
   --meta-dropdown-fg: var(--cp-text);
   --meta-dropdown-hover-bg: var(--cp-surface-1);
-  --meta-dropdown-hover-fg: var(--cp-yellow);
+  --meta-dropdown-hover-fg: var(--cp-accent);
   --meta-chips-heading-fg: var(--cp-subtext);
   --meta-chip-icon-fg: var(--cp-base);
-  --meta-chip-icon-bg: var(--cp-honey);
-  --meta-chip-icon-hover-bg: var(--cp-cream);
+  --meta-chip-icon-bg: var(--cp-accent-strong);
+  --meta-chip-icon-hover-bg: var(--cp-accent-light);
   --meta-chip-name-fg: var(--cp-text);
   --meta-chip-value-fg: var(--cp-subtext);
-  --meta-chip-value-hover-fg: var(--cp-yellow);
+  --meta-chip-value-hover-fg: var(--cp-accent);
   --meta-chip-hover-bg: var(--cp-surface-1);
   --meta-id-tag-fg: var(--cp-text);
-  --meta-id-tag-hover-fg: var(--cp-yellow);
+  --meta-id-tag-hover-fg: var(--cp-accent);
   --meta-id-tag-hover-bg: var(--cp-surface-1);
   --meta-popup-fg: var(--cp-text);
 
   /* Paginate */
   --paginate-bg-hover: var(--cp-surface-1);
-  --paginate-bg-current: var(--cp-yellow);
+  --paginate-bg-current: var(--cp-accent);
   --paginate-fg-disabled: var(--cp-overlay);
   --paginate-divider: var(--cp-overlay);
 
-  --icon-button-filled-bg: var(--cp-cream);
+  --icon-button-filled-bg: var(--cp-accent-light);
 
   /* Torrent-row badges */
   --torrent-row-fg: var(--cp-text);
@@ -269,11 +293,11 @@
   --torrent-row-internal-fg: var(--cp-rosewater);
   --torrent-row-personal-fg: var(--cp-mauve);
   --torrent-row-featured-fg: var(--cp-pink);
-  --torrent-row-freeleech-fg: var(--cp-yellow);
+  --torrent-row-freeleech-fg: var(--cp-accent);
   --torrent-row-double-upload-fg: var(--cp-peach);
   --torrent-row-highspeed-fg: var(--cp-red);
   --torrent-row-bumped-fg: var(
-    --cp-honey
+    --cp-accent-strong
   ); /* richer than freeleech, less than upload */
 
   /* Torrent / playlist / user cards */
@@ -281,20 +305,20 @@
   --torrent-card-fg: var(--cp-text);
   --torrent-card-head-bg: var(--cp-surface-1);
   --torrent-card-head-fg: var(--cp-text);
-  --torrent-card-link-fg: var(--cp-yellow);
+  --torrent-card-link-fg: var(--cp-accent);
   --torrent-card-genre-fg: var(--cp-subtext);
   --torrent-group-bg: var(--cp-surface-0);
   --torrent-group-header-bg: var(--cp-surface-1);
   --torrent-group-text: var(--cp-text);
   --torrent-group-text-muted: var(--cp-subtext);
   --torrent-tag-fg: var(--cp-text);
-  --torrent-tag-hover-fg: var(--cp-yellow);
+  --torrent-tag-hover-fg: var(--cp-accent);
   --user-stat-card-bg: var(--cp-surface-0);
   --user-stat-card-fg: var(--cp-text);
 
   /* Chatbox / forum / posts */
   --chatbox-button-fg: var(--cp-subtext);
-  --chatbox-button-hover-fg: var(--cp-yellow);
+  --chatbox-button-hover-fg: var(--cp-accent);
   --chatbox-tab-delete-fg: var(--cp-red);
   --chatbox-tab-delete-bg: var(--cp-surface-1);
   --post-bg: var(--cp-surface-0);
@@ -302,7 +326,7 @@
   --post-toolbar-bg: var(--cp-surface-0);
   --post-toolbar-fg: var(--cp-subtext);
   --post-toolbar-hover-bg: var(--cp-surface-1);
-  --post-toolbar-hover-fg: var(--cp-yellow);
+  --post-toolbar-hover-fg: var(--cp-accent);
   --post-like-fg: var(--cp-green);
   --post-dislike-fg: var(--cp-red);
   --post-aside-bg: var(--cp-surface-0);
@@ -316,23 +340,32 @@
   --bbcode-rendered-border-default: var(--cp-surface-1);
   --bbcode-rendered-border-muted: var(--cp-surface-1);
   --bbcode-rendered-attention-subtle: var(--cp-mauve);
-  --bbcode-rendered-quote-border: var(--cp-yellow);
+  --bbcode-rendered-quote-border: var(--cp-accent);
 
   /* Misc */
-  --meter-fg: var(--cp-honey);
+  --meter-fg: var(--cp-accent-strong);
   --meter-bg: var(--cp-surface-1);
-  --notification-unread: var(--cp-cream);
+  --notification-unread: var(--cp-accent-light);
   --scrollbar-color: var(--cp-surface-1);
-  --comparison-divider-fg: var(--cp-yellow);
-  --comparison-button-fg: var(--cp-yellow);
+  --comparison-divider-fg: var(--cp-accent);
+  --comparison-button-fg: var(--cp-accent);
   --panel-action-fg: var(--cp-subtext);
   --post-head-bg: transparent;
   --prize-fg: var(--cp-text);
-  --prize-heading-fg: var(--cp-yellow);
+  --prize-heading-fg: var(--cp-accent);
 
-  /* Palette-derived assets (hex/rgba baked into URLs or alpha washes) */
+  /* ============================================================
+   *  PALETTE-DERIVED ASSETS — hex/rgba baked inside URLs or alpha
+   *  washes that can't reference var(). Update these when forking.
+   * ============================================================ */
+
+  /* Checkbox inline check SVG — fill must equal --cp-base in URL-encoded form
+   * (#161412 → %23161412). Update both base hex AND this fill when forking. */
   --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23161412'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
-  --forum-tag-honey-wash: rgba(232, 197, 115, 0.18);
+
+  /* Forum tag bg washes — ~18% alpha versions of semantic colors.
+   * Tweak alpha if your variant needs more/less contrast on tags. */
+  --forum-tag-accent-strong-wash: rgba(232, 197, 115, 0.18);
   --forum-tag-green-wash: rgba(166, 227, 161, 0.18);
   --forum-tag-pink-wash: rgba(245, 194, 231, 0.18);
   --forum-tag-red-wash: rgba(243, 139, 168, 0.18);
