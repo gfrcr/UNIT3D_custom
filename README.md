@@ -21,7 +21,7 @@ Estrutura, regras e comportamento são idênticos; só o `:root` muda. Green/red
 
 ## Instalação
 
-No tracker, vai em **Settings → External css stylesheet** e cola uma das URLs:
+No tracker, vai em **Minhas Configurações → Style → Tema: Material Design 3 Dark →  External css stylesheet** e cola uma das URLs:
 
 ```
 # Padrão (~25 KB)
