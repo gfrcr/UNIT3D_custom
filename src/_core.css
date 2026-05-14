@@ -489,6 +489,12 @@ html {
   background-color: var(--cp-accent-light);
   color: var(--cp-base);
 }
+.scroll-to-top-btn:focus-visible {
+  background-color: var(--cp-peach);
+  color: var(--cp-base);
+  outline: 2px solid var(--cp-peach);
+  outline-offset: 2px;
+}
 
 /* === Forum posts — bump radius (base 5px) so each post reads as a card === */
 .post {
