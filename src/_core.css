@@ -490,9 +490,9 @@ html {
   color: var(--cp-base);
 }
 .scroll-to-top-btn:focus {
-  background-color: var(--cp-peach);
+  background-color: var(--cp-accent-strong);
   color: var(--cp-base);
-  outline: 2px solid var(--cp-peach);
+  outline: 2px solid var(--cp-accent-strong);
   outline-offset: 2px;
 }
 
