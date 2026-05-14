@@ -33,6 +33,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install csso
+        # Install once instead of npx --yes per file (network + tarball extract
+        # dominate build time when there are many variants).
+        run: npm install -g csso-cli@4.0.1
+
       - name: Build variants
         # Each capyppuccin-<variant>.min.css = _palette-<variant>.css + _core.css, minified.
         # Adding a variant = drop a new _palette-<name>.css; the loop picks it up.
@@ -45,12 +50,12 @@ jobs:
             else
               out="capyppuccin-${variant}.min.css"
             fi
-            cat "$palette" src/_core.css | npx --yes csso-cli@4.0.1 -o "$out"
+            cat "$palette" src/_core.css | csso -o "$out"
             echo "built $out from $palette + src/_core.css"
           done
           for wrapper in src/*-bg.css; do
             out=$(basename "$wrapper" .css).min.css
-            npx --yes csso-cli@4.0.1 "$wrapper" -o "$out"
+            csso "$wrapper" -o "$out"
             echo "built $out from $wrapper"
           done
 

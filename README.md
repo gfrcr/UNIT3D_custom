@@ -69,9 +69,10 @@ Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do cam
 1. `cp src/_palette-capyppuccin.css src/_palette-<nome>.css`
 2. Trocar os hexes em `:root` + os assets palette-derivados no fim (`--checkbox-check-svg`, `--forum-tag-*-wash`).
 3. Abrir PR. CI roda `scripts/test-variants.sh` que valida:
-   - paridade de variáveis com a canonical
+   - paridade de variáveis com a canonical (mesmo conjunto de `--*` declarados)
    - nenhum literal de paleta vazou pro `_core.css`
    - número de seletores estável (catch silent regression)
    - cada variante minifica sem erro
+   - **distância mínima entre paletas**: a variante nova precisa diferir em pelo menos 16 valores de variáveis vs cada paleta existente (evita variantes near-duplicate)
 
-O workflow `Minify CSS` builda automaticamente `capyppuccin-<nome>.min.css` no merge.
+O workflow `Minify CSS` builda automaticamente `capyppuccin-<nome>.min.css` (e `-bg.min.css` se houver wrapper) no merge.
