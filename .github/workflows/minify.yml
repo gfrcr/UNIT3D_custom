@@ -6,6 +6,8 @@ on:
     paths:
       - "src/capyppuccin.css"
       - "src/capyppuccin-bg.css"
+      - "src/capyppuccin-teal.css"
+      - "src/capyppuccin-teal-bg.css"
       - ".github/workflows/minify.yml"
   workflow_dispatch:
 
@@ -36,15 +38,17 @@ jobs:
         run: |
           npx --yes csso-cli@4.0.1 src/capyppuccin.css -o capyppuccin.min.css
           npx --yes csso-cli@4.0.1 src/capyppuccin-bg.css -o capyppuccin-bg.min.css
+          npx --yes csso-cli@4.0.1 src/capyppuccin-teal.css -o capyppuccin-teal.min.css
+          npx --yes csso-cli@4.0.1 src/capyppuccin-teal-bg.css -o capyppuccin-teal-bg.min.css
 
       - name: Commit minified output
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet capyppuccin.min.css capyppuccin-bg.min.css; then
+          git add capyppuccin.min.css capyppuccin-bg.min.css capyppuccin-teal.min.css capyppuccin-teal-bg.min.css
+          if git diff --cached --quiet; then
             echo "No changes in minified output, skipping commit."
             exit 0
           fi
-          git add capyppuccin.min.css capyppuccin-bg.min.css
           git commit -m "build: regen minified css [skip-minify]"
           git push

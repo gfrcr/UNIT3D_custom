@@ -15,19 +15,27 @@ Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre
 
 ## Instalação
 
-No tracker, vai em **Settings → External css stylesheet** e cola uma das duas URLs:
+No tracker, vai em **Settings → External css stylesheet** e cola uma das URLs:
 
 ```
-# Tema (~25 KB)
+# Tema amarelo (~25 KB)
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin.min.css
 
-# Tema + background de capivara repetido no body
+# Tema amarelo + background de capivara repetido no body
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin-bg.min.css
+
+# Variante teal
+https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal.min.css
+
+# Variante teal + background de capivara
+https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal-bg.min.css
 ```
 
 Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do campo.
 
 ## Paleta
+
+### Amarelo (padrão)
 
 | Papel | Hex |
 |------|-----|
@@ -39,4 +47,18 @@ Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do cam
 | Leechers / Danger | `#f38ba8` red |
 | Links / Info | `#89b4fa` blue |
 | Premium accent | `#cba6f7` mauve |
+
+### Teal (variante)
+
+| Papel | Hex |
+|------|-----|
+| Teal scale | `#ccfbf1` soft · `#5eead4` cream · `#2dd4bf` **teal** · `#14b8a6` honey |
+| Warm complement | `#fab387` peach · `#f5e0dc` rosewater |
+| Surfaces | `#0e1110` base · `#07090a` mantle · `#161a19` surface-0 · `#1f2422` surface-1 |
+| Text | `#cfebe5` text · `#a0b8b1` subtext · `#697d78` overlay |
+| Seeders / Success | `#a6e3a1` green |
+| Leechers / Danger | `#f38ba8` red |
+| Links / Info | `#89b4fa` blue |
+| Premium accent | `#cba6f7` mauve |
+| Buffer / accent 2 | `#89dceb` sky |
 
