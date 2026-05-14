@@ -45,7 +45,7 @@ samp,
 }
 
 /* === Link colors ===
- * Default inherit. Content areas: yellow unvisited / soft visited. Hover: cream.
+ * Default inherit. Content areas: accent unvisited / soft visited. Hover: light.
  * :not([style]) preserves usergroup-colored usernames (inline style). */
 a,
 a:link,
@@ -54,7 +54,7 @@ a:visited {
 }
 a:hover,
 a:focus {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 
 /* Top-nav stray links → text color (logo, anything without a UNIT3D class). */
@@ -75,7 +75,7 @@ a:focus {
     .message
   )
   a:not([style]) {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 :where(
     .bbcode-rendered,
@@ -87,45 +87,45 @@ a:focus {
     .message
   )
   a:visited:not([style]) {
-  color: var(--cp-yellow-soft);
+  color: var(--cp-accent-soft);
 }
 
 /* Native form controls — no UNIT3D var for accent-color, apply broadly. */
 :root {
-  accent-color: var(--cp-yellow);
+  accent-color: var(--cp-accent);
 }
 
 /* Anchor-style action buttons — same class on both <a> and <button>.
- * Anchors get inverted (surface + yellow border); buttons stay filled. */
+ * Anchors get inverted (surface + accent border); buttons stay filled. */
 a.form__button--filled.form__button--centered,
 a.form__button--filled.form__button--centered:link,
 a.form__button--filled.form__button--centered:visited {
   background: var(--cp-surface-1);
-  color: var(--cp-yellow-soft);
-  border: 1px solid var(--cp-yellow-soft);
+  color: var(--cp-accent-soft);
+  border: 1px solid var(--cp-accent-soft);
 }
 a.form__button--filled.form__button--centered:hover,
 a.form__button--filled.form__button--centered:focus {
-  background: var(--cp-honey);
+  background: var(--cp-accent-strong);
   color: var(--cp-base);
-  border: 1px solid var(--cp-honey);
+  border: 1px solid var(--cp-accent-strong);
 }
 
 button.form__button--filled.form__button--centered {
-  background: var(--cp-yellow);
+  background: var(--cp-accent);
   color: var(--cp-base);
 }
 button.form__button--filled.form__button--centered:hover {
-  background: var(--cp-honey);
+  background: var(--cp-accent-strong);
 }
 
 /* === Text utility overrides — pastel pass on base's saturated text-* === */
 .text-success {
   color: var(--cp-green);
 }
-/* Filter checkboxes use .text-success decoratively (not status) — yellow fits. */
+/* Filter checkboxes use .text-success decoratively (not status) — accent fits. */
 .form__fieldset-checkbox-container .text-success {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .text-info {
   color: var(--cp-subtext);
@@ -134,7 +134,7 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-subtext);
 }
 
-/* Checkbox — replace UA rendering with overlay border + yellow fill + inline check SVG. */
+/* Checkbox — replace UA rendering with overlay border + accent fill + inline check SVG. */
 .form__checkbox {
   appearance: none;
   -webkit-appearance: none;
@@ -152,17 +152,17 @@ button.form__button--filled.form__button--centered:hover {
   flex-shrink: 0;
 }
 .form__checkbox:hover {
-  border-color: var(--cp-honey);
+  border-color: var(--cp-accent-strong);
 }
 .form__checkbox:checked {
-  background-color: var(--cp-yellow);
-  border-color: var(--cp-yellow);
+  background-color: var(--cp-accent);
+  border-color: var(--cp-accent);
   background-image: var(--checkbox-check-svg);
   background-repeat: no-repeat;
   background-position: center;
 }
 .text-warning {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
 }
 .text-danger,
 .text-red {
@@ -181,7 +181,7 @@ button.form__button--filled.form__button--centered:hover {
   color: var(--cp-mauve);
 }
 .text-gold {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .text-bright {
   color: var(--cp-text);
@@ -201,14 +201,14 @@ button.form__button--filled.form__button--centered:hover {
 
 .quick-search:focus-within .quick-search__input,
 .quick-search:focus-within .quick-search__results {
-  border-color: var(--cp-yellow);
+  border-color: var(--cp-accent);
 }
 
 /* === Top-nav alert badge === */
 .top-nav__icon-bar > li > a > svg,
 .top-nav__icon-bar > li > a > svg * {
-  color: var(--cp-honey);
-  fill: var(--cp-honey);
+  color: var(--cp-accent-strong);
+  fill: var(--cp-accent-strong);
 }
 
 /* === Top-nav dropdowns === */
@@ -219,7 +219,7 @@ button.form__button--filled.form__button--centered:hover {
     background-color 0.2s ease;
 }
 .top-nav__dropdown > a:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   background-color: var(--cp-surface-1);
 }
 /* Active page via :has() — body knows the page__* wrapper; propagate to the
@@ -276,7 +276,7 @@ body:has(main[class*="page__internal"])
   .top-nav__dropdown:has(a[href*="/subtitles"])
   > a:not([href]),
 body:has(main[class*="page__user"]) .top-nav__dropdown > a[href*="/users/"] {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 700;
   box-shadow: inset 0 -2px 0 var(--cp-surface-0);
   background-color: var(--cp-surface-1);
@@ -306,7 +306,7 @@ body:has(main[class*="page__user-notification"])
   filter: none;
 }
 .nav-tab--active > .nav-tab--active__link {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 600;
 }
 
@@ -322,10 +322,10 @@ body:has(main[class*="page__user-notification"])
   color: var(--cp-subtext);
 }
 .quick-search__input:hover {
-  border-color: var(--cp-honey);
+  border-color: var(--cp-accent-strong);
 }
 .quick-search__input:focus {
-  border-color: var(--cp-yellow);
+  border-color: var(--cp-accent);
   outline: none;
 }
 /* === Panel tabs — base paints active #b0b0b0 (reads disabled); brand it. === */
@@ -348,7 +348,7 @@ body:has(main[class*="page__user-notification"])
   background-color: var(--cp-surface-0);
 }
 .panel__tab--active {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   background-color: var(--cp-surface-0);
   border-bottom: 2px solid transparent;
   font-weight: 600;
@@ -380,7 +380,7 @@ body:has(main[class*="page__user-notification"])
   background-color: var(--cp-surface-1);
 }
 .bbcode-input__tab-input:checked + .bbcode-input__tab-label {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   background-color: var(--cp-surface-1);
   border-bottom: 2px solid transparent;
   font-weight: 600;
@@ -452,7 +452,7 @@ body:has(main[class*="page__user-notification"])
 
 /* Selection highlight (default is system blue) */
 ::selection {
-  background: var(--cp-yellow);
+  background: var(--cp-accent);
   color: var(--cp-base);
 }
 
@@ -472,7 +472,7 @@ html {
   border-radius: var(--cp-radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--cp-yellow);
+  background: var(--cp-accent);
 }
 
 /* === Forum posts — bump radius (base 5px) so each post reads as a card === */
@@ -494,10 +494,10 @@ html {
   font-size: 12px;
 }
 .post__topic a {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .post__topic a:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .post__tip-stats {
   color: var(--cp-subtext);
@@ -512,7 +512,7 @@ html {
 }
 .post__tip-button:hover {
   background-color: var(--cp-surface-0);
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .post__aside {
   background-color: var(--cp-surface-0);
@@ -536,11 +536,11 @@ html {
   padding: 8px 14px;
 }
 .post__author {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 600;
 }
 .post__author:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .post__group-name,
 .post__group-title {
@@ -567,9 +567,9 @@ html {
 
 /* === Forum index — base renders subforum rows monotone; add hierarchy === */
 
-/* Panel head — small-caps yellow band on every page wrapper. */
+/* Panel head — small-caps accent band on every page wrapper. */
 [class*="page__"] :is(.panel__heading, .panel__header-link) {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   text-transform: uppercase;
   letter-spacing: 0.8px;
   font-weight: 700;
@@ -595,24 +595,24 @@ html {
 
 
 .subforum-listing__link {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-size: 15px;
 }
 .subforum-listing__link:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .subforum-listing__description {
   color: var(--cp-subtext);
   font-size: 12px;
 }
 .subforum-listing__icon {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
 }
 .subforum-listing__topic-stats dd,
 .subforum-listing__post-stats dd {
   font-size: 16px;
   font-weight: 600;
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .subforum-listing__topic-stats dt,
 .subforum-listing__post-stats dt {
@@ -626,7 +626,7 @@ html {
   font-weight: 500;
 }
 .subforum-listing__latest-link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .subforum-listing__latest-datetime,
 .subforum-listing__latest-post-link {
@@ -634,30 +634,25 @@ html {
   font-size: 12px;
 }
 .subforum-listing__latest-post-link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .subforum-listing__latest-author-link {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
   font-size: 12px;
 }
 .subforum-listing__latest-author-link:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 
-/* Sidebar stats list (.key-value rows: Fóruns / Tópicos / Posts).
- * Numbers right-aligned in yellow, labels in subtext for hierarchy. */
 .page__forum--index .key-value dd {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 600;
 }
 .page__forum--index .key-value dt {
   color: var(--cp-subtext);
 }
 
-/* === Forum topic listing polish ===
- * Same idea as forum index but for .page__forum-topic--index (.topic-listing__*). */
-
-/* Row hover + unread indicator (3px yellow stripe on the left of unread topics). */
+/* === Forum topic listing — 3px accent stripe marks unread topics === */
 .topic-listings__item {
   transition: background-color 0.12s ease;
 }
@@ -665,23 +660,23 @@ html {
   background-color: var(--cp-surface-1);
 }
 .topic-listing--unread {
-  border-left: 3px solid var(--cp-yellow);
+  border-left: 3px solid var(--cp-accent);
 }
 .topic-listing--read {
   border-left: 3px solid transparent;
 }
 
 .topic-listing__link {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .topic-listing__link:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .topic-listing--read .topic-listing__link {
   color: var(--cp-subtext);
 }
 .topic-listing--read .topic-listing__link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 
 .topic-listing__created-author,
@@ -690,11 +685,11 @@ html {
   color: var(--cp-subtext);
 }
 .topic-listing__created-link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 
 .topic-listing__icon {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
 }
 .topic-listing__forum {
   color: var(--cp-subtext);
@@ -704,7 +699,7 @@ html {
 .topic-listing__view-stats dd {
   font-size: 16px;
   font-weight: 600;
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .topic-listing__post-stats dt,
 .topic-listing__view-stats dt {
@@ -714,11 +709,11 @@ html {
 }
 
 .topic-listing__latest-author-link {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
   font-size: 12px;
 }
 .topic-listing__latest-author-link:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .topic-listing__latest-datetime,
 .topic-listing__latest-post-link {
@@ -726,13 +721,13 @@ html {
   font-size: 12px;
 }
 .topic-listing__latest-post-link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 
 /* Topic tags — base ships clashy palettes; lighten via palette washes. */
 .topic-tag {
-  --forum-tag-implemented-bg: var(--forum-tag-honey-wash);
-  --forum-tag-implemented-fg: var(--cp-honey);
+  --forum-tag-implemented-bg: var(--forum-tag-accent-strong-wash);
+  --forum-tag-implemented-fg: var(--cp-accent-strong);
   --forum-tag-approved-bg: var(--forum-tag-green-wash);
   --forum-tag-approved-fg: var(--cp-green);
   --forum-tag-suggestion-bg: var(--forum-tag-pink-wash);
@@ -749,14 +744,14 @@ html {
 
 /* === Torrent meta — base sets .meta__title to #bbb grey === */
 .meta__title {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 700;
 }
 .meta__title-link:hover .meta__title {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 .meta__heading {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   font-size: 13px;
@@ -773,19 +768,19 @@ html {
 }
 .work__media-type-link,
 .work__language-link {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
 }
 .work__media-type-link:hover,
 .work__language-link:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .work__rating-text {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 600;
 }
 
 .trailer-btn {
-  background: linear-gradient(135deg, var(--cp-honey), var(--cp-yellow));
+  background: linear-gradient(135deg, var(--cp-accent-strong), var(--cp-accent));
   color: var(--cp-base);
 }
 .trailer-btn:hover {
@@ -794,25 +789,25 @@ html {
 }
 .trailer-modal {
   background: var(--cp-surface-0);
-  border-color: var(--cp-yellow);
+  border-color: var(--cp-accent);
   border-radius: var(--cp-radius-lg);
 }
 .trailer-modal__close {
   color: var(--cp-subtext);
 }
 .trailer-modal__close:hover {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .trailer-modal__title {
   color: var(--cp-text);
 }
 .trailer-modal__yt-link {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 
 .trending-poster__download-count {
   background: var(--cp-surface-0);
-  border-color: var(--cp-yellow);
+  border-color: var(--cp-accent);
   color: var(--cp-text);
 }
 .torrent-search--poster__title {
@@ -822,21 +817,21 @@ html {
   ~ .torrent-search--poster__caption
   .torrent-search--poster__title,
 .torrent-search--poster__result a:hover .torrent-search--poster__title {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .torrent-search--poster__release-date {
   color: var(--cp-subtext);
 }
 
 .similar-torrents__type {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
   font-weight: 600;
 }
 .torrent-search--grouped__name a {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .torrent-search--grouped__name a:hover {
-  color: var(--cp-cream);
+  color: var(--cp-accent-light);
 }
 
 /* Ratio-bar icons (sidebar + top-nav share the palette) */
@@ -852,7 +847,7 @@ html {
 }
 .ratio-bar__tokens i,
 .top-nav__ratio-bar .ratio-bar__tokens i {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .ratio-bar__buffer i,
 .top-nav__ratio-bar .ratio-bar__buffer i {
@@ -862,10 +857,10 @@ html {
   color: var(--cp-red);
 }
 .top-nav__ratio-bar .ratio-bar__points i {
-  color: var(--cp-honey);
+  color: var(--cp-accent-strong);
 }
 .top-nav__ratio-bar .ratio-bar__ratio i {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 
 /* === Torrent row icons — Blade inlines style="color:#..." on FREE/INTERNAL === */
@@ -875,7 +870,7 @@ html {
 }
 .torrent-icons__internal,
 .torrent-icons__internal + .fas {
-  color: var(--cp-honey) !important;
+  color: var(--cp-accent-strong) !important;
 }
 .torrent-icons__personal-release {
   color: var(--cp-mauve);
@@ -884,7 +879,7 @@ html {
   color: var(--cp-red);
 }
 .torrent-icons__sticky {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
 }
 .torrent-icons__comments {
   color: var(--cp-blue);
@@ -947,7 +942,7 @@ td > span[style*="color: #000"] {
 }
 .chatbox-message__avatar[style*="#FFDC00"],
 .chatbox-message__avatar[style*="#ffdc00"] {
-  border-color: var(--cp-honey) !important;
+  border-color: var(--cp-accent-strong) !important;
 }
 .chatbox-message__avatar[style*="#FF4136"],
 .chatbox-message__avatar[style*="#ff4136"] {
@@ -996,7 +991,7 @@ td > span[style*="color: #000"] {
   color: var(--cp-text);
 }
 .comment__author {
-  color: var(--cp-yellow);
+  color: var(--cp-accent);
   font-weight: 600;
 }
 .comment__author-title {
