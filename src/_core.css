@@ -475,6 +475,21 @@ html {
   background: var(--cp-accent);
 }
 
+/* Scroll-to-top floating button — mirror the top-nav icon-bar circle. */
+.scroll-to-top-btn {
+  background-color: var(--cp-surface-1);
+  color: var(--cp-text);
+  border: none;
+  border-radius: var(--cp-radius-xl);
+  transition:
+    color 0.12s ease,
+    background-color 0.12s ease;
+}
+.scroll-to-top-btn:hover {
+  background-color: var(--cp-accent-light);
+  color: var(--cp-base);
+}
+
 /* === Forum posts — bump radius (base 5px) so each post reads as a card === */
 .post {
   border-radius: var(--cp-radius-lg);
