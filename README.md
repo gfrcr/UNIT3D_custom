@@ -32,6 +32,9 @@ https://gfrcr.github.io/UNIT3D_custom/capyppuccin-bg.min.css
 
 # Variante teal
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal.min.css
+
+# Variante teal + background de capivara
+https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal-bg.min.css
 ```
 
 Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do campo.
