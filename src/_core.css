@@ -1064,9 +1064,11 @@ td > span[style*="color: #000"] {
 .swal2-icon.swal2-success .swal2-success-ring {
   background-color: transparent;
 }
+/* SWAL2 inlines style="background:#fff" on these three "mask" elements via
+ * JS (popup.background config). Inline style only loses to !important. */
 .swal2-icon.swal2-success .swal2-success-fix,
 .swal2-icon.swal2-success [class^="swal2-success-circular-line"] {
-  background-color: var(--cp-surface-0);
+  background-color: var(--cp-surface-0) !important;
 }
 .swal2-icon.swal2-error {
   border-color: var(--cp-red);
