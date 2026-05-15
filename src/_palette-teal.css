@@ -41,6 +41,11 @@
   --cp-glow-soft: 0 0 12px rgba(45, 212, 191, 0.45);
   --shadow-glow: 0 0 0 3px rgba(204, 251, 241, 0.55);
 
+  /* SweetAlert2 — backdrop dim + accent-tinted focus rings. */
+  --swal-backdrop-bg: rgba(0, 0, 0, 0.55);
+  --swal-focus-ring: 0 0 0 3px rgba(45, 212, 191, 0.35);
+  --swal-input-focus-ring: 0 0 0 2px rgba(45, 212, 191, 0.25);
+
   /* Buttons */
   --button-filled-bg: var(--cp-accent);
   --button-filled-fg: var(--cp-base);

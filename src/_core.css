@@ -1025,3 +1025,149 @@ td > span[style*="color: #000"] {
   padding-top: 0;
   border-radius: var(--cp-radius-lg);
 }
+
+/* === SweetAlert2 — vendor ships white-on-blue defaults; brand the modal,
+ * toast, buttons, and per-icon colors. Selectors mirror SWAL2's public API
+ * (.swal2-popup, .swal2-toast, .swal2-icon-*, .swal2-confirm/cancel/deny). */
+.swal2-popup {
+  background: var(--cp-surface-0);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-surface-1);
+  border-radius: var(--cp-radius-lg);
+  box-shadow: var(--cp-shadow-lg);
+}
+.swal2-title {
+  color: var(--cp-text);
+}
+.swal2-html-container,
+.swal2-content {
+  color: var(--cp-subtext);
+}
+.swal2-backdrop-show {
+  background: var(--swal-backdrop-bg);
+}
+
+/* Icons — SWAL2 paints the ring + content in fixed hues; map to our semantics. */
+.swal2-icon.swal2-warning {
+  border-color: var(--cp-peach);
+  color: var(--cp-peach);
+}
+.swal2-icon.swal2-success {
+  border-color: var(--cp-green);
+  color: var(--cp-green);
+}
+.swal2-icon.swal2-success [class^="swal2-success-line"],
+.swal2-icon.swal2-success .swal2-success-ring {
+  background-color: var(--cp-green);
+  border-color: var(--cp-green);
+}
+.swal2-icon.swal2-success .swal2-success-ring {
+  background-color: transparent;
+}
+.swal2-icon.swal2-success .swal2-success-fix,
+.swal2-icon.swal2-success [class^="swal2-success-circular-line"] {
+  background-color: var(--cp-surface-0);
+}
+.swal2-icon.swal2-error {
+  border-color: var(--cp-red);
+  color: var(--cp-red);
+}
+.swal2-icon.swal2-error [class^="swal2-x-mark-line"] {
+  background-color: var(--cp-red);
+}
+.swal2-icon.swal2-info {
+  border-color: var(--cp-blue);
+  color: var(--cp-blue);
+}
+.swal2-icon.swal2-question {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+
+/* Buttons — mirror UNIT3D's .button-filled (accent on base) + outlined neutrals. */
+.swal2-styled.swal2-confirm {
+  background: var(--cp-accent);
+  color: var(--cp-base);
+  border: none;
+  border-radius: var(--cp-radius-md);
+  box-shadow: none;
+}
+.swal2-styled.swal2-confirm:hover,
+.swal2-styled.swal2-confirm:focus {
+  background: var(--cp-accent-strong);
+  color: var(--cp-base);
+  box-shadow: none;
+}
+.swal2-styled.swal2-cancel {
+  background: var(--cp-surface-1);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-overlay);
+  border-radius: var(--cp-radius-md);
+  box-shadow: none;
+}
+.swal2-styled.swal2-cancel:hover,
+.swal2-styled.swal2-cancel:focus {
+  background: var(--cp-overlay);
+  color: var(--cp-base);
+}
+.swal2-styled.swal2-deny {
+  background: var(--cp-red);
+  color: var(--cp-base);
+  border: none;
+  border-radius: var(--cp-radius-md);
+  box-shadow: none;
+}
+.swal2-styled.swal2-deny:hover,
+.swal2-styled.swal2-deny:focus {
+  background: var(--cp-red);
+  filter: brightness(0.9);
+  color: var(--cp-base);
+}
+.swal2-styled:focus {
+  outline: none;
+  box-shadow: var(--swal-focus-ring);
+}
+.swal2-close {
+  color: var(--cp-subtext);
+}
+.swal2-close:hover {
+  color: var(--cp-accent);
+}
+
+/* Form controls inside the modal — base SWAL2 ships pale-grey borders. */
+.swal2-input,
+.swal2-textarea,
+.swal2-select,
+.swal2-file {
+  background: var(--cp-surface-1);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-overlay);
+  border-radius: var(--cp-radius-md);
+  box-shadow: none;
+}
+.swal2-input:focus,
+.swal2-textarea:focus,
+.swal2-select:focus {
+  border-color: var(--cp-accent);
+  box-shadow: var(--swal-input-focus-ring);
+}
+.swal2-validation-message {
+  background: var(--cp-surface-1);
+  color: var(--cp-red);
+  border-radius: var(--cp-radius-md);
+}
+
+/* Toast — compact popup variant (top-end auto-dismiss). Keep same surface
+ * + shadow so success/error toasts read as part of the theme. */
+.swal2-popup.swal2-toast {
+  background: var(--cp-surface-0);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-surface-1);
+  box-shadow: var(--cp-shadow-md);
+}
+.swal2-popup.swal2-toast .swal2-title {
+  color: var(--cp-text);
+}
+.swal2-popup.swal2-toast .swal2-timer-progress-bar {
+  background: var(--cp-accent);
+}

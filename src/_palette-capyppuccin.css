@@ -59,6 +59,11 @@
   --cp-glow-soft: 0 0 12px rgba(249, 226, 175, 0.4);
   --shadow-glow: 0 0 0 3px rgba(255, 248, 197, 0.5);
 
+  /* SweetAlert2 — backdrop dim + accent-tinted focus rings. */
+  --swal-backdrop-bg: rgba(0, 0, 0, 0.55);
+  --swal-focus-ring: 0 0 0 3px rgba(249, 226, 175, 0.35);
+  --swal-input-focus-ring: 0 0 0 2px rgba(249, 226, 175, 0.25);
+
   /* ============================================================
    *  COMPONENT MAPPINGS — UNIT3D's own vars wired to our palette.
    *  Generally edit ABOVE this line for a new variant; below should
