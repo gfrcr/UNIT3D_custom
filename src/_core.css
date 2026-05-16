@@ -215,6 +215,11 @@ button.form__button--filled.form__button--centered:hover {
 .quick-search__input::placeholder {
   color: transparent;
 }
+/* Collapsed state — narrow the bar when not focused. Base UNIT3D auto-
+ * expands on :focus-within, so width: auto restores normal sizing then. */
+.quick-search:not(:focus-within) .quick-search__input {
+  max-width: 6.5rem;
+}
 .quick-search:has(.quick-search__input:placeholder-shown)::before {
   content: "Buscar";
   position: absolute;
