@@ -13,9 +13,11 @@ Thumbs.db
 *.log
 scripts/dev.pid
 
-# dev-watch unminified outputs (local-only; production uses *.min.css)
-/capyppuccin.css
-/capyppuccin-teal.css
+# dev-watch unminified outputs (local-only; production uses *.min.css).
+# Ignore every unminified capyppuccin*.css at root; explicit allow keeps
+# every *.min.css tracked.
+/capyppuccin*.css
+!/capyppuccin*.min.css
 
 # Chrome DevTools Local Overrides mirror (live editing only)
 gfrcr.github.io/

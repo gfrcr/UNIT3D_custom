@@ -1,0 +1,17 @@
+/*!
+ * Capyppuccin (tokyo-night) — variant with capybara background pattern
+ * https://github.com/gfrcr/UNIT3D_custom
+ *
+ * Thin wrapper: imports the tokyo-night theme and adds the cbr capybara SVG as
+ * a repeating body background. Use this URL instead of capyppuccin-tokyo-night.min.css
+ * when you want the pattern.
+ */
+
+@import url("https://gfrcr.github.io/UNIT3D_custom/capyppuccin-tokyo-night.min.css");
+
+body {
+  background-image: url("https://gfrcr.github.io/UNIT3D_custom/bg.svg");
+  background-repeat: repeat;
+  background-size: 120px;
+  background-attachment: fixed;
+}
