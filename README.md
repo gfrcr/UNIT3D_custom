@@ -1,27 +1,17 @@
 # Capyppuccin
 
-Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Inspirado em [Catppuccin Mocha](https://catppuccin.com), com cantos arredondados, shadows suaves e nove variantes de paleta.
+Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Inspirado em [Catppuccin Mocha](https://catppuccin.com), com cantos arredondados, shadows suaves e seis variantes de paleta.
 
 ## Variantes
 
-### Catppuccin (yellow accent canonical)
+- **Capyppuccin (padrão)** — amarelo pastel sobre charcoal quente. Escala em torno de `#f9e2af`.
+- **Teal** — Tailwind teal sobre charcoal frio. Escala em torno de `#2dd4bf`.
+- **Dracula** — roxo signature sobre slate escuro. Escala em torno de `#bd93f9`.
+- **Tokyo Night** — storm blue/purple sobre navy. Escala em torno de `#7aa2f7`.
+- **Rosé Pine (moon)** — gold sobre roxo profundo. Escala em torno de `#f6c177`.
+- **Everforest** — sage green sobre charcoal floresta. Escala em torno de `#a7c080`.
 
-Cores extraídas direto do [palette.json oficial](https://github.com/catppuccin/palette) (v1.8.0). Accent é o yellow de cada flavor:
-
-- **Capyppuccin** — Mocha-inspired, yellow `#f9e2af` sobre charcoal quente (variante warm, surfaces próprias).
-- **Latte** — light, yellow `#df8e1d` sobre cream.
-- **Frappé** — medium dark, yellow `#e5c890` sobre warm slate.
-- **Macchiato** — dark, yellow `#eed49f` sobre navy slate.
-
-### Outras paletas
-
-- **Teal** — Tailwind teal `#2dd4bf` sobre charcoal frio.
-- **Dracula** — purple signature `#bd93f9` sobre slate escuro.
-- **Tokyo Night** — storm blue/purple `#7aa2f7` sobre navy.
-- **Rosé Pine (moon)** — gold `#f6c177` sobre roxo profundo.
-- **Everforest** — sage green `#a7c080` sobre charcoal floresta.
-
-Estrutura, regras e comportamento são idênticos; só o `:root` muda.
+Estrutura, regras e comportamento são idênticos; só o `:root` muda. Green/red/blue/mauve dos seeders, leechers, links e accents são comuns.
 
 ## O que muda
 
@@ -38,21 +28,9 @@ Estrutura, regras e comportamento são idênticos; só o `:root` muda.
 No tracker, vai em **Perfil → Minhas Configurações → Styles (coloca o Material Design 3 Dark) → External css stylesheet** e cola uma das URLs. Cada variante tem versão pura e versão com o background da capivara.
 
 ```
-# Capyppuccin (canonical, Mocha-inspired)
+# Padrão amarelo
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin.min.css
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin-bg.min.css
-
-# Catppuccin Latte (claro)
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-latte.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-latte-bg.min.css
-
-# Catppuccin Frappé
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-frappe.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-frappe-bg.min.css
-
-# Catppuccin Macchiato
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-macchiato.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-macchiato-bg.min.css
 
 # Teal
 https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal.min.css
