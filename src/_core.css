@@ -203,6 +203,44 @@ button.form__button--filled.form__button--centered:hover {
   border-color: var(--cp-accent);
 }
 
+/* Localize placeholder + default dropdown copy. Both strings ship hard-coded
+ * in the Blade template; CSS can't rewrite text content, so we hide the
+ * native text (color:transparent / font-size:0) and paint replacements via
+ * ::before. Anchor on .quick-search (positioned by base) — don't add
+ * position to .quick-search__inputs, that breaks the dropdown anchor and
+ * the results panel falls into normal flow, expanding the bar. */
+.quick-search__input {
+  font-size: 1.5rem;
+}
+.quick-search__input::placeholder {
+  color: transparent;
+}
+.quick-search:has(.quick-search__input:placeholder-shown)::before {
+  content: "Buscar";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  color: var(--cp-subtext);
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.quick-search__result--default .quick-search__result-text,
+.quick-search__result--empty .quick-search__result-text {
+  font-size: 0;
+}
+.quick-search__result--default .quick-search__result-text::before {
+  content: "Procurar filmes, séries ou pessoas";
+  font-size: 1.2rem;
+}
+.quick-search__result--empty .quick-search__result-text::before {
+  content: "Nenhum resultado encontrado";
+  font-size: 1.2rem;
+}
+
 /* === Top-nav alert badge === */
 .top-nav__icon-bar > li > a > svg,
 .top-nav__icon-bar > li > a > svg * {
@@ -316,9 +354,6 @@ body:has(main[class*="page__user-notification"])
   transition:
     border-color 0.12s ease,
     box-shadow 0.12s ease;
-}
-.quick-search__input::placeholder {
-  color: var(--cp-subtext);
 }
 .quick-search__input:hover {
   border-color: var(--cp-accent-strong);
