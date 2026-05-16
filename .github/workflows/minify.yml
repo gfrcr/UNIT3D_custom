@@ -6,7 +6,7 @@ on:
     paths:
       - "src/_core.css"
       - "src/_palette-*.css"
-      - "src/*-bg.css"
+      - "scripts/gen-palettes.js"
       - ".github/workflows/minify.yml"
   workflow_dispatch:
 
@@ -38,6 +38,12 @@ jobs:
         # dominate build time when there are many variants).
         run: npm install -g csso-cli@4.0.1
 
+      - name: Generate bg wrappers
+        # gen-palettes.js writes the -bg.css wrappers (and any OKLCH-derived
+        # palette files) to the root. Wrapper template lives only in the
+        # script — single source of truth.
+        run: node scripts/gen-palettes.js
+
       - name: Build variants
         # Each capyppuccin-<variant>.min.css = _palette-<variant>.css + _core.css, minified.
         # Adding a variant = drop a new _palette-<name>.css; the loop picks it up.
@@ -53,7 +59,7 @@ jobs:
             cat "$palette" src/_core.css | csso -o "$out"
             echo "built $out from $palette + src/_core.css"
           done
-          for wrapper in src/*-bg.css; do
+          for wrapper in capyppuccin*-bg.css; do
             out=$(basename "$wrapper" .css).min.css
             csso "$wrapper" -o "$out"
             echo "built $out from $wrapper"

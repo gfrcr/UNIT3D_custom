@@ -1,0 +1,10 @@
+/*!
+ * Capyppuccin (latte) — variant with capybara background pattern
+ * https://github.com/gfrcr/UNIT3D_custom
+ *
+ * Thin wrapper: imports the latte theme and overlays the capybara
+ * silhouettes recolored to --cp-accent-strong via CSS mask, on a darker
+ * body frame so the cream cards stand out. Use this URL instead of
+ * capyppuccin-latte-bg.min.css when you want the pattern.
+ */
+@import url(https://gfrcr.github.io/UNIT3D_custom/capyppuccin-latte.min.css);body{background-color:#5a544e;position:relative}body::before{content:"";position:fixed;inset:0;background-color:var(--cp-accent-strong);opacity:.3;-webkit-mask-image:url(https://gfrcr.github.io/UNIT3D_custom/bg.svg);mask-image:url(https://gfrcr.github.io/UNIT3D_custom/bg.svg);-webkit-mask-repeat:repeat;mask-repeat:repeat;-webkit-mask-size:120px;mask-size:120px;z-index:-1;pointer-events:none}
