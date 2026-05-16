@@ -3,7 +3,6 @@
  * Palette-agnostic; pairs with src/_palette-*.css to produce a full theme.
  * Edit this file once; every variant inherits changes automatically. */
 
-
 /* === Globals ===
  * font-family not tokenized; base hardcodes `a { color: #4991f6 }` and uses
  * UA accent-color — override via element selectors. */
@@ -614,7 +613,6 @@ html {
   background-color: var(--cp-surface-1);
 }
 
-
 .subforum-listing__link {
   color: var(--cp-accent);
   font-size: 15px;
@@ -801,7 +799,11 @@ html {
 }
 
 .trailer-btn {
-  background: linear-gradient(135deg, var(--cp-accent-strong), var(--cp-accent));
+  background: linear-gradient(
+    135deg,
+    var(--cp-accent-strong),
+    var(--cp-accent)
+  );
   color: var(--cp-base);
 }
 .trailer-btn:hover {
@@ -1028,8 +1030,11 @@ td > span[style*="color: #000"] {
 
 /* === SweetAlert2 — vendor ships white-on-blue defaults; brand the modal,
  * toast, buttons, and per-icon colors. Selectors mirror SWAL2's public API
- * (.swal2-popup, .swal2-toast, .swal2-icon-*, .swal2-confirm/cancel/deny). */
-.swal2-popup {
+ * (.swal2-popup, .swal2-toast, .swal2-icon-*, .swal2-confirm/cancel/deny).
+ * UNIT3D bundles SWAL2 via Vite; its CSS injects dynamically AFTER our
+ * userstyle, so equal-specificity rules lose the cascade. Bumping with
+ * `body` prefix wins without resorting to !important. */
+body .swal2-popup {
   background: var(--cp-surface-0);
   color: var(--cp-text);
   border: 1px solid var(--cp-surface-1);
@@ -1102,15 +1107,16 @@ td > span[style*="color: #000"] {
 }
 .swal2-styled.swal2-cancel {
   background: var(--cp-surface-1);
-  color: var(--cp-text);
-  border: 1px solid var(--cp-overlay);
+  color: var(--cp-accent-soft);
+  border: 1px solid var(--cp-accent-soft);
   border-radius: var(--cp-radius-md);
   box-shadow: none;
 }
 .swal2-styled.swal2-cancel:hover,
 .swal2-styled.swal2-cancel:focus {
-  background: var(--cp-overlay);
+  background: var(--cp-accent-strong);
   color: var(--cp-base);
+  border: 1px solid var(--cp-accent-strong);
 }
 .swal2-styled.swal2-deny {
   background: var(--cp-red);
@@ -1161,15 +1167,49 @@ td > span[style*="color: #000"] {
 
 /* Toast — compact popup variant (top-end auto-dismiss). Keep same surface
  * + shadow so success/error toasts read as part of the theme. */
-.swal2-popup.swal2-toast {
+body .swal2-popup.swal2-toast {
   background: var(--cp-surface-0);
   color: var(--cp-text);
   border: 1px solid var(--cp-surface-1);
   box-shadow: var(--cp-shadow-md);
 }
-.swal2-popup.swal2-toast .swal2-title {
+body .swal2-popup.swal2-toast .swal2-title {
   color: var(--cp-text);
 }
-.swal2-popup.swal2-toast .swal2-timer-progress-bar {
+body .swal2-popup.swal2-toast .swal2-timer-progress-bar {
   background: var(--cp-accent);
+}
+
+/* Localize SWAL2 chrome that ships hard-coded English. Body text varies per
+ * action (which notification, which torrent) and CSS can't split a text node,
+ * so we leave it alone — only the universal Title + Cancel button are swapped.
+ * Trick: collapse original text node with font-size:0, paint replacement via
+ * ::before. Pin font-size/line-height/padding in rem (absolute) since em
+ * inherits the zeroed parent and would crush every metric to zero. */
+body .swal2-modal .swal2-title {
+  font-size: 0;
+  line-height: 2.5rem;
+}
+body .swal2-modal .swal2-title::before {
+  content: "Tem certeza?";
+  font-size: 1.875rem;
+  line-height: 2.5rem;
+}
+body .swal2-styled.swal2-confirm,
+body .swal2-styled.swal2-cancel {
+  font-size: 0;
+  padding: 0.3rem 0.8rem;
+}
+body .swal2-styled.swal2-confirm::before {
+  content: "Confirmar";
+  font-size: 1.2rem;
+}
+body .swal2-styled.swal2-cancel::before {
+  content: "Cancelar";
+  font-size: 1.2rem;
+}
+/* SWAL2's default em-margin between buttons collapses when we zero parent
+ * font-size; restore spacing via flex gap on the actions row. */
+body .swal2-actions {
+  gap: 0.5rem;
 }
