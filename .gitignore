@@ -11,6 +11,11 @@ Thumbs.db
 
 # Misc
 *.log
+scripts/dev.pid
+
+# dev-watch unminified outputs (local-only; production uses *.min.css)
+/capyppuccin.css
+/capyppuccin-teal.css
 
 # Chrome DevTools Local Overrides mirror (live editing only)
 gfrcr.github.io/
