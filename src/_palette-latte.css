@@ -1,32 +1,32 @@
 /*!
- * Capyppuccin (tokyo night storm) — variant palette
- * Tokyo Night Storm: blue-purple over navy.
- * Surfaces derived via OKLCH ladder (hue 250deg, chroma 0.05, dark mode).
+ * Capyppuccin (latte) — light variant palette
+ * Capyppuccin Light: yellow accent on warm cream (warm hue, not Catppuccin's cool blue-grey).
+ * Surfaces derived via OKLCH ladder (hue 50deg, chroma 0.03, light mode).
  * See _palette-capyppuccin.css for the annotated reference. */
 
 :root {
-  --cp-accent-soft: #c0caf5;
-  --cp-accent-light: #7dcfff;
-  --cp-accent: #7aa2f7;
-  --cp-accent-strong: #bb9af7;
-  --cp-peach: #ff9e64;
-  --cp-rosewater: #f7768e;
+  --cp-accent-soft: #fceedb;
+  --cp-accent-light: #efb966;
+  --cp-accent: #df8e1d;
+  --cp-accent-strong: #b87114;
+  --cp-peach: #fe640b;
+  --cp-rosewater: #dc8a78;
 
-  --cp-base: #0a2036;
-  --cp-mantle: #011429;
-  --cp-surface-0: #192f46;
-  --cp-surface-1: #2b4259;
+  --cp-base: #f9e3d7;
+  --cp-mantle: #efd9cd;
+  --cp-surface-0: #d8c2b6;
+  --cp-surface-1: #c8b2a7;
 
-  --cp-text: #cfd5db;
-  --cp-subtext: #b7bfc7;
-  --cp-overlay: #77818c;
+  --cp-text: #292624;
+  --cp-subtext: #4c4643;
+  --cp-overlay: #78706b;
 
-  --cp-green: #9ece6a;
-  --cp-red: #f7768e;
-  --cp-blue: #7aa2f7;
-  --cp-mauve: #bb9af7;
-  --cp-teal: #73daca;
-  --cp-pink: #ff9e64;
+  --cp-green: #40a02b;
+  --cp-red: #d20f39;
+  --cp-blue: #1e66f5;
+  --cp-mauve: #8839ef;
+  --cp-teal: #179299;
+  --cp-pink: #ea76cb;
 
   /* Shape + shadow scales */
   --cp-radius-xs: 3px;
@@ -38,13 +38,13 @@
   --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
-  --cp-glow-soft: 0 0 12px rgba(122, 162, 247, 0.45);
-  --shadow-glow: 0 0 0 3px rgba(192, 202, 245, 0.55);
+  --cp-glow-soft: 0 0 12px rgba(223, 142, 29, 0.45);
+  --shadow-glow: 0 0 0 3px rgba(252, 238, 219, 0.55);
 
   /* SweetAlert2 — backdrop dim + accent-tinted focus rings. */
   --swal-backdrop-bg: rgba(0, 0, 0, 0.55);
-  --swal-focus-ring: 0 0 0 3px rgba(122, 162, 247, 0.35);
-  --swal-input-focus-ring: 0 0 0 2px rgba(122, 162, 247, 0.25);
+  --swal-focus-ring: 0 0 0 3px rgba(223, 142, 29, 0.35);
+  --swal-input-focus-ring: 0 0 0 2px rgba(223, 142, 29, 0.25);
 
 /* Buttons */
   --button-filled-bg: var(--cp-accent);
@@ -337,12 +337,12 @@
 
   
   /* Palette-derived assets (hex/rgba baked into URLs or alpha washes) */
-  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230a2036'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
-  --forum-tag-accent-strong-wash: rgba(187, 154, 247, 0.22);
-  --forum-tag-green-wash: rgba(158, 206, 106, 0.18);
-  --forum-tag-pink-wash: rgba(255, 158, 100, 0.18);
-  --forum-tag-red-wash: rgba(247, 118, 142, 0.18);
-  --forum-tag-mauve-wash: rgba(187, 154, 247, 0.18);
-  --forum-tag-subtext-wash: rgba(183, 191, 199, 0.18);
-  --forum-tag-red-wash-light: rgba(247, 118, 142, 0.12);
+  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23f9e3d7'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
+  --forum-tag-accent-strong-wash: rgba(184, 113, 20, 0.22);
+  --forum-tag-green-wash: rgba(64, 160, 43, 0.18);
+  --forum-tag-pink-wash: rgba(234, 118, 203, 0.18);
+  --forum-tag-red-wash: rgba(210, 15, 57, 0.18);
+  --forum-tag-mauve-wash: rgba(136, 57, 239, 0.18);
+  --forum-tag-subtext-wash: rgba(76, 70, 67, 0.18);
+  --forum-tag-red-wash-light: rgba(210, 15, 57, 0.12);
 }

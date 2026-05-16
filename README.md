@@ -1,10 +1,17 @@
 # Capyppuccin
 
-Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Inspirado em [Catppuccin Mocha](https://catppuccin.com), com cantos arredondados, shadows suaves e seis variantes de paleta.
+Tema customizado para o tracker **[Capybara BR](https://capybarabr.com)**, sobre o Material Design v3 Dark do UNIT3D. Inspirado em [Catppuccin Mocha](https://catppuccin.com), com cantos arredondados, shadows suaves e oito variantes de paleta.
 
 ## Variantes
 
-- **Capyppuccin (padrão)** — amarelo pastel sobre charcoal quente. Escala em torno de `#f9e2af`.
+### Família Capyppuccin (warm yellow, mesmo accent, escada de lightness)
+
+- **Capyppuccin (padrão)** — dark warm charcoal. Escala em torno de `#f9e2af`.
+- **Frappé** — mid-dark warm slate, mesma família. Posicionada entre o canonical e a Latte.
+- **Latte** — light cream warm. Versão clara da família.
+
+### Outras paletas
+
 - **Teal** — Tailwind teal sobre charcoal frio. Escala em torno de `#2dd4bf`.
 - **Dracula** — roxo signature sobre slate escuro. Escala em torno de `#bd93f9`.
 - **Tokyo Night** — storm blue/purple sobre navy. Escala em torno de `#7aa2f7`.
@@ -25,33 +32,22 @@ Estrutura, regras e comportamento são idênticos; só o `:root` muda. Green/red
 
 ## Instalação
 
-No tracker, vai em **Perfil → Minhas Configurações → Styles (coloca o Material Design 3 Dark) → External css stylesheet** e cola uma das URLs. Cada variante tem versão pura e versão com o background da capivara.
+No tracker, vai em **Perfil → Minhas Configurações → Styles (coloca o Material Design 3 Dark) → External css stylesheet** e cola uma das URLs.
 
-```
-# Padrão amarelo
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-bg.min.css
+**Base:** `https://gfrcr.github.io/UNIT3D_custom/` + filename abaixo + `.min.css`.
 
-# Teal
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-teal-bg.min.css
+Sufixo `-bg` na versão com capivara repetida no body. Ex: `capyppuccin-bg.min.css`.
 
-# Dracula
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-dracula.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-dracula-bg.min.css
-
-# Tokyo Night
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-tokyo-night.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-tokyo-night-bg.min.css
-
-# Rosé Pine (moon)
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-rose-pine.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-rose-pine-bg.min.css
-
-# Everforest
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-everforest.min.css
-https://gfrcr.github.io/UNIT3D_custom/capyppuccin-everforest-bg.min.css
-```
+| Variante | Filename |
+|--|--|
+| Capyppuccin (canonical, dark warm) | `capyppuccin` |
+| Frappé (mid-dark warm sibling) | `capyppuccin-frappe` |
+| Latte (light cream sibling) | `capyppuccin-latte` |
+| Teal | `capyppuccin-teal` |
+| Dracula | `capyppuccin-dracula` |
+| Tokyo Night | `capyppuccin-tokyo-night` |
+| Rosé Pine (moon) | `capyppuccin-rose-pine` |
+| Everforest | `capyppuccin-everforest` |
 
 Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do campo.
 
@@ -82,17 +78,19 @@ Hard-refresh (`Ctrl+Shift+R`) na primeira vez. Pra desativar, apaga a URL do cam
 
 ## Adicionando uma variante
 
-Opção rápida via gerador:
+Opção rápida via gerador (OKLCH-derivada):
 
-1. Editar `scripts/gen-palettes.js`, adicionar um objeto ao array `variants` com os tokens (accent ramp, surfaces, text, semantic).
-2. `node scripts/gen-palettes.js` — gera `src/_palette-<nome>.css` + `src/capyppuccin-<nome>-bg.css` automaticamente, com checkbox SVG e washes de tag re-derivados da nova paleta.
+1. Editar `scripts/gen-palettes.js`, adicionar um objeto ao array `variants` com `name`, `mode` (dark/light), `hue`, `chroma`, `baseL`, accent ramp e semantic colors.
+2. `node scripts/gen-palettes.js` — gera `src/_palette-<nome>.css` + o bg wrapper diretamente no root (`capyppuccin-<nome>-bg.css`), com surfaces derivadas via OKLCH ladder.
 3. Abrir PR.
 
-Opção manual:
+Opção manual (paleta hand-crafted):
 
 1. `cp src/_palette-capyppuccin.css src/_palette-<nome>.css`
 2. Trocar os hexes em `:root` + os assets palette-derivados no fim (`--checkbox-check-svg`, `--forum-tag-*-wash`).
-3. `cp src/capyppuccin-bg.css src/capyppuccin-<nome>-bg.css` e ajustar o `@import` URL.
+3. Adicionar `{ name: '<nome>', mode: 'dark' }` no array `wrapperOnly` do `scripts/gen-palettes.js` pra gerar o bg wrapper automaticamente.
+
+Wrappers `*-bg.css` vivem **só no root** como build artifact (gitignored unminified; `*-bg.min.css` tracked pra gh-pages). Single source of truth = template no script.
 
 Ambos os caminhos rodam `scripts/test-variants.sh` no CI, validando:
 
@@ -100,6 +98,6 @@ Ambos os caminhos rodam `scripts/test-variants.sh` no CI, validando:
 - nenhum literal de paleta vazou pro `_core.css`
 - número de seletores estável (catch silent regression)
 - cada variante minifica sem erro
-- **distância mínima entre paletas**: a variante nova precisa diferir em pelo menos 16 valores de variáveis vs cada paleta existente (evita variantes near-duplicate)
+- **distância mínima entre paletas**: a variante nova precisa diferir em pelo menos 10 valores de variáveis vs cada paleta existente (evita near-duplicates, mas permite siblings de mesma família como o trio Capyppuccin)
 
 O workflow `Minify CSS` builda automaticamente `capyppuccin-<nome>.min.css` (e `-bg.min.css` se houver wrapper) no merge.

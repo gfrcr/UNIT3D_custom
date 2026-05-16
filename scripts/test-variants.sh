@@ -18,10 +18,11 @@ PALETTES=(src/_palette-*.css)
 FAIL=0
 
 # Minimum number of var values that must differ between any two palettes.
-# Discourages near-duplicate variants (e.g., changing only 2 hexes).
-# Calibrated to capyppuccin vs teal distance (the canonical "this is a
-# meaningfully different variant" baseline).
-MIN_DISTINCT_VARS=16
+# Discourages near-duplicate variants (e.g., changing only 2 hexes). Floor
+# is 10 to accommodate intentional siblings (e.g., Capyppuccin trio sharing
+# accent/semantics, differentiated only via the surface lightness ladder).
+# Real near-duplicates would diff in ~3-5 vars; 10 stays above noise.
+MIN_DISTINCT_VARS=10
 
 err() { printf '  \033[31mFAIL\033[0m %s\n' "$1" >&2; FAIL=1; }
 ok() { printf '  \033[32mOK\033[0m   %s\n' "$1"; }

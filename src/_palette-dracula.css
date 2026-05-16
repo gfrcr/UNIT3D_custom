@@ -1,6 +1,7 @@
 /*!
  * Capyppuccin (dracula) — variant palette
- * Dracula: signature purple accent over dark slate.
+ * Dracula: signature purple over slate.
+ * Surfaces derived via OKLCH ladder (hue 285deg, chroma 0.04, dark mode).
  * See _palette-capyppuccin.css for the annotated reference. */
 
 :root {
@@ -11,14 +12,14 @@
   --cp-peach: #ffb86c;
   --cp-rosewater: #ff79c6;
 
-  --cp-base: #282a36;
-  --cp-mantle: #1d1f2a;
-  --cp-surface-0: #44475a;
-  --cp-surface-1: #565973;
+  --cp-base: #19182c;
+  --cp-mantle: #0e0c20;
+  --cp-surface-0: #27263c;
+  --cp-surface-1: #38384f;
 
-  --cp-text: #f8f8f2;
-  --cp-subtext: #c9c8c2;
-  --cp-overlay: #6272a4;
+  --cp-text: #d3d4d9;
+  --cp-subtext: #bdbdc5;
+  --cp-overlay: #7f7f8a;
 
   --cp-green: #50fa7b;
   --cp-red: #ff5555;
@@ -336,12 +337,12 @@
 
   
   /* Palette-derived assets (hex/rgba baked into URLs or alpha washes) */
-  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23282a36'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
+  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2319182c'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
   --forum-tag-accent-strong-wash: rgba(155, 109, 245, 0.22);
   --forum-tag-green-wash: rgba(80, 250, 123, 0.18);
   --forum-tag-pink-wash: rgba(255, 121, 198, 0.18);
   --forum-tag-red-wash: rgba(255, 85, 85, 0.18);
   --forum-tag-mauve-wash: rgba(189, 147, 249, 0.18);
-  --forum-tag-subtext-wash: rgba(201, 200, 194, 0.18);
+  --forum-tag-subtext-wash: rgba(189, 189, 197, 0.18);
   --forum-tag-red-wash-light: rgba(255, 85, 85, 0.12);
 }
