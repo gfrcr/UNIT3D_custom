@@ -1,31 +1,31 @@
 /*!
- * Capyppuccin (catppuccin latte) — light variant palette
- * Catppuccin Latte (official): amber yellow accent over light cream surfaces.
+ * Capyppuccin (catppuccin frappé) — variant palette
+ * Catppuccin Frappé (official): muted yellow over warm dark slate.
  * See _palette-capyppuccin.css for the annotated reference. */
 
 :root {
-  --cp-accent-soft: #fceedb;
-  --cp-accent-light: #efb966;
-  --cp-accent: #df8e1d;
-  --cp-accent-strong: #b87114;
-  --cp-peach: #fe640b;
-  --cp-rosewater: #dc8a78;
+  --cp-accent-soft: #f5ead0;
+  --cp-accent-light: #eed9aa;
+  --cp-accent: #e5c890;
+  --cp-accent-strong: #caa874;
+  --cp-peach: #ef9f76;
+  --cp-rosewater: #f2d5cf;
 
-  --cp-base: #eff1f5;
-  --cp-mantle: #e6e9ef;
-  --cp-surface-0: #ccd0da;
-  --cp-surface-1: #bcc0cc;
+  --cp-base: #303446;
+  --cp-mantle: #292c3c;
+  --cp-surface-0: #414559;
+  --cp-surface-1: #51576d;
 
-  --cp-text: #4c4f69;
-  --cp-subtext: #5c5f77;
-  --cp-overlay: #8c8fa1;
+  --cp-text: #c6d0f5;
+  --cp-subtext: #b5bfe2;
+  --cp-overlay: #838ba7;
 
-  --cp-green: #40a02b;
-  --cp-red: #d20f39;
-  --cp-blue: #1e66f5;
-  --cp-mauve: #8839ef;
-  --cp-teal: #179299;
-  --cp-pink: #ea76cb;
+  --cp-green: #a6d189;
+  --cp-red: #e78284;
+  --cp-blue: #8caaee;
+  --cp-mauve: #ca9ee6;
+  --cp-teal: #81c8be;
+  --cp-pink: #f4b8e4;
 
   /* Shape + shadow scales */
   --cp-radius-xs: 3px;
@@ -37,13 +37,13 @@
   --cp-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.18);
   --cp-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.22);
   --cp-shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.28);
-  --cp-glow-soft: 0 0 12px rgba(223, 142, 29, 0.45);
-  --shadow-glow: 0 0 0 3px rgba(252, 238, 219, 0.55);
+  --cp-glow-soft: 0 0 12px rgba(229, 200, 144, 0.45);
+  --shadow-glow: 0 0 0 3px rgba(245, 234, 208, 0.55);
 
   /* SweetAlert2 — backdrop dim + accent-tinted focus rings. */
   --swal-backdrop-bg: rgba(0, 0, 0, 0.55);
-  --swal-focus-ring: 0 0 0 3px rgba(223, 142, 29, 0.35);
-  --swal-input-focus-ring: 0 0 0 2px rgba(223, 142, 29, 0.25);
+  --swal-focus-ring: 0 0 0 3px rgba(229, 200, 144, 0.35);
+  --swal-input-focus-ring: 0 0 0 2px rgba(229, 200, 144, 0.25);
 
 /* Buttons */
   --button-filled-bg: var(--cp-accent);
@@ -336,12 +336,12 @@
 
   
   /* Palette-derived assets (hex/rgba baked into URLs or alpha washes) */
-  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23eff1f5'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
-  --forum-tag-accent-strong-wash: rgba(184, 113, 20, 0.22);
-  --forum-tag-green-wash: rgba(64, 160, 43, 0.18);
-  --forum-tag-pink-wash: rgba(234, 118, 203, 0.18);
-  --forum-tag-red-wash: rgba(210, 15, 57, 0.18);
-  --forum-tag-mauve-wash: rgba(136, 57, 239, 0.18);
-  --forum-tag-subtext-wash: rgba(92, 95, 119, 0.18);
-  --forum-tag-red-wash-light: rgba(210, 15, 57, 0.12);
+  --checkbox-check-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23303446'><path d='M6.173 11.591l-3.18-3.181 1.176-1.177 2.004 2.005 5.83-5.831 1.177 1.176z'/></svg>");
+  --forum-tag-accent-strong-wash: rgba(202, 168, 116, 0.22);
+  --forum-tag-green-wash: rgba(166, 209, 137, 0.18);
+  --forum-tag-pink-wash: rgba(244, 184, 228, 0.18);
+  --forum-tag-red-wash: rgba(231, 130, 132, 0.18);
+  --forum-tag-mauve-wash: rgba(202, 158, 230, 0.18);
+  --forum-tag-subtext-wash: rgba(181, 191, 226, 0.18);
+  --forum-tag-red-wash-light: rgba(231, 130, 132, 0.12);
 }
