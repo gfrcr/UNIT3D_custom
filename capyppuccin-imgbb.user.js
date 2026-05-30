@@ -10,7 +10,6 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-/* global GM_setValue, GM_getValue, unsafeWindow */
 (function () {
   'use strict';
 
