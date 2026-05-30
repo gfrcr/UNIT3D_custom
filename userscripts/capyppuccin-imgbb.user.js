@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Capyppuccin ImgBB Upload
 // @namespace    https://gfrcr.github.io/UNIT3D_custom
-// @version      0.1.0
-// @description  Upload de imagem (paste + botão) pro chat da capybarabr via ImgBB. Protótipo pro futuro ticket de feature nativa.
+// @version      0.2.0
+// @description  ImgBB image upload (paste + button) em todos os BBCode editors da capybarabr — chat, forum, PM, torrent comments, ticket compose/reply.
 // @author       gfrcr
 // @match        https://capybarabr.com/*
 // @grant        GM_setValue
@@ -31,8 +31,6 @@
   }
 
   function injectSettingsPanel() {
-    // espera o panel nativo aparecer (página é renderizada server-side, mas
-    // por garantia de robustez se houver delay)
     const tryInject = () => {
       const nativePanel = document.querySelector('main .panelV2');
       if (!nativePanel || document.querySelector('[data-capy-imgbb-panel]')) return;
@@ -47,7 +45,8 @@
         </header>
         <div class="panel__body">
           <p style="opacity: 0.8; font-size: 13px; margin: 0 0 12px;">
-            Configure sua API key do ImgBB pra colar/upar imagens direto no chat.
+            Configure sua API key do ImgBB pra colar/upar imagens em qualquer BBCode editor
+            (chat, fórum, PM, comentário de torrent, ticket).
             Pega uma key gratuita em
             <a href="https://api.imgbb.com/" target="_blank" rel="noopener">api.imgbb.com</a>
             (clica em "Get API key" depois de logar).
@@ -100,19 +99,60 @@
     };
 
     tryInject();
-    // se o DOM mudar (ex: livewire), tenta de novo
     new MutationObserver(tryInject).observe(document.body, { childList: true, subtree: true });
   }
 
-  // ────────────────── chat: paste handler + upload button ──────────────────
+  // ────────────────── shared helpers ──────────────────
+
+  function buildUploadButton(textarea, opts = {}) {
+    const cls = opts.className || 'form__standard-icon-button';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = cls;
+    btn.dataset.capyUpload = '1';
+    btn.title = 'Upload image to ImgBB';
+    btn.innerHTML = '<abbr title="Upload image to ImgBB"><i class="fas fa-cloud-upload-alt"></i></abbr>';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const picker = document.createElement('input');
+      picker.type = 'file';
+      picker.accept = 'image/*';
+      picker.addEventListener('change', () => {
+        const file = picker.files[0];
+        if (file) uploadAndInsert(textarea, file);
+      });
+      picker.click();
+    });
+    return btn;
+  }
+
+  function wirePaste(textarea) {
+    if (textarea.dataset.capyPasteWired) return;
+    textarea.dataset.capyPasteWired = '1';
+    textarea.addEventListener('paste', (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const imageItem = Array.from(items).find((i) => i.type.startsWith('image/'));
+      if (!imageItem) return;
+      e.preventDefault();
+      const blob = imageItem.getAsFile();
+      if (blob) uploadAndInsert(textarea, blob);
+    });
+  }
+
+  // ────────────────── context 1: chat ──────────────────
 
   waitForChat()
     .then(({ form, textarea }) => {
-      log('chat ready');
-      wireUploadButton(form);
-      wirePasteHandler(textarea);
+      const bar = form.querySelector('.form__bbcode-buttons');
+      if (bar && !bar.querySelector('[data-capy-upload]')) {
+        bar.appendChild(buildUploadButton(textarea));
+        log('chat: upload button injected');
+      }
+      wirePaste(textarea);
+      log('chat: paste handler wired');
     })
-    .catch((e) => warn('chat not ready:', e.message));
+    .catch(() => { /* chat absent on this page — silent */ });
 
   function waitForChat({ timeoutMs = 15000, pollMs = 100 } = {}) {
     return new Promise((resolve, reject) => {
@@ -132,57 +172,83 @@
     });
   }
 
-  function wireUploadButton(form) {
-    const bar = form.querySelector('.form__bbcode-buttons');
-    if (!bar) {
-      warn('.form__bbcode-buttons not found — skipping upload button');
-      return;
-    }
-    if (bar.querySelector('[data-capy-upload]')) return;
+  // ────────────────── context 2: rich .bbcode-input (forum, PM, etc.) ──────────────────
 
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'form__standard-icon-button';
-    btn.dataset.capyUpload = '1';
-    btn.title = 'Upload image to ImgBB';
-    btn.innerHTML = '<abbr title="Upload image to ImgBB"><i class="fas fa-cloud-upload-alt"></i></abbr>';
-    bar.appendChild(btn);
+  bootRichBbcodeInputs();
 
-    btn.addEventListener('click', () => {
-      const picker = document.createElement('input');
-      picker.type = 'file';
-      picker.accept = 'image/*';
-      picker.multiple = false;
-      picker.addEventListener('change', () => {
-        const file = picker.files[0];
-        if (file) uploadAndInsert(file);
-      });
-      picker.click();
-    });
+  function bootRichBbcodeInputs() {
+    const tryInit = () => {
+      for (const bi of document.querySelectorAll('.bbcode-input')) {
+        if (bi.dataset.capyWired) continue;
+        const textarea = bi.querySelector('textarea.bbcode-input__input, textarea');
+        const iconBar = bi.querySelector('.bbcode-input__icon-bar');
+        if (!textarea || !iconBar) continue;
 
-    log('upload button injected');
+        // Match the existing pattern (each button is wrapped in <li>)
+        const li = document.createElement('li');
+        li.appendChild(buildUploadButton(textarea));
+        iconBar.appendChild(li);
+
+        wirePaste(textarea);
+        bi.dataset.capyWired = '1';
+        log('rich bbcode-input wired:', textarea.id || textarea.name);
+      }
+    };
+    tryInit();
+    new MutationObserver(tryInit).observe(document.body, { childList: true, subtree: true });
   }
 
-  function wirePasteHandler(textarea) {
-    textarea.addEventListener('paste', (e) => {
-      const items = e.clipboardData?.items;
-      if (!items) return;
-      const imageItem = Array.from(items).find((i) => i.type.startsWith('image/'));
-      if (!imageItem) return;
-      e.preventDefault();
-      const blob = imageItem.getAsFile();
-      if (blob) uploadAndInsert(blob);
-    });
-    log('paste handler wired');
+  // ────────────────── context 3: raw textareas (torrent / ticket comments) ──────────────────
+
+  bootRawTextareas();
+
+  function bootRawTextareas() {
+    // Conhecidos pela inspeção live:
+    //   #new-comment__textarea — torrent show comments + ticket show comments
+    //   #body — ticket create
+    const RAW_TARGETS = ['#new-comment__textarea', '#tickets-create form textarea[name="body"]', 'form[action*="/tickets"] textarea#body'];
+
+    const tryInit = () => {
+      const found = new Set();
+      // Heurística simples e segura: textareas que TÊM um data-bbcode hint OU
+      // estão num form que envia pra rotas conhecidas de comments/tickets.
+      // Pra evitar falsos positivos (formulários de busca, etc.), exigimos
+      // ID conhecido OU contexto de form action explícito.
+      const candidates = [
+        document.getElementById('new-comment__textarea'),
+        document.getElementById('body')
+      ].filter(Boolean);
+
+      for (const ta of candidates) {
+        if (ta.dataset.capyWired) continue;
+        if (ta.closest('.bbcode-input')) continue; // já tratado pelo rich path
+        // Filtro extra pro #body: só se o form for de ticket
+        if (ta.id === 'body') {
+          const form = ta.closest('form');
+          if (!form || !/\/tickets/i.test(form.action || '')) continue;
+        }
+
+        const bar = document.createElement('div');
+        bar.className = 'capy-raw-bar';
+        bar.dataset.capyRawBar = '1';
+        bar.style.cssText = 'display:flex; gap:4px; padding:4px 0; margin-bottom:4px;';
+        bar.appendChild(buildUploadButton(ta, { className: 'form__button form__standard-icon-button' }));
+        ta.parentElement.insertBefore(bar, ta);
+
+        wirePaste(ta);
+        ta.dataset.capyWired = '1';
+        found.add(ta.id);
+        log('raw textarea wired:', ta.id);
+      }
+    };
+    tryInit();
+    new MutationObserver(tryInit).observe(document.body, { childList: true, subtree: true });
   }
 
   // ────────────────── upload core ──────────────────
 
-  async function uploadAndInsert(blob) {
+  async function uploadAndInsert(textarea, blob) {
     const key = getKey();
-    const textarea = document.getElementById('chatbox__messages-create');
-    if (!textarea) return;
-
     if (!key) {
       const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
       alert(
@@ -199,8 +265,6 @@
     try {
       const fd = new FormData();
       fd.append('image', blob);
-      // GM_xmlhttpRequest bypassa CSP da página (UNIT3D bloqueia fetch direto
-      // pra hosts externos via SecureHeaders).
       const j = await gmRequest({
         method: 'POST',
         url: `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
@@ -231,8 +295,6 @@
           if (r.status < 200 || r.status >= 300) {
             return reject(new Error(`HTTP ${r.status}: ${r.statusText || ''}`.trim()));
           }
-          // Algumas builds do GM_xmlhttpRequest devolvem `response` parseado
-          // quando responseType=json; outras devolvem string em `responseText`.
           let body = r.response;
           if (body === undefined || body === null || typeof body === 'string') {
             try { body = JSON.parse(r.responseText); } catch (e) { return reject(new Error('invalid JSON response')); }
@@ -266,5 +328,5 @@
     return (bytes / 1024 / 1024).toFixed(1) + 'MB';
   }
 
-  log('loaded (settings:', location.pathname, ')');
+  log('loaded — pathname:', location.pathname);
 })();
