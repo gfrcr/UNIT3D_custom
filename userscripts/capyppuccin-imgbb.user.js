@@ -233,7 +233,12 @@
         bar.dataset.capyRawBar = '1';
         bar.style.cssText = 'display:flex; gap:4px; padding:4px 0; margin-bottom:4px;';
         bar.appendChild(buildUploadButton(ta, { className: 'form__button form__standard-icon-button' }));
-        ta.parentElement.insertBefore(bar, ta);
+        // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
+        // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
+        // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
+        const formGroup = ta.closest('.form__group');
+        const anchor = formGroup && formGroup.parentElement ? formGroup : ta;
+        anchor.parentElement.insertBefore(bar, anchor);
 
         wirePaste(ta);
         ta.dataset.capyWired = '1';
