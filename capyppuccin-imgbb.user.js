@@ -7,6 +7,8 @@
 // @match        https://capybarabr.com/*
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_xmlhttpRequest
+// @connect      api.imgbb.com
 // @run-at       document-idle
 // ==/UserScript==
 
@@ -197,13 +199,16 @@
     try {
       const fd = new FormData();
       fd.append('image', blob);
-      const r = await fetch(
-        `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
-        { method: 'POST', body: fd }
-      );
-      const j = await r.json();
+      // GM_xmlhttpRequest bypassa CSP da página (UNIT3D bloqueia fetch direto
+      // pra hosts externos via SecureHeaders).
+      const j = await gmRequest({
+        method: 'POST',
+        url: `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
+        data: fd,
+        responseType: 'json'
+      });
       if (!j.success || !j.data?.url) {
-        throw new Error(j.error?.message || `HTTP ${r.status}`);
+        throw new Error(j.error?.message || 'imgbb returned no url');
       }
       const url = j.data.url;
       replaceInTextarea(textarea, placeholder, `[img]${url}[/img]`);
@@ -213,6 +218,31 @@
       warn('upload failed:', err);
       alert('Upload falhou: ' + err.message);
     }
+  }
+
+  function gmRequest(opts) {
+    return new Promise((resolve, reject) => {
+      GM_xmlhttpRequest({
+        method: opts.method,
+        url: opts.url,
+        data: opts.data,
+        responseType: opts.responseType,
+        onload: (r) => {
+          if (r.status < 200 || r.status >= 300) {
+            return reject(new Error(`HTTP ${r.status}: ${r.statusText || ''}`.trim()));
+          }
+          // Algumas builds do GM_xmlhttpRequest devolvem `response` parseado
+          // quando responseType=json; outras devolvem string em `responseText`.
+          let body = r.response;
+          if (body === undefined || body === null || typeof body === 'string') {
+            try { body = JSON.parse(r.responseText); } catch (e) { return reject(new Error('invalid JSON response')); }
+          }
+          resolve(body);
+        },
+        onerror: () => reject(new Error('network error')),
+        ontimeout: () => reject(new Error('request timed out'))
+      });
+    });
   }
 
   function insertAtCursor(el, text) {
