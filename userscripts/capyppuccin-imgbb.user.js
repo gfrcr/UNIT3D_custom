@@ -260,6 +260,7 @@
       // ID conhecido OU contexto de form action explícito.
       const candidates = [
         document.getElementById('new-comment__textarea'),
+        document.getElementById('edit-comment'),
         document.getElementById('body')
       ].filter(Boolean);
 
@@ -275,7 +276,7 @@
         const bar = document.createElement('div');
         bar.className = 'capy-raw-bar';
         bar.dataset.capyRawBar = '1';
-        bar.style.cssText = 'display:flex; gap:0; padding:2px 0; margin-bottom:2px; flex-wrap:wrap;';
+        bar.style.cssText = 'display:flex; gap:2px; padding:4px 0; margin-bottom:4px; flex-wrap:wrap;';
         // Mesma família de classes do toolbar nativo do chat (--skinny pra ficar compacto).
         const btnCls = 'form__button form__standard-icon-button form__standard-icon-button--skinny';
         for (const def of RAW_BBCODE_TAGS) {
