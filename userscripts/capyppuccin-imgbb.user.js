@@ -19,10 +19,42 @@
   const log = (...a) => console.log(LOG, ...a);
   const warn = (...a) => console.warn(LOG, ...a);
   const KEY_STORE = 'capy-imgbb-key';
+  const STICKER_STORE = 'capy-stickers';
+  const STICKER_SIZE = 150; // px — alvo do resize e do [img=SIZE]
   const PAGE = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
 
   const getKey = () => GM_getValue(KEY_STORE, '');
   const setKey = (v) => GM_setValue(KEY_STORE, v);
+
+  // ── sticker storage ──
+  function getStickers() {
+    const raw = GM_getValue(STICKER_STORE, '');
+    if (!raw) return [];
+    try {
+      const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) {
+      return [];
+    }
+  }
+  function setStickers(arr) {
+    GM_setValue(STICKER_STORE, JSON.stringify(arr));
+  }
+  function addSticker({ url, name = '' }) {
+    const sticker = {
+      id: `${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
+      url,
+      name,
+      addedAt: Date.now()
+    };
+    const arr = getStickers();
+    arr.push(sticker);
+    setStickers(arr);
+    return sticker;
+  }
+  function removeSticker(id) {
+    setStickers(getStickers().filter((s) => s.id !== id));
+  }
 
   // ────────────────── settings page: inject API key field ──────────────────
 
@@ -389,6 +421,9 @@
     if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + 'KB';
     return (bytes / 1024 / 1024).toFixed(1) + 'MB';
   }
+
+  // Debug handle (console) — não cria dependências internas.
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker };
 
   log('loaded — pathname:', location.pathname);
 })();
