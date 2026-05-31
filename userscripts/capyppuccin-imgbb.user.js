@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Capyppuccin ImgBB Upload
 // @namespace    https://gfrcr.github.io/UNIT3D_custom
-// @version      0.3.1
+// @version      0.3.2
 // @description  ImgBB upload + Stickers em todos os BBCode editors da capybarabr — chat, forum, PM, torrent comments, ticket compose/reply.
 // @author       gfrcr
 // @match        https://capybarabr.com/*
@@ -10,6 +10,8 @@
 // @grant        GM_xmlhttpRequest
 // @connect      api.imgbb.com
 // @run-at       document-idle
+// @updateURL    https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
+// @downloadURL  https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
 // ==/UserScript==
 
 (function () {
