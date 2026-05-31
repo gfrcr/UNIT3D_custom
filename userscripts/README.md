@@ -7,7 +7,7 @@ do tracker. Independentes do tema CSS — instalação separada.
 
 | Arquivo | O que faz |
 |--|--|
-| [`capyppuccin-imgbb.user.js`](capyppuccin-imgbb.user.js) | Upload de imagem no chat (paste + botão) via ImgBB. Protótipo do que vai virar feature nativa. |
+| [`capyppuccin-imgbb.user.js`](capyppuccin-imgbb.user.js) | Upload de imagem (paste + botão) via ImgBB em todos os campos de BBCode — chat, fórum, PM, comentários de torrent e tickets. Nos comentários crus também adiciona uma barra de BBCode (negrito/itálico/etc.). Protótipo do que vai virar feature nativa. |
 
 ## Como instalar
 
