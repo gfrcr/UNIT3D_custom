@@ -357,18 +357,7 @@
     insertAtCursor(textarea, placeholder);
 
     try {
-      const fd = new FormData();
-      fd.append('image', blob);
-      const j = await gmRequest({
-        method: 'POST',
-        url: `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
-        data: fd,
-        responseType: 'json'
-      });
-      if (!j.success || !j.data?.url) {
-        throw new Error(j.error?.message || 'imgbb returned no url');
-      }
-      const url = j.data.url;
+      const url = await uploadBlob(blob);
       replaceInTextarea(textarea, placeholder, `[img]${url}[/img]`);
       log('uploaded:', url);
     } catch (err) {
@@ -399,6 +388,30 @@
         ontimeout: () => reject(new Error('request timed out'))
       });
     });
+  }
+
+  // Sobe um blob pro ImgBB e retorna a URL direta. Lança em erro.
+  async function uploadBlob(blob) {
+    const key = getKey();
+    if (!key) throw new Error('no-key');
+    const fd = new FormData();
+    fd.append('image', blob);
+    const j = await gmRequest({
+      method: 'POST',
+      url: `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
+      data: fd,
+      responseType: 'json'
+    });
+    if (!j.success || !j.data?.url) {
+      throw new Error(j.error?.message || 'imgbb returned no url');
+    }
+    return j.data.url;
+  }
+
+  // Resize + upload. Retorna a URL do sticker.
+  async function uploadSticker(blob) {
+    const resized = await resizeImage(blob, STICKER_SIZE);
+    return uploadBlob(resized);
   }
 
   function insertAtCursor(el, text) {
@@ -459,7 +472,7 @@
   }
 
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker };
 
   log('loaded — pathname:', location.pathname);
 })();
