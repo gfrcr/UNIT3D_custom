@@ -572,7 +572,13 @@
   }
 
   function openStickerPicker(button, textarea) {
-    if (_openPicker) { closeStickerPicker(); return; } // toggle
+    if (_openPicker) {
+      // Mesmo botão = toggle (fecha). Botão diferente = troca (fecha o velho,
+      // abre o novo) sem exigir um clique extra.
+      const sameButton = _openPicker.el.parentElement === button.parentElement;
+      closeStickerPicker();
+      if (sameButton) return;
+    }
 
     const pop = document.createElement('div');
     pop.className = 'capy-sticker-pop';
