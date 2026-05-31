@@ -471,8 +471,152 @@
     });
   }
 
+  // ── sticker picker ──
+  let _openPicker = null; // { el, onDocClick }
+
+  function closeStickerPicker() {
+    if (!_openPicker) return;
+    document.removeEventListener('click', _openPicker.onDocClick, true);
+    _openPicker.el.remove();
+    _openPicker = null;
+  }
+
+  function openStickerPicker(button, textarea) {
+    if (_openPicker) { closeStickerPicker(); return; } // toggle
+
+    const pop = document.createElement('div');
+    pop.className = 'capy-sticker-pop';
+    pop.style.cssText = [
+      'position:absolute', 'bottom:100%', 'left:0', 'z-index:10000',
+      'margin-bottom:6px', 'padding:8px',
+      'background:var(--panel-bg,#2a292e)',
+      'border:1px solid var(--input-text-border-color,#555)',
+      'border-radius:8px',
+      'display:flex', 'flex-wrap:wrap', 'gap:6px',
+      'width:240px', 'max-height:240px', 'overflow-y:auto',
+      'box-shadow:0 4px 16px rgba(0,0,0,.4)'
+    ].join(';');
+
+    const TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
+
+    function render() {
+      pop.textContent = '';
+
+      // tile "+"
+      const add = document.createElement('button');
+      add.type = 'button';
+      add.title = 'Adicionar sticker';
+      add.style.cssText = TILE +
+        'display:flex;align-items:center;justify-content:center;' +
+        'font-size:24px;border:1px dashed var(--input-text-border-color,#777);' +
+        'background:transparent;color:inherit;';
+      add.textContent = '+';
+      add.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pickAndAdd(render);
+      });
+      pop.appendChild(add);
+
+      const stickers = getStickers();
+      if (stickers.length === 0) {
+        const hint = document.createElement('div');
+        hint.style.cssText = 'flex:1 1 100%;opacity:.6;font-size:12px;align-self:center;';
+        hint.textContent = 'Adicione seu primeiro sticker com o +';
+        pop.appendChild(hint);
+        return;
+      }
+
+      for (const s of stickers) {
+        const cell = document.createElement('div');
+        cell.style.cssText = 'position:relative;' + TILE;
+
+        const thumb = document.createElement('img');
+        thumb.src = s.url;
+        thumb.title = s.name || '';
+        thumb.loading = 'lazy';
+        thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:6px;display:block;';
+        thumb.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          insertAtCursor(textarea, `[img=${STICKER_SIZE}]${s.url}[/img]`);
+          closeStickerPicker();
+        });
+        cell.appendChild(thumb);
+
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.title = 'Apagar';
+        del.textContent = '×';
+        del.style.cssText = [
+          'position:absolute', 'top:-6px', 'right:-6px',
+          'width:18px', 'height:18px', 'line-height:16px',
+          'border-radius:50%', 'border:none', 'cursor:pointer',
+          'background:var(--cp-red,#f38ba8)', 'color:#1a1a1a',
+          'font-size:13px', 'padding:0', 'display:none'
+        ].join(';');
+        cell.addEventListener('mouseenter', () => { del.style.display = 'block'; });
+        cell.addEventListener('mouseleave', () => { del.style.display = 'none'; });
+        del.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          removeSticker(s.id);
+          render();
+        });
+        cell.appendChild(del);
+
+        pop.appendChild(cell);
+      }
+    }
+
+    render();
+
+    // ancora: o botão precisa de um pai posicionado
+    const host = button.parentElement;
+    const hostCS = getComputedStyle(host);
+    if (hostCS.position === 'static') host.style.position = 'relative';
+    host.appendChild(pop);
+
+    // click fora fecha (capture pra pegar antes de outros handlers)
+    const onDocClick = (e) => {
+      if (!pop.contains(e.target) && e.target !== button && !button.contains(e.target)) {
+        closeStickerPicker();
+      }
+    };
+    document.addEventListener('click', onDocClick, true);
+    _openPicker = { el: pop, onDocClick };
+  }
+
+  // Abre seletor de arquivo, sobe como sticker, salva, re-renderiza.
+  function pickAndAdd(rerender) {
+    const picker = document.createElement('input');
+    picker.type = 'file';
+    picker.accept = 'image/*';
+    picker.addEventListener('change', async () => {
+      const file = picker.files[0];
+      if (!file) return;
+      try {
+        const url = await uploadSticker(file);
+        addSticker({ url, name: (file.name || '').replace(/\.[^.]+$/, '') });
+        rerender();
+      } catch (err) {
+        if (err.message === 'no-key') {
+          const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
+          alert(
+            'ImgBB API key não configurada.\n\n' +
+            `Vai em capybarabr.com/users/${me}/general-settings/edit ` +
+            '→ painel "ImgBB upload" → cola sua key e salva.'
+          );
+        } else {
+          alert('Upload do sticker falhou: ' + err.message);
+        }
+      }
+    });
+    picker.click();
+  }
+
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker };
 
   log('loaded — pathname:', location.pathname);
 })();
