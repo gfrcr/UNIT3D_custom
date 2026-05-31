@@ -277,15 +277,15 @@
 
   // BBCode tags used on raw textareas (chat-like subset, PT-BR titles).
   const RAW_BBCODE_TAGS = [
-    { open: '[b]',       close: '[/b]',       icon: 'fa-bold',          title: 'Negrito' },
-    { open: '[i]',       close: '[/i]',       icon: 'fa-italic',        title: 'Itálico' },
-    { open: '[u]',       close: '[/u]',       icon: 'fa-underline',     title: 'Sublinhado' },
-    { open: '[s]',       close: '[/s]',       icon: 'fa-strikethrough', title: 'Riscado' },
-    { open: '[img]',     close: '[/img]',     icon: 'fa-image',         title: 'Imagem' },
-    { open: '[url]',     close: '[/url]',     icon: 'fa-link',          title: 'Link' },
-    { open: '[code]',    close: '[/code]',    icon: 'fa-code',          title: 'Código' },
-    { open: '[quote]',   close: '[/quote]',   icon: 'fa-quote-right',   title: 'Citação' },
-    { open: '[spoiler]', close: '[/spoiler]', icon: 'fa-eye-slash',     title: 'Spoiler' },
+    { open: '[b]', close: '[/b]', icon: 'fa-bold', title: 'Negrito' },
+    { open: '[i]', close: '[/i]', icon: 'fa-italic', title: 'Itálico' },
+    { open: '[u]', close: '[/u]', icon: 'fa-underline', title: 'Sublinhado' },
+    { open: '[s]', close: '[/s]', icon: 'fa-strikethrough', title: 'Riscado' },
+    { open: '[img]', close: '[/img]', icon: 'fa-image', title: 'Imagem' },
+    { open: '[url]', close: '[/url]', icon: 'fa-link', title: 'Link' },
+    { open: '[code]', close: '[/code]', icon: 'fa-code', title: 'Código' },
+    { open: '[quote]', close: '[/quote]', icon: 'fa-quote-right', title: 'Citação' },
+    { open: '[spoiler]', close: '[/spoiler]', icon: 'fa-eye-slash', title: 'Spoiler' },
   ];
 
   function buildBbcodeButton(textarea, def, className) {
