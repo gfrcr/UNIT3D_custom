@@ -422,8 +422,44 @@
     return (bytes / 1024 / 1024).toFixed(1) + 'MB';
   }
 
+  // Encolhe o blob pra que o lado maior seja `maxSize` px. Mantém proporção,
+  // não amplia. Retorna Promise<Blob>. Fallback pro blob original em erro.
+  function resizeImage(blob, maxSize = STICKER_SIZE) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const w = img.naturalWidth;
+          const h = img.naturalHeight;
+          const longest = Math.max(w, h);
+          const scale = longest > maxSize ? maxSize / longest : 1;
+          const tw = Math.max(1, Math.round(w * scale));
+          const th = Math.max(1, Math.round(h * scale));
+          const canvas = document.createElement('canvas');
+          canvas.width = tw;
+          canvas.height = th;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, tw, th);
+          canvas.toBlob((out) => {
+            URL.revokeObjectURL(url);
+            resolve(out || blob);
+          }, 'image/png');
+        } catch (_) {
+          URL.revokeObjectURL(url);
+          resolve(blob);
+        }
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(blob);
+      };
+      img.src = url;
+    });
+  }
+
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage };
 
   log('loaded — pathname:', location.pathname);
 })();
