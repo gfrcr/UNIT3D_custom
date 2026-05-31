@@ -572,6 +572,81 @@
     });
   }
 
+  // ── sticker tiles (compartilhado: picker popover + settings manage grid) ──
+  const STICKER_TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
+
+  // Renderiza os tiles num container. opts.onPick(sticker) ao clicar num
+  // thumbnail; opts.onChange() após add/remove (ex: atualizar contador).
+  function renderStickerTiles(container, opts = {}) {
+    const rerender = () => renderStickerTiles(container, opts);
+    container.textContent = '';
+
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.title = 'Adicionar sticker';
+    add.style.cssText = STICKER_TILE +
+      'display:flex;align-items:center;justify-content:center;' +
+      'font-size:24px;border:1px dashed var(--input-text-border-color,#777);' +
+      'background:transparent;color:inherit;';
+    add.textContent = '+';
+    add.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pickAndAdd(() => { rerender(); opts.onChange?.(); });
+    });
+    container.appendChild(add);
+
+    const stickers = getStickers();
+    if (stickers.length === 0) {
+      const hint = document.createElement('div');
+      hint.style.cssText = 'flex:1 1 100%;opacity:.6;font-size:12px;align-self:center;';
+      hint.textContent = 'Adicione seu primeiro sticker com o +';
+      container.appendChild(hint);
+      return;
+    }
+
+    for (const s of stickers) {
+      const cell = document.createElement('div');
+      cell.style.cssText = 'position:relative;' + STICKER_TILE;
+
+      const thumb = document.createElement('img');
+      thumb.src = s.url;
+      thumb.title = s.name || '';
+      thumb.loading = 'lazy';
+      thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:6px;display:block;';
+      thumb.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        opts.onPick?.(s);
+      });
+      cell.appendChild(thumb);
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.title = 'Apagar';
+      del.textContent = '×';
+      del.style.cssText = [
+        'position:absolute', 'top:-6px', 'right:-6px',
+        'width:18px', 'height:18px', 'line-height:16px',
+        'border-radius:50%', 'border:none', 'cursor:pointer',
+        'background:var(--cp-red,#f38ba8)', 'color:#1a1a1a',
+        'font-size:13px', 'padding:0', 'display:none'
+      ].join(';');
+      cell.addEventListener('mouseenter', () => { del.style.display = 'block'; });
+      cell.addEventListener('mouseleave', () => { del.style.display = 'none'; });
+      del.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        removeSticker(s.id);
+        rerender();
+        opts.onChange?.();
+      });
+      cell.appendChild(del);
+
+      container.appendChild(cell);
+    }
+  }
+
   // ── sticker picker ──
   let _openPicker = null; // { el, onDocClick }
 
@@ -604,79 +679,12 @@
       'box-shadow:0 4px 16px rgba(0,0,0,.4)'
     ].join(';');
 
-    const TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
-
-    function render() {
-      pop.textContent = '';
-
-      // tile "+"
-      const add = document.createElement('button');
-      add.type = 'button';
-      add.title = 'Adicionar sticker';
-      add.style.cssText = TILE +
-        'display:flex;align-items:center;justify-content:center;' +
-        'font-size:24px;border:1px dashed var(--input-text-border-color,#777);' +
-        'background:transparent;color:inherit;';
-      add.textContent = '+';
-      add.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        pickAndAdd(render);
-      });
-      pop.appendChild(add);
-
-      const stickers = getStickers();
-      if (stickers.length === 0) {
-        const hint = document.createElement('div');
-        hint.style.cssText = 'flex:1 1 100%;opacity:.6;font-size:12px;align-self:center;';
-        hint.textContent = 'Adicione seu primeiro sticker com o +';
-        pop.appendChild(hint);
-        return;
+    renderStickerTiles(pop, {
+      onPick: (s) => {
+        insertAtCursor(textarea, `[img=${getStickerDisplaySize()}]${s.url}[/img]`);
+        closeStickerPicker();
       }
-
-      for (const s of stickers) {
-        const cell = document.createElement('div');
-        cell.style.cssText = 'position:relative;' + TILE;
-
-        const thumb = document.createElement('img');
-        thumb.src = s.url;
-        thumb.title = s.name || '';
-        thumb.loading = 'lazy';
-        thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:6px;display:block;';
-        thumb.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          insertAtCursor(textarea, `[img=${STICKER_SIZE}]${s.url}[/img]`);
-          closeStickerPicker();
-        });
-        cell.appendChild(thumb);
-
-        const del = document.createElement('button');
-        del.type = 'button';
-        del.title = 'Apagar';
-        del.textContent = '×';
-        del.style.cssText = [
-          'position:absolute', 'top:-6px', 'right:-6px',
-          'width:18px', 'height:18px', 'line-height:16px',
-          'border-radius:50%', 'border:none', 'cursor:pointer',
-          'background:var(--cp-red,#f38ba8)', 'color:#1a1a1a',
-          'font-size:13px', 'padding:0', 'display:none'
-        ].join(';');
-        cell.addEventListener('mouseenter', () => { del.style.display = 'block'; });
-        cell.addEventListener('mouseleave', () => { del.style.display = 'none'; });
-        del.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          removeSticker(s.id);
-          render();
-        });
-        cell.appendChild(del);
-
-        pop.appendChild(cell);
-      }
-    }
-
-    render();
+    });
 
     // ancora: o botão precisa de um pai posicionado
     const host = button.parentElement;
