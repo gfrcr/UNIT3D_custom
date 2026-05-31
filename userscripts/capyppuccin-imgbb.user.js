@@ -20,7 +20,7 @@
   const warn = (...a) => console.warn(LOG, ...a);
   const KEY_STORE = 'capy-imgbb-key';
   const STICKER_STORE = 'capy-stickers';
-  const STICKER_SIZE = 150; // px — alvo do resize e do [img=SIZE]
+  const STICKER_SIZE = 150; // px — alvo do resize/upload (exibição é configurável via getStickerDisplaySize)
   const PAGE = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
 
   const getKey = () => GM_getValue(KEY_STORE, '');
@@ -223,6 +223,7 @@
           if (!confirm(`Substituir sua biblioteca atual por ${arr.length} sticker(s) do arquivo?`)) return;
           setStickers(arr);
           refreshCount();
+          renderStickerTiles(grid, { onChange: refreshCount }); // re-render a grade com os importados
           alert('Biblioteca importada.');
         } catch (e) {
           alert('Import falhou: ' + e.message);
