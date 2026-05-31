@@ -163,6 +163,17 @@
           outro dispositivo.
           <strong data-capy-sticker-count></strong>
         </p>
+        <p class="form__group" style="margin:0 0 12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+            Tamanho do sticker:
+            <select class="form__select" data-capy-sticker-size style="width:auto;">
+              <option value="150">Grande (150px)</option>
+              <option value="100">Médio (100px)</option>
+              <option value="50">Pequeno (50px)</option>
+            </select>
+          </label>
+        </p>
+        <div data-capy-sticker-grid style="display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;"></div>
         <p style="display:flex;gap:8px;flex-wrap:wrap;">
           <button type="button" class="form__button form__button--outlined" data-capy-stk-export>
             Exportar JSON
@@ -179,6 +190,15 @@
         `${getStickers().length} sticker(s) salvos.`;
     };
     refreshCount();
+
+    const sizeSelect = panel.querySelector('[data-capy-sticker-size]');
+    sizeSelect.value = String(getStickerDisplaySize());
+    sizeSelect.addEventListener('change', () => {
+      setStickerDisplaySize(parseInt(sizeSelect.value, 10));
+    });
+
+    const grid = panel.querySelector('[data-capy-sticker-grid]');
+    renderStickerTiles(grid, { onChange: refreshCount });
 
     panel.querySelector('[data-capy-stk-export]').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(getStickers(), null, 2)], { type: 'application/json' });
