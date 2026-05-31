@@ -7,7 +7,7 @@ do tracker. Independentes do tema CSS — instalação separada.
 
 | Arquivo | O que faz |
 |--|--|
-| [`capyppuccin-imgbb.user.js`](capyppuccin-imgbb.user.js) | Upload de imagem (paste + botão) **e stickers** (biblioteca de imagens ~150px reusáveis) em todos os campos de BBCode — chat, fórum, PM, comentários de torrent e tickets. Nos comentários crus também adiciona uma barra de BBCode. Protótipo do que vai virar feature nativa. |
+| [`capyppuccin-imgbb.user.js`](capyppuccin-imgbb.user.js) | Upload de imagem (paste + botão) **e stickers** (biblioteca de imagens reusáveis com tamanho configurável (50/100/150px)) em todos os campos de BBCode — chat, fórum, PM, comentários de torrent e tickets. Nos comentários crus também adiciona uma barra de BBCode. Protótipo do que vai virar feature nativa. |
 
 ## Como instalar
 

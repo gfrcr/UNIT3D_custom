@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Capyppuccin ImgBB Upload
 // @namespace    https://gfrcr.github.io/UNIT3D_custom
-// @version      0.3.0
+// @version      0.3.1
 // @description  ImgBB upload + Stickers em todos os BBCode editors da capybarabr — chat, forum, PM, torrent comments, ticket compose/reply.
 // @author       gfrcr
 // @match        https://capybarabr.com/*
