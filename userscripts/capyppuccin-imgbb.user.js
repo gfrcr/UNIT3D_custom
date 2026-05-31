@@ -158,6 +158,22 @@
     return btn;
   }
 
+  function buildStickerButton(textarea, opts = {}) {
+    const cls = opts.className || 'form__standard-icon-button';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = cls;
+    btn.dataset.capySticker = '1';
+    btn.title = 'Stickers';
+    btn.innerHTML = '<abbr title="Stickers"><i class="fas fa-note-sticky"></i></abbr>';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openStickerPicker(btn, textarea);
+    });
+    return btn;
+  }
+
   // BBCode tags used on raw textareas (chat-like subset, PT-BR titles).
   const RAW_BBCODE_TAGS = [
     { open: '[b]',       close: '[/b]',       icon: 'fa-bold',          title: 'Negrito' },
@@ -223,7 +239,8 @@
       const bar = form.querySelector('.form__bbcode-buttons');
       if (bar && !bar.querySelector('[data-capy-upload]')) {
         bar.appendChild(buildUploadButton(textarea));
-        log('chat: upload button injected');
+        bar.appendChild(buildStickerButton(textarea));
+        log('chat: upload + sticker buttons injected');
       }
       wirePaste(textarea);
       log('chat: paste handler wired');
@@ -264,6 +281,9 @@
         const li = document.createElement('li');
         li.appendChild(buildUploadButton(textarea));
         iconBar.appendChild(li);
+        const liSticker = document.createElement('li');
+        liSticker.appendChild(buildStickerButton(textarea));
+        iconBar.appendChild(liSticker);
 
         wirePaste(textarea);
         bi.dataset.capyWired = '1';
@@ -315,6 +335,7 @@
           bar.appendChild(buildBbcodeButton(ta, def, btnCls));
         }
         bar.appendChild(buildUploadButton(ta, { className: btnCls }));
+        bar.appendChild(buildStickerButton(ta, { className: btnCls }));
         // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
         // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
         // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
