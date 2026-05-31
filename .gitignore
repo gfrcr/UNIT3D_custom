@@ -21,3 +21,7 @@ scripts/dev.pid
 
 # Chrome DevTools Local Overrides mirror (live editing only)
 gfrcr.github.io/
+
+# Mod-facing tickets — kept local (not published in the public repo)
+/userscripts/TICKET-imgbb.md
+/userscripts/TICKET-imgbb.bbcode

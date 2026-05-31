@@ -14,10 +14,3 @@ do tracker. Independentes do tema CSS — instalação separada.
 1. Tampermonkey / Violentmonkey / OrangeMonkey no navegador
 2. Abre o `.user.js` no GitHub raw → extensão detecta e oferece instalar
 3. Hard refresh em `capybarabr.com`
-
-## Tickets
-
-Propostas de feature pra equipe da capybarabr adotar oficialmente
-(o que o protótipo de userscript demonstra):
-
-- [`TICKET-imgbb.md`](TICKET-imgbb.md) — upload de imagem no chat
