@@ -127,11 +127,80 @@
       });
 
       nativePanel.parentElement.insertBefore(panel, nativePanel.nextSibling);
+      injectStickersPanel(panel);
       log('settings panel injected');
     };
 
     tryInject();
     new MutationObserver(tryInject).observe(document.body, { childList: true, subtree: true });
+  }
+
+  function injectStickersPanel(afterEl) {
+    if (document.querySelector('[data-capy-stickers-panel]')) return;
+    const panel = document.createElement('section');
+    panel.className = 'panelV2';
+    panel.dataset.capyStickersPanel = '1';
+    panel.style.marginTop = '16px';
+    panel.innerHTML = `
+      <header class="panel__header">
+        <h2 class="panel__heading">Stickers <small style="opacity:.6;">(userscript)</small></h2>
+      </header>
+      <div class="panel__body">
+        <p style="opacity:.8;font-size:13px;margin:0 0 12px;">
+          Sua biblioteca de stickers fica salva localmente neste navegador
+          (não sincroniza entre máquinas). Use exportar/importar pra levar pra
+          outro dispositivo.
+          <strong data-capy-sticker-count></strong>
+        </p>
+        <p style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="form__button form__button--outlined" data-capy-stk-export>
+            Exportar JSON
+          </button>
+          <button type="button" class="form__button form__button--text" data-capy-stk-import>
+            Importar JSON
+          </button>
+        </p>
+      </div>
+    `;
+
+    const refreshCount = () => {
+      panel.querySelector('[data-capy-sticker-count]').textContent =
+        `${getStickers().length} sticker(s) salvos.`;
+    };
+    refreshCount();
+
+    panel.querySelector('[data-capy-stk-export]').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(getStickers(), null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'capy-stickers.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    panel.querySelector('[data-capy-stk-import]').addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json';
+      input.addEventListener('change', async () => {
+        const file = input.files[0];
+        if (!file) return;
+        try {
+          const arr = JSON.parse(await file.text());
+          if (!Array.isArray(arr)) throw new Error('formato inválido (esperado array)');
+          if (!confirm(`Substituir sua biblioteca atual por ${arr.length} sticker(s) do arquivo?`)) return;
+          setStickers(arr);
+          refreshCount();
+          alert('Biblioteca importada.');
+        } catch (e) {
+          alert('Import falhou: ' + e.message);
+        }
+      });
+      input.click();
+    });
+
+    afterEl.parentElement.insertBefore(panel, afterEl.nextSibling);
   }
 
   // ────────────────── shared helpers ──────────────────
