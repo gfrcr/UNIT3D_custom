@@ -56,6 +56,17 @@
     setStickers(getStickers().filter((s) => s.id !== id));
   }
 
+  const DISPLAY_SIZE_STORE = 'capy-sticker-display-size';
+  const STICKER_DISPLAY_SIZES = [50, 100, 150];
+  function getStickerDisplaySize() {
+    const n = parseInt(GM_getValue(DISPLAY_SIZE_STORE, 100), 10);
+    return STICKER_DISPLAY_SIZES.includes(n) ? n : 100;
+  }
+  function setStickerDisplaySize(n) {
+    const v = STICKER_DISPLAY_SIZES.includes(n) ? n : 100;
+    GM_setValue(DISPLAY_SIZE_STORE, v);
+  }
+
   // ────────────────── settings page: inject API key field ──────────────────
 
   if (/\/users\/[^/]+\/general-settings\/edit\/?$/.test(location.pathname)) {
@@ -712,7 +723,7 @@
   }
 
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker, getStickerDisplaySize, setStickerDisplaySize };
 
   log('loaded — pathname:', location.pathname);
 })();
