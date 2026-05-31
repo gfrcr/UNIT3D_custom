@@ -110,8 +110,8 @@
     btn.type = 'button';
     btn.className = cls;
     btn.dataset.capyUpload = '1';
-    btn.title = 'Upload image to ImgBB';
-    btn.innerHTML = '<abbr title="Upload image to ImgBB"><i class="fas fa-cloud-upload-alt"></i></abbr>';
+    btn.title = 'Enviar imagem (ImgBB)';
+    btn.innerHTML = '<abbr title="Enviar imagem (ImgBB)"><i class="fas fa-cloud-upload-alt"></i></abbr>';
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const picker = document.createElement('input');
@@ -124,6 +124,50 @@
       picker.click();
     });
     return btn;
+  }
+
+  // BBCode tags used on raw textareas (chat-like subset, PT-BR titles).
+  const RAW_BBCODE_TAGS = [
+    { open: '[b]',       close: '[/b]',       icon: 'fa-bold',          title: 'Negrito' },
+    { open: '[i]',       close: '[/i]',       icon: 'fa-italic',        title: 'Itálico' },
+    { open: '[u]',       close: '[/u]',       icon: 'fa-underline',     title: 'Sublinhado' },
+    { open: '[s]',       close: '[/s]',       icon: 'fa-strikethrough', title: 'Riscado' },
+    { open: '[img]',     close: '[/img]',     icon: 'fa-image',         title: 'Imagem' },
+    { open: '[url]',     close: '[/url]',     icon: 'fa-link',          title: 'Link' },
+    { open: '[code]',    close: '[/code]',    icon: 'fa-code',          title: 'Código' },
+    { open: '[quote]',   close: '[/quote]',   icon: 'fa-quote-right',   title: 'Citação' },
+    { open: '[spoiler]', close: '[/spoiler]', icon: 'fa-eye-slash',     title: 'Spoiler' },
+  ];
+
+  function buildBbcodeButton(textarea, def, className) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = className;
+    btn.title = def.title;
+    btn.innerHTML = `<abbr title="${def.title}"><i class="fas ${def.icon}"></i></abbr>`;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      wrapSelection(textarea, def.open, def.close);
+    });
+    return btn;
+  }
+
+  function wrapSelection(textarea, openTag, closeTag) {
+    const start = textarea.selectionStart ?? textarea.value.length;
+    const end = textarea.selectionEnd ?? textarea.value.length;
+    const before = textarea.value.substring(0, start);
+    const selection = textarea.value.substring(start, end);
+    const after = textarea.value.substring(end);
+    textarea.value = before + openTag + selection + closeTag + after;
+    if (selection.length === 0) {
+      const pos = start + openTag.length;
+      textarea.selectionStart = textarea.selectionEnd = pos;
+    } else {
+      textarea.selectionStart = start;
+      textarea.selectionEnd = end + openTag.length + closeTag.length;
+    }
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    textarea.focus();
   }
 
   function wirePaste(textarea) {
@@ -231,8 +275,13 @@
         const bar = document.createElement('div');
         bar.className = 'capy-raw-bar';
         bar.dataset.capyRawBar = '1';
-        bar.style.cssText = 'display:flex; gap:4px; padding:4px 0; margin-bottom:4px;';
-        bar.appendChild(buildUploadButton(ta, { className: 'form__button form__standard-icon-button' }));
+        bar.style.cssText = 'display:flex; gap:0; padding:2px 0; margin-bottom:2px; flex-wrap:wrap;';
+        // Mesma família de classes do toolbar nativo do chat (--skinny pra ficar compacto).
+        const btnCls = 'form__button form__standard-icon-button form__standard-icon-button--skinny';
+        for (const def of RAW_BBCODE_TAGS) {
+          bar.appendChild(buildBbcodeButton(ta, def, btnCls));
+        }
+        bar.appendChild(buildUploadButton(ta, { className: btnCls }));
         // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
         // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
         // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
