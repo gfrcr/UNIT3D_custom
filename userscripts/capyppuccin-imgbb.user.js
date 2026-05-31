@@ -594,11 +594,13 @@
   }
 
   // ── sticker tiles (compartilhado: picker popover + settings manage grid) ──
-  const STICKER_TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
-
   // Renderiza os tiles num container. opts.onPick(sticker) ao clicar num
   // thumbnail; opts.onChange() após add/remove (ex: atualizar contador).
+  // NOTA: STICKER_TILE é local (não module-level const) porque injectStickersPanel
+  // chama renderStickerTiles SINCRONAMENTE no load (antes de um const module-level
+  // ser inicializado → TDZ). Local inicializa a cada chamada, sem zona morta.
   function renderStickerTiles(container, opts = {}) {
+    const STICKER_TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
     const rerender = () => renderStickerTiles(container, opts);
     container.textContent = '';
 
