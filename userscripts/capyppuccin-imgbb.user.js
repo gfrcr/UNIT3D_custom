@@ -156,6 +156,26 @@
             </button>
             <span data-capy-status style="opacity: 0.7; font-size: 13px;"></span>
           </p>
+          <hr style="opacity:.15; margin:16px 0;">
+          <p style="opacity:.8; font-size:13px; margin:0 0 12px;">
+            Auto-exclusão: o ImgBB apaga a imagem sozinho depois do prazo.
+            Bom pro chat (efêmero); evite em fórum (vira link morto). Padrão: Nunca.
+          </p>
+          <p class="form__group" style="margin:0 0 10px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; flex-wrap:wrap;">
+              Expirar imagens do chat após:
+              <select class="form__select" data-capy-exp-chat style="width:auto;"></select>
+            </label>
+          </p>
+          <p class="form__group" style="margin:0 0 6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:13px; flex-wrap:wrap;">
+              Expirar imagens de fórum/comentários após:
+              <select class="form__select" data-capy-exp-rest style="width:auto;"></select>
+            </label>
+          </p>
+          <p data-capy-exp-warn style="display:none; color:var(--cp-red,#f38ba8); font-size:12px; margin:0;">
+            ⚠ posts de fórum são permanentes — a imagem vira link morto quando expirar.
+          </p>
         </div>
       `;
 
@@ -180,6 +200,32 @@
         setKey('');
         input.value = '';
         refreshStatus();
+      });
+
+      // expiração: popula ambos os selects a partir de EXPIRATION_OPTIONS
+      const expChat = panel.querySelector('[data-capy-exp-chat]');
+      const expRest = panel.querySelector('[data-capy-exp-rest]');
+      const expWarn = panel.querySelector('[data-capy-exp-warn]');
+      for (const sel of [expChat, expRest]) {
+        for (const opt of EXPIRATION_OPTIONS) {
+          const o = document.createElement('option');
+          o.value = String(opt.seconds);
+          o.textContent = opt.label;
+          sel.appendChild(o);
+        }
+      }
+      expChat.value = String(getExpiration('chat'));
+      expRest.value = String(getExpiration('rest'));
+      const refreshExpWarn = () => {
+        expWarn.style.display = parseInt(expRest.value, 10) > 0 ? 'block' : 'none';
+      };
+      refreshExpWarn();
+      expChat.addEventListener('change', () => {
+        setExpiration('chat', parseInt(expChat.value, 10));
+      });
+      expRest.addEventListener('change', () => {
+        setExpiration('rest', parseInt(expRest.value, 10));
+        refreshExpWarn();
       });
 
       nativePanel.parentElement.insertBefore(panel, nativePanel.nextSibling);
