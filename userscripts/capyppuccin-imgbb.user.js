@@ -330,6 +330,7 @@
 
   function buildUploadButton(textarea, opts = {}) {
     const cls = opts.className || 'form__standard-icon-button';
+    const context = opts.context;
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = cls;
@@ -343,7 +344,7 @@
       picker.accept = 'image/*';
       picker.addEventListener('change', () => {
         const file = picker.files[0];
-        if (file) uploadAndInsert(textarea, file);
+        if (file) uploadAndInsert(textarea, file, context);
       });
       picker.click();
     });
@@ -410,9 +411,10 @@
     textarea.focus();
   }
 
-  function wirePaste(textarea) {
+  function wirePaste(textarea, opts = {}) {
     if (textarea.dataset.capyPasteWired) return;
     textarea.dataset.capyPasteWired = '1';
+    const context = opts.context;
     textarea.addEventListener('paste', (e) => {
       const items = e.clipboardData?.items;
       if (!items) return;
@@ -420,7 +422,7 @@
       if (!imageItem) return;
       e.preventDefault();
       const blob = imageItem.getAsFile();
-      if (blob) uploadAndInsert(textarea, blob);
+      if (blob) uploadAndInsert(textarea, blob, context);
     });
   }
 
@@ -430,11 +432,11 @@
     .then(({ form, textarea }) => {
       const bar = form.querySelector('.form__bbcode-buttons');
       if (bar && !bar.querySelector('[data-capy-upload]')) {
-        bar.appendChild(buildUploadButton(textarea));
+        bar.appendChild(buildUploadButton(textarea, { context: 'chat' }));
         bar.appendChild(buildStickerButton(textarea));
         log('chat: upload + sticker buttons injected');
       }
-      wirePaste(textarea);
+      wirePaste(textarea, { context: 'chat' });
       log('chat: paste handler wired');
     })
     .catch(() => { /* chat absent on this page — silent */ });
@@ -471,13 +473,13 @@
 
         // Match the existing pattern (each button is wrapped in <li>)
         const li = document.createElement('li');
-        li.appendChild(buildUploadButton(textarea));
+        li.appendChild(buildUploadButton(textarea, { context: 'rest' }));
         iconBar.appendChild(li);
         const liSticker = document.createElement('li');
         liSticker.appendChild(buildStickerButton(textarea));
         iconBar.appendChild(liSticker);
 
-        wirePaste(textarea);
+        wirePaste(textarea, { context: 'rest' });
         bi.dataset.capyWired = '1';
         log('rich bbcode-input wired:', textarea.id || textarea.name);
       }
@@ -526,7 +528,7 @@
         for (const def of RAW_BBCODE_TAGS) {
           bar.appendChild(buildBbcodeButton(ta, def, btnCls));
         }
-        bar.appendChild(buildUploadButton(ta, { className: btnCls }));
+        bar.appendChild(buildUploadButton(ta, { className: btnCls, context: 'rest' }));
         bar.appendChild(buildStickerButton(ta, { className: btnCls }));
         // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
         // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
@@ -542,7 +544,7 @@
           if (rowGap > 4) bar.style.marginBottom = `-${rowGap - 4}px`;
         }
 
-        wirePaste(ta);
+        wirePaste(ta, { context: 'rest' });
         ta.dataset.capyWired = '1';
         found.add(ta.id);
         log('raw textarea wired:', ta.id);
