@@ -614,6 +614,7 @@
     fd.append('image', blob);
     let url = `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`;
     if (expiration > 0) url += `&expiration=${expiration}`;
+    log(expiration > 0 ? `upload com expiração: ${expiration}s` : 'upload sem expiração');
     const j = await gmRequest({
       method: 'POST',
       url,
@@ -623,6 +624,7 @@
     if (!j.success || !j.data?.url) {
       throw new Error(j.error?.message || 'imgbb returned no url');
     }
+    log('imgbb ok — expiration no response:', j.data.expiration);
     return j.data.url;
   }
 
