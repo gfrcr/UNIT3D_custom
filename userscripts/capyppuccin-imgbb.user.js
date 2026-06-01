@@ -748,11 +748,15 @@
   // Monta o BBCode do card. Só tags comprovadas no projeto ([quote]/[img=N]/[b]/[url]/[i]).
   function buildCardBbcode(meta) {
     const esc = (s) => (s || '').replace(/\[/g, '(').replace(/\]/g, ')').trim();
-    const title = esc(meta.title) || meta.domain || meta.canonical;
+    // URLs não têm '[' ']' nem espaço/quebra legítimos crus — tirar evita quebrar o BBCode.
+    const escUrl = (u) => (u || '').replace(/[[\]\s]/g, '');
+    const canonical = escUrl(meta.canonical);
+    const image = escUrl(meta.image);
+    const title = esc(meta.title) || meta.domain || canonical;
     const desc = esc(meta.description);
     const lines = ['[quote]'];
-    if (meta.image) lines.push(`[img=300]${meta.image}[/img]`);
-    lines.push(`[b][url=${meta.canonical}]${title}[/url][/b]`);
+    if (image) lines.push(`[img=300]${image}[/img]`);
+    lines.push(`[b][url=${canonical}]${title}[/url][/b]`);
     if (desc) lines.push(desc);
     if (meta.domain) lines.push(`[i]🔗 ${meta.domain}[/i]`);
     lines.push('[/quote]');
