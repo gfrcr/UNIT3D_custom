@@ -435,6 +435,7 @@
       if (bar && !bar.querySelector('[data-capy-upload]')) {
         bar.appendChild(buildUploadButton(textarea, { context: 'chat' }));
         bar.appendChild(buildStickerButton(textarea));
+        bar.appendChild(buildLinkCardButton(textarea));
         log('chat: upload + sticker buttons injected');
       }
       wirePaste(textarea, { context: 'chat' });
@@ -479,6 +480,9 @@
         const liSticker = document.createElement('li');
         liSticker.appendChild(buildStickerButton(textarea));
         iconBar.appendChild(liSticker);
+        const liCard = document.createElement('li');
+        liCard.appendChild(buildLinkCardButton(textarea));
+        iconBar.appendChild(liCard);
 
         wirePaste(textarea, { context: 'rest' });
         bi.dataset.capyWired = '1';
@@ -531,6 +535,7 @@
         }
         bar.appendChild(buildUploadButton(ta, { className: btnCls, context: 'rest' }));
         bar.appendChild(buildStickerButton(ta, { className: btnCls }));
+        bar.appendChild(buildLinkCardButton(ta, { className: btnCls }));
         // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
         // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
         // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
