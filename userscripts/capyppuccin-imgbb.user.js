@@ -427,8 +427,9 @@
         return;
       }
       // sem imagem: se colou uma URL pura, oferece virar card (opt-in, não-destrutivo)
-      const text = (e.clipboardData.getData('text/plain') || '').trim();
-      if (isUrl(text)) offerCardChip(textarea, text);
+      const raw = e.clipboardData.getData('text/plain') || '';
+      const text = raw.trim();
+      if (isUrl(text)) offerCardChip(textarea, text, raw);
     });
   }
 
@@ -819,7 +820,7 @@
   }
   // Mostra um chip não-bloqueante "🔗 virar card?" perto do editor. Clicar converte
   // a URL recém-colada em card; some ao clicar fora ou após ~6s.
-  function offerCardChip(textarea, url) {
+  function offerCardChip(textarea, url, replaceFind = url) {
     closeCardChip();
     const chip = document.createElement('div');
     chip.className = 'capy-card-chip';
@@ -838,7 +839,7 @@
       e.preventDefault();
       e.stopPropagation();
       closeCardChip();
-      insertCard(textarea, url, url);
+      insertCard(textarea, url, replaceFind);
     });
     chip.appendChild(btn);
     document.body.appendChild(chip);
