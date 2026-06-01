@@ -69,6 +69,49 @@
     GM_setValue(DISPLAY_SIZE_STORE, v);
   }
 
+  // ── expiration storage (auto-delete de uploads no ImgBB) ──
+  // DECLARADO AQUI (antes da linha ~74) de propósito: injectSettingsPanel roda
+  // no load e lê EXPIRATION_OPTIONS/getExpiration → mover pra baixo causa TDZ.
+  const EXPIRATION_STORE = 'capy-expiration';
+  // leque de tempos: label PT-BR + segundos. 0 = Nunca. Teto da API = 15552000 (180d).
+  const EXPIRATION_OPTIONS = [
+    { label: 'Nunca', seconds: 0 },
+    { label: '1 hora', seconds: 3600 },
+    { label: '6 horas', seconds: 21600 },
+    { label: '1 dia', seconds: 86400 },
+    { label: '3 dias', seconds: 259200 },
+    { label: '7 dias', seconds: 604800 },
+    { label: '30 dias', seconds: 2592000 },
+    { label: '180 dias', seconds: 15552000 }
+  ];
+  const EXPIRATION_SECONDS = new Set(EXPIRATION_OPTIONS.map((o) => o.seconds));
+  const EXPIRATION_BUCKETS = ['chat', 'rest'];
+
+  function getExpirationAll() {
+    const raw = GM_getValue(EXPIRATION_STORE, '');
+    if (!raw) return { chat: 0, rest: 0 };
+    try {
+      const obj = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      return {
+        chat: EXPIRATION_SECONDS.has(obj?.chat) ? obj.chat : 0,
+        rest: EXPIRATION_SECONDS.has(obj?.rest) ? obj.rest : 0
+      };
+    } catch (_) {
+      return { chat: 0, rest: 0 };
+    }
+  }
+  function getExpiration(bucket) {
+    const all = getExpirationAll();
+    return EXPIRATION_BUCKETS.includes(bucket) ? all[bucket] : 0;
+  }
+  function setExpiration(bucket, seconds) {
+    if (!EXPIRATION_BUCKETS.includes(bucket)) return;
+    const s = EXPIRATION_SECONDS.has(seconds) ? seconds : 0;
+    const all = getExpirationAll();
+    all[bucket] = s;
+    GM_setValue(EXPIRATION_STORE, JSON.stringify(all));
+  }
+
   // ────────────────── settings page: inject API key field ──────────────────
 
   if (/\/users\/[^/]+\/general-settings\/edit\/?$/.test(location.pathname)) {
@@ -756,7 +799,7 @@
   }
 
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker, getStickerDisplaySize, setStickerDisplaySize };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker, getStickerDisplaySize, setStickerDisplaySize, getExpiration, setExpiration };
 
   log('loaded — pathname:', location.pathname);
 })();
