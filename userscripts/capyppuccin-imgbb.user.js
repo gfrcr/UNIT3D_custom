@@ -9,6 +9,7 @@
 // @grant        GM_getValue
 // @grant        GM_xmlhttpRequest
 // @connect      api.imgbb.com
+// @connect      api.microlink.io
 // @run-at       document-idle
 // @updateURL    https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
 // @downloadURL  https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
@@ -689,6 +690,153 @@
       };
       img.src = url;
     });
+  }
+
+  // ────────────────── urlcard core: preview de link (URL unfurl) ──────────────────
+  // Transforma uma URL num card BBCode (imagem + título + descrição + domínio),
+  // buscando metadados OpenGraph via Microlink (keyless). Gatilhos: botão dedicado
+  // e detecção no paste. Tudo function-declaration (hoisted) → sem leitura no load,
+  // sem risco de TDZ. Usa gmRequest (CSP), nunca fetch.
+
+  function isUrl(str) {
+    if (!str) return false;
+    try {
+      const u = new URL(str);
+      return u.protocol === 'http:' || u.protocol === 'https:';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Busca metadados via Microlink (keyless). 1ª chamada pega og:image; se não houver,
+  // 2ª chamada com &screenshot=true pega um screenshot real. Lança em erro (cota/HTTP/etc).
+  async function fetchPreview(url) {
+    const base = 'https://api.microlink.io/?url=';
+    const j1 = await gmRequest({ method: 'GET', url: base + encodeURIComponent(url), responseType: 'json' });
+    if (!j1 || j1.status !== 'success') throw new Error(j1?.message || 'microlink error');
+    const d = j1.data || {};
+    let image = d.image?.url || '';
+    if (!image) {
+      const j2 = await gmRequest({ method: 'GET', url: base + encodeURIComponent(url) + '&screenshot=true', responseType: 'json' });
+      if (j2 && j2.status === 'success') image = j2.data?.screenshot?.url || '';
+    }
+    const canonical = d.url || url;
+    let domain = '';
+    try { domain = new URL(canonical).hostname.replace(/^www\./, ''); } catch (_) { domain = ''; }
+    return {
+      title: d.title || domain,
+      description: d.description || '',
+      image,
+      canonical,
+      domain
+    };
+  }
+
+  // Monta o BBCode do card. Só tags comprovadas no projeto ([quote]/[img=N]/[b]/[url]/[i]).
+  function buildCardBbcode(meta) {
+    const esc = (s) => (s || '').replace(/\[/g, '(').replace(/\]/g, ')').trim();
+    const title = esc(meta.title) || meta.domain || meta.canonical;
+    const desc = esc(meta.description);
+    const lines = ['[quote]'];
+    if (meta.image) lines.push(`[img=300]${meta.image}[/img]`);
+    lines.push(`[b][url=${meta.canonical}]${title}[/url][/b]`);
+    if (desc) lines.push(desc);
+    if (meta.domain) lines.push(`[i]🔗 ${meta.domain}[/i]`);
+    lines.push('[/quote]');
+    return lines.join('\n');
+  }
+
+  // Orquestra: placeholder → fetch → card (ou fallback link simples). Se replaceFind
+  // for passado, o placeholder substitui essa string no textarea (usado pelo paste);
+  // senão é inserido no cursor (substituindo a seleção, se houver).
+  async function insertCard(textarea, url, replaceFind) {
+    if (!isUrl(url)) { alert('URL inválida.'); return; }
+    const placeholder = '[buscando preview…]';
+    if (replaceFind) {
+      replaceInTextarea(textarea, replaceFind, placeholder);
+    } else {
+      insertAtCursor(textarea, placeholder);
+    }
+    try {
+      const meta = await fetchPreview(url);
+      replaceInTextarea(textarea, placeholder, buildCardBbcode(meta));
+      log('card inserted:', meta.canonical);
+    } catch (err) {
+      replaceInTextarea(textarea, placeholder, `[url=${url}]${url}[/url]`);
+      warn('preview failed:', err);
+      alert('Não consegui o preview (cota diária do Microlink?). Inseri o link simples.');
+    }
+  }
+
+  // Resolve a URL pro botão: usa a seleção se for URL; senão pede via prompt.
+  function resolveUrlFromSelectionOrPrompt(textarea) {
+    const start = textarea.selectionStart ?? 0;
+    const end = textarea.selectionEnd ?? 0;
+    const sel = textarea.value.substring(start, end).trim();
+    if (isUrl(sel)) return sel;
+    const typed = (prompt('Cole a URL do link:') || '').trim();
+    if (!typed) return null;
+    if (!isUrl(typed)) { alert('URL inválida.'); return null; }
+    return typed;
+  }
+
+  function buildLinkCardButton(textarea, opts = {}) {
+    const cls = opts.className || 'form__standard-icon-button';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = cls;
+    btn.dataset.capyLinkcard = '1';
+    btn.title = 'Card de link';
+    btn.innerHTML = '<abbr title="Card de link"><i class="fas fa-window-maximize"></i></abbr>';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = resolveUrlFromSelectionOrPrompt(textarea);
+      if (url) insertCard(textarea, url);
+    });
+    return btn;
+  }
+
+  // ── chip de opt-in pro paste de URL ──
+  let _cardChip = null; // { el, timer, onDocClick }
+  function closeCardChip() {
+    if (!_cardChip) return;
+    clearTimeout(_cardChip.timer);
+    document.removeEventListener('click', _cardChip.onDocClick, true);
+    _cardChip.el.remove();
+    _cardChip = null;
+  }
+  // Mostra um chip não-bloqueante "🔗 virar card?" perto do editor. Clicar converte
+  // a URL recém-colada em card; some ao clicar fora ou após ~6s.
+  function offerCardChip(textarea, url) {
+    closeCardChip();
+    const chip = document.createElement('div');
+    chip.className = 'capy-card-chip';
+    chip.style.cssText = [
+      'position:fixed', 'z-index:10001',
+      'background:var(--panel-bg,#2a292e)',
+      'border:1px solid var(--input-text-border-color,#555)',
+      'border-radius:8px', 'padding:4px',
+      'box-shadow:0 4px 16px rgba(0,0,0,.4)'
+    ].join(';');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = '🔗 virar card?';
+    btn.style.cssText = 'background:transparent;color:inherit;border:none;cursor:pointer;font-size:13px;padding:4px 8px;';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeCardChip();
+      insertCard(textarea, url, url);
+    });
+    chip.appendChild(btn);
+    document.body.appendChild(chip);
+    const r = textarea.getBoundingClientRect();
+    chip.style.left = `${Math.round(r.left + 8)}px`;
+    chip.style.top = `${Math.round(r.top + 8)}px`;
+    const onDocClick = (e) => { if (!chip.contains(e.target)) closeCardChip(); };
+    setTimeout(() => document.addEventListener('click', onDocClick, true), 0);
+    const timer = setTimeout(closeCardChip, 6000);
+    _cardChip = { el: chip, timer, onDocClick };
   }
 
   // ── sticker tiles (compartilhado: picker popover + settings manage grid) ──
