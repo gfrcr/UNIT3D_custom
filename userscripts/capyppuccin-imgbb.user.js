@@ -420,10 +420,15 @@
       const items = e.clipboardData?.items;
       if (!items) return;
       const imageItem = Array.from(items).find((i) => i.type.startsWith('image/'));
-      if (!imageItem) return;
-      e.preventDefault();
-      const blob = imageItem.getAsFile();
-      if (blob) uploadAndInsert(textarea, blob, context);
+      if (imageItem) {
+        e.preventDefault();
+        const blob = imageItem.getAsFile();
+        if (blob) uploadAndInsert(textarea, blob, context);
+        return;
+      }
+      // sem imagem: se colou uma URL pura, oferece virar card (opt-in, não-destrutivo)
+      const text = (e.clipboardData.getData('text/plain') || '').trim();
+      if (isUrl(text)) offerCardChip(textarea, text);
     });
   }
 
