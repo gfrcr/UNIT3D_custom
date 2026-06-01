@@ -554,7 +554,7 @@
 
   // ────────────────── upload core ──────────────────
 
-  async function uploadAndInsert(textarea, blob) {
+  async function uploadAndInsert(textarea, blob, context) {
     const key = getKey();
     if (!key) {
       const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
@@ -570,7 +570,7 @@
     insertAtCursor(textarea, placeholder);
 
     try {
-      const url = await uploadBlob(blob);
+      const url = await uploadBlob(blob, { expiration: getExpiration(context) });
       replaceInTextarea(textarea, placeholder, `[img]${url}[/img]`);
       log('uploaded:', url);
     } catch (err) {
@@ -604,14 +604,17 @@
   }
 
   // Sobe um blob pro ImgBB e retorna a URL direta. Lança em erro.
-  async function uploadBlob(blob) {
+  // opts.expiration (segundos, 60-15552000): se > 0, o ImgBB auto-deleta após o prazo.
+  async function uploadBlob(blob, { expiration = 0 } = {}) {
     const key = getKey();
     if (!key) throw new Error('no-key');
     const fd = new FormData();
     fd.append('image', blob);
+    let url = `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`;
+    if (expiration > 0) url += `&expiration=${expiration}`;
     const j = await gmRequest({
       method: 'POST',
-      url: `https://api.imgbb.com/1/upload?key=${encodeURIComponent(key)}`,
+      url,
       data: fd,
       responseType: 'json'
     });
