@@ -25,3 +25,7 @@ gfrcr.github.io/
 # Mod-facing tickets — kept local (not published in the public repo)
 /userscripts/TICKET-imgbb.md
 /userscripts/TICKET-imgbb.bbcode
+
+# Internal/reference docs — kept local (not published in the public repo)
+/userscripts/CLAUDE.md
+/userscripts/forum-post-imgbb.bbcode
