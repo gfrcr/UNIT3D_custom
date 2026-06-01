@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Capyppuccin ImgBB Upload
 // @namespace    https://gfrcr.github.io/UNIT3D_custom
-// @version      0.4.0
+// @version      0.5.0
 // @description  ImgBB upload + Stickers em todos os BBCode editors da capybarabr — chat, forum, PM, torrent comments, ticket compose/reply.
 // @author       gfrcr
 // @match        https://capybarabr.com/*
@@ -1013,7 +1013,7 @@
   }
 
   // Debug handle (console) — não cria dependências internas.
-  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker, getStickerDisplaySize, setStickerDisplaySize, getExpiration, setExpiration };
+  PAGE.__capyStickers = { getStickers, setStickers, addSticker, removeSticker, resizeImage, uploadSticker, openStickerPicker, closeStickerPicker, getStickerDisplaySize, setStickerDisplaySize, getExpiration, setExpiration, isUrl, fetchPreview, buildCardBbcode, insertCard };
 
   log('loaded — pathname:', location.pathname);
 })();
