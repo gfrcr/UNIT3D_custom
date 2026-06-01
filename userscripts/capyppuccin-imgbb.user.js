@@ -646,7 +646,9 @@
   }
 
   function replaceInTextarea(el, find, replacement) {
-    el.value = el.value.replace(find, replacement);
+    // Escapa '$' no replacement: String.replace trata $&, $', $1… como padrões
+    // especiais. URLs (no card / fallback) podem conter '$' e sairiam corrompidas.
+    el.value = el.value.replace(find, replacement.replace(/\$/g, '$$$$'));
     el.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
