@@ -603,12 +603,15 @@
         data: opts.data,
         responseType: opts.responseType,
         onload: (r) => {
-          if (r.status < 200 || r.status >= 300) {
+          const ok = r.status >= 200 && r.status < 300;
+          // opts.resolveErrorBody: resolve o body mesmo em 4xx/5xx, pro caller ler o erro
+          // estruturado da API (ex: Microlink EPROXYNEEDED chega em HTTP 400 com JSON).
+          if (!ok && !opts.resolveErrorBody) {
             return reject(new Error(`HTTP ${r.status}: ${r.statusText || ''}`.trim()));
           }
           let body = r.response;
           if (body === undefined || body === null || typeof body === 'string') {
-            try { body = JSON.parse(r.responseText); } catch (e) { return reject(new Error('invalid JSON response')); }
+            try { body = JSON.parse(r.responseText); } catch (e) { return reject(new Error(ok ? 'invalid JSON response' : `HTTP ${r.status}`)); }
           }
           resolve(body);
         },
@@ -755,7 +758,7 @@
   async function fetchPreview(url) {
     if (isYouTube(url)) return fetchYouTubePreview(url);
     const base = 'https://api.microlink.io/?url=';
-    const j1 = await gmRequest({ method: 'GET', url: base + encodeURIComponent(url), responseType: 'json' });
+    const j1 = await gmRequest({ method: 'GET', url: base + encodeURIComponent(url), responseType: 'json', resolveErrorBody: true });
     if (!j1 || j1.status !== 'success') {
       throw new Error(j1?.code === 'EPROXYNEEDED' ? 'antibot' : (j1?.message || 'microlink error'));
     }
