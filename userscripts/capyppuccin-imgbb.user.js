@@ -10,6 +10,7 @@
 // @grant        GM_xmlhttpRequest
 // @connect      api.imgbb.com
 // @connect      api.microlink.io
+// @connect      youtube.com
 // @run-at       document-idle
 // @updateURL    https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
 // @downloadURL  https://gfrcr.github.io/UNIT3D_custom/userscripts/capyppuccin-imgbb.user.js
@@ -721,12 +722,43 @@
     }
   }
 
-  // Busca metadados via Microlink (keyless). 1ª chamada pega og:image; se não houver,
-  // 2ª chamada com &screenshot=true pega um screenshot real. Lança em erro (cota/HTTP/etc).
+  function domainOf(url) {
+    try { return new URL(url).hostname.replace(/^www\./, ''); } catch (_) { return ''; }
+  }
+
+  // True se a URL é do YouTube (qualquer subdomínio) ou youtu.be.
+  function isYouTube(url) {
+    const h = domainOf(url);
+    return h === 'youtube.com' || h === 'youtu.be' || h.endsWith('.youtube.com');
+  }
+
+  // YouTube tem antibot (Microlink grátis recusa), mas o oEmbed dele é keyless e
+  // devolve título + thumbnail. Lança em erro (cai no fallback de link simples).
+  async function fetchYouTubePreview(url) {
+    const j = await gmRequest({
+      method: 'GET',
+      url: 'https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url),
+      responseType: 'json'
+    });
+    if (!j || !j.title) throw new Error('oembed: sem dados');
+    return {
+      title: j.title,
+      description: j.author_name ? `por ${j.author_name}` : '',
+      image: j.thumbnail_url || '',
+      canonical: url,
+      domain: domainOf(url) || 'youtube.com'
+    };
+  }
+
+  // Busca metadados. YouTube → oEmbed (antibot bloqueia o Microlink). Demais → Microlink
+  // keyless: 1ª chamada pega og:image; se não houver, 2ª com &screenshot=true. Lança em erro.
   async function fetchPreview(url) {
+    if (isYouTube(url)) return fetchYouTubePreview(url);
     const base = 'https://api.microlink.io/?url=';
     const j1 = await gmRequest({ method: 'GET', url: base + encodeURIComponent(url), responseType: 'json' });
-    if (!j1 || j1.status !== 'success') throw new Error(j1?.message || 'microlink error');
+    if (!j1 || j1.status !== 'success') {
+      throw new Error(j1?.code === 'EPROXYNEEDED' ? 'antibot' : (j1?.message || 'microlink error'));
+    }
     const d = j1.data || {};
     let image = d.image?.url || '';
     if (!image) {
@@ -734,14 +766,12 @@
       if (j2 && j2.status === 'success') image = j2.data?.screenshot?.url || '';
     }
     const canonical = d.url || url;
-    let domain = '';
-    try { domain = new URL(canonical).hostname.replace(/^www\./, ''); } catch (_) { domain = ''; }
     return {
-      title: d.title || domain,
+      title: d.title || domainOf(canonical),
       description: d.description || '',
       image,
       canonical,
-      domain
+      domain: domainOf(canonical)
     };
   }
 
@@ -781,7 +811,10 @@
     } catch (err) {
       replaceInTextarea(textarea, placeholder, `[url=${url}]${url}[/url]`);
       warn('preview failed:', err);
-      alert('Não consegui o preview (cota diária do Microlink?). Inseri o link simples.');
+      const msg = err?.message === 'antibot'
+        ? 'Esse site bloqueia leitura automática (antibot). Inseri o link simples.'
+        : 'Não consegui buscar o preview. Inseri o link simples.';
+      alert(msg);
     }
   }
 
