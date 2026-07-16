@@ -138,6 +138,17 @@ a.fc__cta.form__button--filled:focus {
   color: var(--cp-base);
 }
 
+/* Achievements — base paints the card with a cool grey (--achievement-bg) and
+ * hardcodes the group heading to #ffa900. Warm the card to a lifted surface and
+ * mute the heading to subtext (matching the forum's .post__group-title). */
+:root {
+  --achievement-bg: var(--cp-surface-1);
+}
+.achievements__group-title {
+  color: var(--cp-subtext);
+  border-color: var(--cp-surface-1);
+}
+
 /* === Text utility overrides — pastel pass on base's saturated text-* === */
 .text-success {
   color: var(--cp-green);
