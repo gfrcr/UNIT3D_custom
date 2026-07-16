@@ -118,6 +118,26 @@ button.form__button--filled.form__button--centered:hover {
   background: var(--cp-accent-strong);
 }
 
+/* FilmClub / events CTAs (fc-banner__cta, fc__cta) reuse .form__button--filled
+ * as anchors but NOT .form__button--centered, so the content-area anchor accent
+ * rule above overrode their fg → accent-on-accent (invisible text). The base
+ * --button-filled-bg already gives the accent fill; just pin fg to base. */
+a.fc-banner__cta.form__button--filled,
+a.fc-banner__cta.form__button--filled:link,
+a.fc-banner__cta.form__button--filled:visited,
+a.fc__cta.form__button--filled,
+a.fc__cta.form__button--filled:link,
+a.fc__cta.form__button--filled:visited {
+  color: var(--cp-base);
+}
+a.fc-banner__cta.form__button--filled:hover,
+a.fc-banner__cta.form__button--filled:focus,
+a.fc__cta.form__button--filled:hover,
+a.fc__cta.form__button--filled:focus {
+  background: var(--cp-accent-strong);
+  color: var(--cp-base);
+}
+
 /* === Text utility overrides — pastel pass on base's saturated text-* === */
 .text-success {
   color: var(--cp-green);
