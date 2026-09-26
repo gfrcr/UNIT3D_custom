@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Capyppuccin ImgBB Upload
 // @namespace    https://gfrcr.github.io/UNIT3D_custom
-// @version      0.5.0
+// @version      0.6.0
 // @description  ImgBB upload + Stickers em todos os BBCode editors da capybarabr — chat, forum, PM, torrent comments, ticket compose/reply.
 // @author       gfrcr
 // @match        https://capybarabr.com/*
@@ -67,8 +67,7 @@
     return STICKER_DISPLAY_SIZES.includes(n) ? n : 100;
   }
   function setStickerDisplaySize(n) {
-    const v = STICKER_DISPLAY_SIZES.includes(n) ? n : 100;
-    GM_setValue(DISPLAY_SIZE_STORE, v);
+    GM_setValue(DISPLAY_SIZE_STORE, n);
   }
 
   // ── expiration storage (auto-delete de uploads no ImgBB) ──
@@ -87,8 +86,8 @@
     { label: '180 dias', seconds: 15552000 }
   ];
   const EXPIRATION_SECONDS = new Set(EXPIRATION_OPTIONS.map((o) => o.seconds));
-  const EXPIRATION_BUCKETS = ['chat', 'rest'];
 
+  // Validação só na leitura: o storage pode ter valor de versão antiga.
   function getExpirationAll() {
     const raw = GM_getValue(EXPIRATION_STORE, '');
     if (!raw) return { chat: 0, rest: 0 };
@@ -103,16 +102,79 @@
     }
   }
   function getExpiration(bucket) {
-    const all = getExpirationAll();
-    return EXPIRATION_BUCKETS.includes(bucket) ? all[bucket] : 0;
+    return getExpirationAll()[bucket] ?? 0;
   }
   function setExpiration(bucket, seconds) {
-    if (!EXPIRATION_BUCKETS.includes(bucket)) return;
-    const s = EXPIRATION_SECONDS.has(seconds) ? seconds : 0;
-    const all = getExpirationAll();
-    all[bucket] = s;
-    GM_setValue(EXPIRATION_STORE, JSON.stringify(all));
+    GM_setValue(EXPIRATION_STORE, JSON.stringify({ ...getExpirationAll(), [bucket]: seconds }));
   }
+
+  // ────────────────── observer compartilhado ──────────────────
+  // DECLARADO AQUI (antes da injeção de settings) de propósito — gotcha TDZ do
+  // CLAUDE.md: o caminho de load lê isto.
+  // Um observer pro documento, batch coalescido em rAF; scanner que retorna
+  // true sai da lista, e o observer desliga quando a lista esvazia.
+  const domScanners = new Set();
+  let domObserver = null;
+  let scanQueued = false;
+
+  function onDomChange(scan) {
+    if (scan() === true) return;
+    domScanners.add(scan);
+    if (domObserver) return;
+    domObserver = new MutationObserver(() => {
+      if (scanQueued) return;
+      scanQueued = true;
+      requestAnimationFrame(() => {
+        scanQueued = false;
+        for (const fn of domScanners) if (fn() === true) domScanners.delete(fn);
+        if (domScanners.size === 0) {
+          domObserver.disconnect();
+          domObserver = null;
+        }
+      });
+    });
+    domObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Estilo do que não tem classe nativa do UNIT3D. Fallback de CSS var pra
+  // herdar o Capyppuccin quando o tema define, e degradar sozinho quando não.
+  document.head.appendChild(Object.assign(document.createElement('style'), {
+    textContent: `
+      .capy-raw-bar { display:flex; gap:4px; padding:0; margin:0; flex-wrap:wrap }
+      .capy-pop, .capy-card-chip {
+        z-index:10000; padding:8px;
+        background:var(--panel-bg,#2a292e);
+        border:1px solid var(--input-text-border-color,#555);
+        border-radius:8px;
+        box-shadow:0 4px 16px rgba(0,0,0,.4);
+      }
+      .capy-pop {
+        position:absolute; bottom:100%; left:0; margin-bottom:6px;
+        display:flex; flex-wrap:wrap; gap:6px;
+        width:240px; max-height:240px; overflow-y:auto;
+      }
+      .capy-card-chip { position:fixed; z-index:10001; padding:4px }
+      .capy-card-chip button {
+        background:transparent; color:inherit; border:none;
+        cursor:pointer; font-size:13px; padding:4px 8px;
+      }
+      .capy-tile, .capy-tile img { width:64px; height:64px; border-radius:6px }
+      .capy-tile { position:relative; flex:0 0 auto; cursor:pointer }
+      .capy-tile img { object-fit:cover; display:block }
+      .capy-tile--add {
+        display:flex; align-items:center; justify-content:center; font-size:24px;
+        border:1px dashed var(--input-text-border-color,#777);
+        background:transparent; color:inherit;
+      }
+      .capy-del {
+        display:none; position:absolute; top:-6px; right:-6px;
+        width:18px; height:18px; line-height:16px; font-size:13px; padding:0;
+        border:none; border-radius:50%; cursor:pointer;
+        background:var(--cp-red,#f38ba8); color:#1a1a1a;
+      }
+      .capy-tile:hover .capy-del { display:block }
+    `
+  }));
 
   // ────────────────── settings page: inject API key field ──────────────────
 
@@ -122,8 +184,9 @@
 
   function injectSettingsPanel() {
     const tryInject = () => {
+      if (document.querySelector('[data-capy-imgbb-panel]')) return true;
       const nativePanel = document.querySelector('main .panelV2');
-      if (!nativePanel || document.querySelector('[data-capy-imgbb-panel]')) return;
+      if (!nativePanel) return;
 
       const panel = document.createElement('section');
       panel.className = 'panelV2';
@@ -233,10 +296,10 @@
       nativePanel.parentElement.insertBefore(panel, nativePanel.nextSibling);
       injectStickersPanel(panel);
       log('settings panel injected');
+      return true;
     };
 
-    tryInject();
-    new MutationObserver(tryInject).observe(document.body, { childList: true, subtree: true });
+    onDomChange(tryInject);
   }
 
   function injectStickersPanel(afterEl) {
@@ -330,43 +393,54 @@
 
   // ────────────────── shared helpers ──────────────────
 
-  function buildUploadButton(textarea, opts = {}) {
-    const cls = opts.className || 'form__standard-icon-button';
-    const context = opts.context;
+  // Botão de ícone no padrão das barras nativas (FontAwesome dentro de <abbr>).
+  function iconButton({ icon, title, data, className, onClick }) {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = cls;
-    btn.dataset.capyUpload = '1';
-    btn.title = 'Enviar imagem (ImgBB)';
-    btn.innerHTML = '<abbr title="Enviar imagem (ImgBB)"><i class="fas fa-cloud-upload-alt"></i></abbr>';
+    btn.className = className || 'form__standard-icon-button';
+    if (data) btn.dataset[data] = '1';
+    btn.title = title;
+    btn.innerHTML = `<abbr title="${title}"><i class="fas ${icon}"></i></abbr>`;
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const picker = document.createElement('input');
-      picker.type = 'file';
-      picker.accept = 'image/*';
-      picker.addEventListener('change', () => {
-        const file = picker.files[0];
-        if (file) uploadAndInsert(textarea, file, context);
-      });
-      picker.click();
+      onClick(e, btn);
     });
     return btn;
   }
 
-  function buildStickerButton(textarea, opts = {}) {
-    const cls = opts.className || 'form__standard-icon-button';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = cls;
-    btn.dataset.capySticker = '1';
-    btn.title = 'Stickers';
-    btn.innerHTML = '<abbr title="Stickers"><i class="fas fa-note-sticky"></i></abbr>';
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      openStickerPicker(btn, textarea);
+  // Abre o seletor de arquivo do SO e entrega o File escolhido.
+  function pickImage(onFile) {
+    const picker = document.createElement('input');
+    picker.type = 'file';
+    picker.accept = 'image/*';
+    picker.addEventListener('change', () => {
+      const file = picker.files[0];
+      if (file) onFile(file);
     });
-    return btn;
+    picker.click();
+  }
+
+  function buildUploadButton(textarea, opts = {}) {
+    return iconButton({
+      icon: 'fa-cloud-upload-alt',
+      title: 'Enviar imagem (ImgBB)',
+      data: 'capyUpload',
+      className: opts.className,
+      onClick: () => pickImage((file) => uploadAndInsert(textarea, file, opts.context))
+    });
+  }
+
+  function buildStickerButton(textarea, opts = {}) {
+    return iconButton({
+      icon: 'fa-note-sticky',
+      title: 'Stickers',
+      data: 'capySticker',
+      className: opts.className,
+      onClick: (e, btn) => {
+        e.stopPropagation();
+        openStickerPicker(btn, textarea);
+      }
+    });
   }
 
   // BBCode tags used on raw textareas (chat-like subset, PT-BR titles).
@@ -383,16 +457,12 @@
   ];
 
   function buildBbcodeButton(textarea, def, className) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = className;
-    btn.title = def.title;
-    btn.innerHTML = `<abbr title="${def.title}"><i class="fas ${def.icon}"></i></abbr>`;
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      wrapSelection(textarea, def.open, def.close);
+    return iconButton({
+      icon: def.icon,
+      title: def.title,
+      className,
+      onClick: () => wrapSelection(textarea, def.open, def.close)
     });
-    return btn;
   }
 
   function wrapSelection(textarea, openTag, closeTag) {
@@ -436,148 +506,114 @@
 
   // ────────────────── context 1: chat ──────────────────
 
-  waitForChat()
-    .then(({ form, textarea }) => {
-      const bar = form.querySelector('.form__bbcode-buttons');
-      if (bar && !bar.querySelector('[data-capy-upload]')) {
-        bar.appendChild(buildUploadButton(textarea, { context: 'chat' }));
-        bar.appendChild(buildStickerButton(textarea));
-        bar.appendChild(buildLinkCardButton(textarea));
-        log('chat: upload + sticker buttons injected');
-      }
-      wirePaste(textarea, { context: 'chat' });
-      log('chat: paste handler wired');
-    })
-    .catch(() => { /* chat absent on this page — silent */ });
-
-  function waitForChat({ timeoutMs = 15000, pollMs = 100 } = {}) {
-    return new Promise((resolve, reject) => {
-      const start = Date.now();
-      const tick = () => {
-        const el = document.getElementById('chatbody');
-        const ta = document.getElementById('chatbox__messages-create');
-        const form = document.querySelector('form.chatroom__new-message');
-        const data = el && PAGE.Alpine?.$data ? PAGE.Alpine.$data(el) : null;
-        if (el && ta && form && data?.bbCodeWrapper) {
-          return resolve({ chatEl: el, form, textarea: ta, chatData: data });
-        }
-        if (Date.now() - start > timeoutMs) return reject(new Error('timeout'));
-        setTimeout(tick, pollMs);
-      };
-      tick();
-    });
-  }
+  onDomChange(() => {
+    const el = document.getElementById('chatbody');
+    const textarea = document.getElementById('chatbox__messages-create');
+    const bar = document.querySelector('form.chatroom__new-message .form__bbcode-buttons');
+    // bbCodeWrapper: sinal de que o Alpine do chatbox já inicializou.
+    if (!el || !textarea || !bar || !PAGE.Alpine?.$data?.(el)?.bbCodeWrapper) return;
+    if (bar.querySelector('[data-capy-upload]')) return true;
+    bar.append(
+      buildUploadButton(textarea, { context: 'chat' }),
+      buildStickerButton(textarea),
+      buildLinkCardButton(textarea)
+    );
+    wirePaste(textarea, { context: 'chat' });
+    log('chat: buttons + paste wired');
+    return true;
+  });
 
   // ────────────────── context 2: rich .bbcode-input (forum, PM, etc.) ──────────────────
 
-  bootRichBbcodeInputs();
+  onDomChange(() => {
+    for (const bi of document.querySelectorAll('.bbcode-input:not([data-capy-wired])')) {
+      const textarea = bi.querySelector('textarea.bbcode-input__input, textarea');
+      const iconBar = bi.querySelector('.bbcode-input__icon-bar');
+      if (!textarea || !iconBar) continue;
 
-  function bootRichBbcodeInputs() {
-    const tryInit = () => {
-      for (const bi of document.querySelectorAll('.bbcode-input')) {
-        if (bi.dataset.capyWired) continue;
-        const textarea = bi.querySelector('textarea.bbcode-input__input, textarea');
-        const iconBar = bi.querySelector('.bbcode-input__icon-bar');
-        if (!textarea || !iconBar) continue;
-
-        // Match the existing pattern (each button is wrapped in <li>)
+      // Cada botão da barra nativa vem embrulhado num <li>.
+      for (const btn of [
+        buildUploadButton(textarea, { context: 'rest' }),
+        buildStickerButton(textarea),
+        buildLinkCardButton(textarea)
+      ]) {
         const li = document.createElement('li');
-        li.appendChild(buildUploadButton(textarea, { context: 'rest' }));
+        li.appendChild(btn);
         iconBar.appendChild(li);
-        const liSticker = document.createElement('li');
-        liSticker.appendChild(buildStickerButton(textarea));
-        iconBar.appendChild(liSticker);
-        const liCard = document.createElement('li');
-        liCard.appendChild(buildLinkCardButton(textarea));
-        iconBar.appendChild(liCard);
-
-        wirePaste(textarea, { context: 'rest' });
-        bi.dataset.capyWired = '1';
-        log('rich bbcode-input wired:', textarea.id || textarea.name);
       }
-    };
-    tryInit();
-    new MutationObserver(tryInit).observe(document.body, { childList: true, subtree: true });
-  }
+
+      wirePaste(textarea, { context: 'rest' });
+      bi.dataset.capyWired = '1';
+      log('rich bbcode-input wired:', textarea.id || textarea.name);
+    }
+  });
 
   // ────────────────── context 3: raw textareas (torrent / ticket comments) ──────────────────
 
-  bootRawTextareas();
+  onDomChange(() => {
+    // Só IDs conhecidos (inspeção live), pra não pegar textarea de busca:
+    //   #new-comment__textarea — comentários de torrent e de ticket
+    //   #edit-comment — edição de comentário
+    //   #body — criação de ticket (confirmado pelo action do form abaixo)
+    const candidates = [
+      document.getElementById('new-comment__textarea'),
+      document.getElementById('edit-comment'),
+      document.getElementById('body')
+    ].filter(Boolean);
 
-  function bootRawTextareas() {
-    // Conhecidos pela inspeção live:
-    //   #new-comment__textarea — torrent show comments + ticket show comments
-    //   #body — ticket create
-    const RAW_TARGETS = ['#new-comment__textarea', '#tickets-create form textarea[name="body"]', 'form[action*="/tickets"] textarea#body'];
-
-    const tryInit = () => {
-      const found = new Set();
-      // Heurística simples e segura: textareas que TÊM um data-bbcode hint OU
-      // estão num form que envia pra rotas conhecidas de comments/tickets.
-      // Pra evitar falsos positivos (formulários de busca, etc.), exigimos
-      // ID conhecido OU contexto de form action explícito.
-      const candidates = [
-        document.getElementById('new-comment__textarea'),
-        document.getElementById('edit-comment'),
-        document.getElementById('body')
-      ].filter(Boolean);
-
-      for (const ta of candidates) {
-        if (ta.dataset.capyWired) continue;
-        if (ta.closest('.bbcode-input')) continue; // já tratado pelo rich path
-        // Filtro extra pro #body: só se o form for de ticket
-        if (ta.id === 'body') {
-          const form = ta.closest('form');
-          if (!form || !/\/tickets/i.test(form.action || '')) continue;
-        }
-
-        const bar = document.createElement('div');
-        bar.className = 'capy-raw-bar';
-        bar.dataset.capyRawBar = '1';
-        bar.style.cssText = 'display:flex; gap:4px; padding:0; margin:0; flex-wrap:wrap;';
-        // Mesma família de classes do toolbar nativo do chat (--skinny pra ficar compacto).
-        const btnCls = 'form__button form__standard-icon-button form__standard-icon-button--skinny';
-        for (const def of RAW_BBCODE_TAGS) {
-          bar.appendChild(buildBbcodeButton(ta, def, btnCls));
-        }
-        bar.appendChild(buildUploadButton(ta, { className: btnCls, context: 'rest' }));
-        bar.appendChild(buildStickerButton(ta, { className: btnCls }));
-        bar.appendChild(buildLinkCardButton(ta, { className: btnCls }));
-        // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
-        // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
-        // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
-        const formGroup = ta.closest('.form__group');
-        const anchor = formGroup && formGroup.parentElement ? formGroup : ta;
-        anchor.parentElement.insertBefore(bar, anchor);
-        // O form pai é flex com gap (16px na capy) — isso afasta a barra do
-        // textarea. Puxa de volta com margin-bottom negativo, deixando ~4px.
-        const parentCS = getComputedStyle(anchor.parentElement);
-        if (parentCS.display.includes('flex')) {
-          const rowGap = parseFloat(parentCS.rowGap || parentCS.gap || '0') || 0;
-          if (rowGap > 4) bar.style.marginBottom = `-${rowGap - 4}px`;
-        }
-
-        wirePaste(ta, { context: 'rest' });
-        ta.dataset.capyWired = '1';
-        found.add(ta.id);
-        log('raw textarea wired:', ta.id);
+    for (const ta of candidates) {
+      if (ta.dataset.capyWired) continue;
+      if (ta.closest('.bbcode-input')) continue; // já tratado pelo rich path
+      if (ta.id === 'body') {
+        const form = ta.closest('form');
+        if (!form || !/\/tickets/i.test(form.action || '')) continue;
       }
-    };
-    tryInit();
-    new MutationObserver(tryInit).observe(document.body, { childList: true, subtree: true });
-  }
+
+      const bar = document.createElement('div');
+      bar.className = 'capy-raw-bar';
+      bar.dataset.capyRawBar = '1';
+      // Mesma família de classes do toolbar nativo do chat (--skinny pra ficar compacto).
+      const btnCls = 'form__button form__standard-icon-button form__standard-icon-button--skinny';
+      for (const def of RAW_BBCODE_TAGS) {
+        bar.appendChild(buildBbcodeButton(ta, def, btnCls));
+      }
+      bar.appendChild(buildUploadButton(ta, { className: btnCls, context: 'rest' }));
+      bar.appendChild(buildStickerButton(ta, { className: btnCls }));
+      bar.appendChild(buildLinkCardButton(ta, { className: btnCls }));
+      // O <p class="form__group"> contém textarea + <label class="form__label--floating">.
+      // A label é position:absolute relativa ao <p>. Se eu inserir a barra DENTRO do <p>,
+      // a label flutua pra cima da barra. Inserir ANTES do <p> mantém o conjunto intacto.
+      const formGroup = ta.closest('.form__group');
+      const anchor = formGroup && formGroup.parentElement ? formGroup : ta;
+      anchor.parentElement.insertBefore(bar, anchor);
+      // O form pai é flex com gap (16px na capy) — isso afasta a barra do
+      // textarea. Puxa de volta com margin-bottom negativo, deixando ~4px.
+      const parentCS = getComputedStyle(anchor.parentElement);
+      if (parentCS.display.includes('flex')) {
+        const rowGap = parseFloat(parentCS.rowGap || parentCS.gap || '0') || 0;
+        if (rowGap > 4) bar.style.marginBottom = `-${rowGap - 4}px`;
+      }
+
+      wirePaste(ta, { context: 'rest' });
+      ta.dataset.capyWired = '1';
+      log('raw textarea wired:', ta.id);
+    }
+  });
 
   // ────────────────── upload core ──────────────────
 
+  function alertNoKey() {
+    const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
+    alert(
+      'ImgBB API key não configurada.\n\n' +
+      `Vai em capybarabr.com/users/${me}/general-settings/edit ` +
+      '→ painel "ImgBB upload" → cola sua key e salva.'
+    );
+  }
+
   async function uploadAndInsert(textarea, blob, context) {
-    const key = getKey();
-    if (!key) {
-      const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
-      alert(
-        'ImgBB API key não configurada.\n\n' +
-        `Vai em capybarabr.com/users/${me}/general-settings/edit ` +
-        '→ painel "ImgBB upload" → cola sua key e salva.'
-      );
+    if (!getKey()) {
+      alertNoKey();
       return;
     }
 
@@ -675,38 +711,23 @@
 
   // Encolhe o blob pra que o lado maior seja `maxSize` px. Mantém proporção,
   // não amplia. Retorna Promise<Blob>. Fallback pro blob original em erro.
-  function resizeImage(blob, maxSize = STICKER_SIZE) {
-    return new Promise((resolve) => {
-      const url = URL.createObjectURL(blob);
-      const img = new Image();
-      img.onload = () => {
-        try {
-          const w = img.naturalWidth;
-          const h = img.naturalHeight;
-          const longest = Math.max(w, h);
-          const scale = longest > maxSize ? maxSize / longest : 1;
-          const tw = Math.max(1, Math.round(w * scale));
-          const th = Math.max(1, Math.round(h * scale));
-          const canvas = document.createElement('canvas');
-          canvas.width = tw;
-          canvas.height = th;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, tw, th);
-          canvas.toBlob((out) => {
-            URL.revokeObjectURL(url);
-            resolve(out || blob);
-          }, 'image/png');
-        } catch (_) {
-          URL.revokeObjectURL(url);
-          resolve(blob);
-        }
-      };
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        resolve(blob);
-      };
-      img.src = url;
-    });
+  async function resizeImage(blob, maxSize = STICKER_SIZE) {
+    try {
+      // imageOrientation explícito: sem ele o EXIF de foto de celular é ignorado
+      // e o sticker sobe deitado (o caminho antigo, via <img>, aplicava sozinho).
+      const bmp = await createImageBitmap(blob, { imageOrientation: 'from-image' });
+      const scale = Math.min(1, maxSize / Math.max(bmp.width, bmp.height));
+      const canvas = new OffscreenCanvas(
+        Math.max(1, Math.round(bmp.width * scale)),
+        Math.max(1, Math.round(bmp.height * scale))
+      );
+      canvas.getContext('2d').drawImage(bmp, 0, 0, canvas.width, canvas.height);
+      bmp.close();
+      return await canvas.convertToBlob({ type: 'image/png' });
+    } catch (err) {
+      warn('resize failed, uploading original:', err);
+      return blob;
+    }
   }
 
   // ────────────────── urlcard core: preview de link (URL unfurl) ──────────────────
@@ -834,19 +855,16 @@
   }
 
   function buildLinkCardButton(textarea, opts = {}) {
-    const cls = opts.className || 'form__standard-icon-button';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = cls;
-    btn.dataset.capyLinkcard = '1';
-    btn.title = 'Card de link';
-    btn.innerHTML = '<abbr title="Card de link"><i class="fas fa-window-maximize"></i></abbr>';
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = resolveUrlFromSelectionOrPrompt(textarea);
-      if (url) insertCard(textarea, url);
+    return iconButton({
+      icon: 'fa-window-maximize',
+      title: 'Card de link',
+      data: 'capyLinkcard',
+      className: opts.className,
+      onClick: () => {
+        const url = resolveUrlFromSelectionOrPrompt(textarea);
+        if (url) insertCard(textarea, url);
+      }
     });
-    return btn;
   }
 
   // ── chip de opt-in pro paste de URL ──
@@ -864,17 +882,9 @@
     closeCardChip();
     const chip = document.createElement('div');
     chip.className = 'capy-card-chip';
-    chip.style.cssText = [
-      'position:fixed', 'z-index:10001',
-      'background:var(--panel-bg,#2a292e)',
-      'border:1px solid var(--input-text-border-color,#555)',
-      'border-radius:8px', 'padding:4px',
-      'box-shadow:0 4px 16px rgba(0,0,0,.4)'
-    ].join(';');
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.textContent = '🔗 virar card?';
-    btn.style.cssText = 'background:transparent;color:inherit;border:none;cursor:pointer;font-size:13px;padding:4px 8px;';
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -895,21 +905,14 @@
   // ── sticker tiles (compartilhado: picker popover + settings manage grid) ──
   // Renderiza os tiles num container. opts.onPick(sticker) ao clicar num
   // thumbnail; opts.onChange() após add/remove (ex: atualizar contador).
-  // NOTA: STICKER_TILE é local (não module-level const) porque injectStickersPanel
-  // chama renderStickerTiles SINCRONAMENTE no load (antes de um const module-level
-  // ser inicializado → TDZ). Local inicializa a cada chamada, sem zona morta.
   function renderStickerTiles(container, opts = {}) {
-    const STICKER_TILE = 'width:64px;height:64px;border-radius:6px;cursor:pointer;flex:0 0 auto;';
     const rerender = () => renderStickerTiles(container, opts);
     container.textContent = '';
 
     const add = document.createElement('button');
     add.type = 'button';
+    add.className = 'capy-tile capy-tile--add';
     add.title = 'Adicionar sticker';
-    add.style.cssText = STICKER_TILE +
-      'display:flex;align-items:center;justify-content:center;' +
-      'font-size:24px;border:1px dashed var(--input-text-border-color,#777);' +
-      'background:transparent;color:inherit;';
     add.textContent = '+';
     add.addEventListener('click', (e) => {
       e.preventDefault();
@@ -929,13 +932,12 @@
 
     for (const s of stickers) {
       const cell = document.createElement('div');
-      cell.style.cssText = 'position:relative;' + STICKER_TILE;
+      cell.className = 'capy-tile';
 
       const thumb = document.createElement('img');
       thumb.src = s.url;
       thumb.title = s.name || '';
       thumb.loading = 'lazy';
-      thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:6px;display:block;';
       thumb.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -945,17 +947,9 @@
 
       const del = document.createElement('button');
       del.type = 'button';
+      del.className = 'capy-del';
       del.title = 'Apagar';
       del.textContent = '×';
-      del.style.cssText = [
-        'position:absolute', 'top:-6px', 'right:-6px',
-        'width:18px', 'height:18px', 'line-height:16px',
-        'border-radius:50%', 'border:none', 'cursor:pointer',
-        'background:var(--cp-red,#f38ba8)', 'color:#1a1a1a',
-        'font-size:13px', 'padding:0', 'display:none'
-      ].join(';');
-      cell.addEventListener('mouseenter', () => { del.style.display = 'block'; });
-      cell.addEventListener('mouseleave', () => { del.style.display = 'none'; });
       del.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -989,17 +983,7 @@
     }
 
     const pop = document.createElement('div');
-    pop.className = 'capy-sticker-pop';
-    pop.style.cssText = [
-      'position:absolute', 'bottom:100%', 'left:0', 'z-index:10000',
-      'margin-bottom:6px', 'padding:8px',
-      'background:var(--panel-bg,#2a292e)',
-      'border:1px solid var(--input-text-border-color,#555)',
-      'border-radius:8px',
-      'display:flex', 'flex-wrap:wrap', 'gap:6px',
-      'width:240px', 'max-height:240px', 'overflow-y:auto',
-      'box-shadow:0 4px 16px rgba(0,0,0,.4)'
-    ].join(';');
+    pop.className = 'capy-sticker-pop capy-pop';
 
     renderStickerTiles(pop, {
       onPick: (s) => {
@@ -1026,30 +1010,19 @@
 
   // Abre seletor de arquivo, sobe como sticker, salva, re-renderiza.
   function pickAndAdd(rerender) {
-    const picker = document.createElement('input');
-    picker.type = 'file';
-    picker.accept = 'image/*';
-    picker.addEventListener('change', async () => {
-      const file = picker.files[0];
-      if (!file) return;
+    pickImage(async (file) => {
       try {
         const url = await uploadSticker(file);
         addSticker({ url, name: (file.name || '').replace(/\.[^.]+$/, '') });
         rerender();
       } catch (err) {
         if (err.message === 'no-key') {
-          const me = location.pathname.match(/\/users\/([^/]+)/)?.[1] || 'SEU_USER';
-          alert(
-            'ImgBB API key não configurada.\n\n' +
-            `Vai em capybarabr.com/users/${me}/general-settings/edit ` +
-            '→ painel "ImgBB upload" → cola sua key e salva.'
-          );
+          alertNoKey();
         } else {
           alert('Upload do sticker falhou: ' + err.message);
         }
       }
     });
-    picker.click();
   }
 
   // Debug handle (console) — não cria dependências internas.
